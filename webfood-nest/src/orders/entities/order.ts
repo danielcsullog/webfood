@@ -1,7 +1,12 @@
+import { Entity, PrimaryKey } from "@mikro-orm/core";
 import { OrderBuilder } from "./orderBuilder";
 
+@Entity()
 export class Order {
+    @PrimaryKey()
     orderId!: number;
+
+
     orderDate!: string;
     userId!: number;
     userAddress!: string;

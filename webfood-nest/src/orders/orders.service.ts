@@ -16,8 +16,6 @@ export class OrdersService {
     }*/
 
     findAll(): Order[] {
-        console.log("Orders size: " + this._orders.length);
-
         return this._orders;
     }
 
@@ -26,16 +24,6 @@ export class OrdersService {
     }
 
     create(orderDto: OrderDto): Order {
-        /*const order = new Order();
-
-        order.orderId = this._nextId;
-        order.orderDate = orderDto.orderDate; //new Date().toLocaleString();
-        order.orderedItemIds = orderDto.orderedItemIds;
-        order.userAddress = orderDto.userAddress;
-        order.userId = orderDto.userId;
-        order.isCompleted = false;
-        */
-
         const order = new OrderBuilder().order()
             .withId(this._nextId)
             .withDate(orderDto.orderDate)
