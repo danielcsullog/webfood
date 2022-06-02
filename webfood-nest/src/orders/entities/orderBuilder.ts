@@ -1,7 +1,6 @@
 import { Order } from "./order";
 
 export class OrderBuilder {
-    orderId!: number;
     orderDate!: string;
     userId!: number;
     userAddress!: string;
@@ -10,11 +9,6 @@ export class OrderBuilder {
 
     order(): OrderBuilder {
         return new OrderBuilder;
-    }
-
-    withId(id: number): OrderBuilder {
-        this.orderId = id;
-        return this;
     }
 
     withDate(date: string): OrderBuilder {

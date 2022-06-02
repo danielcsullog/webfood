@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { OrderDto } from './dto/order.dto';
 import { Order } from './entities/order';
 import { OrdersService } from './orders.service';
@@ -9,13 +9,13 @@ export class OrdersController {
     constructor(private _orderService: OrdersService) {}
 
     @Get()
-    findAll(): OrderDto[] {
-        return this._orderService.findAll();
+    async findAll(@Query() orderDto: OrderDto): Promise<OrderDto[]> {
+        return await this._orderService.findAll(orderDto);
     }
 
     @Get(':orderId')
-    findOrderById(@Param('orderId', ParseIntPipe) id: number): OrderDto {
-        const order = this._orderService.findOrderById(id);
+    async findOrderById(@Param('orderId', ParseIntPipe) id: number): Promise<OrderDto> {
+        const order = await this._orderService.findOrderById(id);
         
         if(!order) {
             throw new HttpException('Order not found!', HttpStatus.NOT_FOUND);
@@ -25,8 +25,8 @@ export class OrdersController {
     }
 
     @Post()
-    create(@Body() orderDto: OrderDto): OrderDto {
-        const newOrder = this._orderService.create(orderDto);
+    async create(@Body() orderDto: OrderDto): Promise<OrderDto> {
+        const newOrder = await this._orderService.create(orderDto);
         return this.createOrderDto(newOrder);
     }
 

@@ -1,3 +1,5 @@
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { OrderDto } from './dto/order.dto';
 import { Order } from './entities/order';
@@ -5,36 +7,29 @@ import { OrderBuilder } from './entities/orderBuilder';
 
 @Injectable()
 export class OrdersService {
+    constructor(
+        @InjectRepository(Order)
+        private orderRepository: EntityRepository<Order>
+    ) {}
 
-    private _orders: Order[] = [];
-    private _nextId = 1;
-
-    /*setNextIdOnAppStart(): number {
-        //TODO: get last known id from DB, then +1;
-        this._nextId = 1;
-        return this._nextId;
-    }*/
-
-    findAll(): Order[] {
-        return this._orders;
+    async findAll(orderDto?: OrderDto): Promise<Order[]> {
+        return await this.orderRepository.find(orderDto);
     }
 
-    findOrderById(id: number): Order {
-        return this._orders.find(order => order.orderId === id);
+    async findOrderById(orderId: number): Promise<Order> {
+        return await this.orderRepository.findOne({ orderId });
     }
 
-    create(orderDto: OrderDto): Order {
+    async create(orderDto: OrderDto): Promise<Order> {
         const order = new OrderBuilder().order()
-            .withId(this._nextId)
             .withDate(orderDto.orderDate)
             .withOrderedItemIds(orderDto.orderedItemIds)
             .withUserAddress(orderDto.userAddress)
             .withUserId(orderDto.userId)
             .withCompletionStatus(false)
             .build();
-        
-        this._nextId += 1;
-        this._orders.push(order);
+
+        await this.orderRepository.persistAndFlush(order);
 
         return order;
     }
