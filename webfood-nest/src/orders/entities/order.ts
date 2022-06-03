@@ -1,8 +1,8 @@
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import { OrderBuilder } from "./orderBuilder";
 
 @Entity()
 export class Order {
+
     @PrimaryKey()
     orderId!: number;
 
@@ -23,11 +23,28 @@ export class Order {
     //voucher?: number;
     // TODO: complete fields if necessary
 
-    constructor(private builder: OrderBuilder) {
-        this.orderDate = builder.orderDate
-        this.userId = builder.userId;
-        this.userAddress = builder.userAddress;
-        this.orderedItemIds = builder.orderedItemIds;
-        this.isCompleted = builder.isCompleted;
+    withOrderDate(orderDate: string): Order {
+        this.orderDate = orderDate;
+        return this;
+    }
+
+    withUserId(userId: number): Order {
+        this.userId = userId;
+        return this;
+    }
+
+    withUserAddress(address: string): Order {
+        this.userAddress = address;
+        return this;
+    }
+
+    withOrderedItemIds(itemIds: number[]): Order {
+        this.orderedItemIds = itemIds;
+        return this;
+    }
+
+    withCompletionStatus(isCompleted: boolean): Order {
+        this.isCompleted = isCompleted;
+        return this;
     }
 }

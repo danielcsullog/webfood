@@ -3,7 +3,6 @@ import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { OrderDto } from './dto/order.dto';
 import { Order } from './entities/order';
-import { OrderBuilder } from './entities/orderBuilder';
 
 @Injectable()
 export class OrdersService {
@@ -21,13 +20,12 @@ export class OrdersService {
     }
 
     async create(orderDto: OrderDto): Promise<Order> {
-        const order = new OrderBuilder().order()
-            .withDate(orderDto.orderDate)
-            .withOrderedItemIds(orderDto.orderedItemIds)
-            .withUserAddress(orderDto.userAddress)
+        const order = new Order()
+            .withOrderDate(orderDto.orderDate)
             .withUserId(orderDto.userId)
-            .withCompletionStatus(false)
-            .build();
+            .withUserAddress(orderDto.userAddress)
+            .withOrderedItemIds(orderDto.orderedItemIds)
+            .withCompletionStatus(false);
 
         await this.orderRepository.persistAndFlush(order);
 
