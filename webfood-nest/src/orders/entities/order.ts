@@ -1,4 +1,6 @@
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { Collection, Entity, Enum, ManyToMany, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import { Meal } from "../../meals/entities/meal";
+import { Restaurant } from "../../restaurants/entities/restaurant";
 
 @Entity()
 export class Order {
@@ -6,8 +8,8 @@ export class Order {
     @PrimaryKey()
     orderId!: number;
 
-    @Property()
-    orderDate!: string;
+    @Property({ onCreate: () => new Date() })
+    orderDate!: Date;
 
     @Property()
     userId!: number;
@@ -15,36 +17,20 @@ export class Order {
     @Property()
     userAddress!: string;
 
-    @Property()
-    orderedItemIds!: number[];
+    @Enum()
+    orderStatus!: OrderStatus;
 
-    @Property()    
-    isCompleted!: boolean;
-    //voucher?: number;
-    // TODO: complete fields if necessary
+    @ManyToMany(() => Meal, (meal) => meal.orders)
+    meals = new Collection<Meal>(this);
 
-    withOrderDate(orderDate: string): Order {
-        this.orderDate = orderDate;
-        return this;
-    }
-
-    withUserId(userId: number): Order {
-        this.userId = userId;
-        return this;
-    }
-
-    withUserAddress(address: string): Order {
-        this.userAddress = address;
-        return this;
-    }
-
-    withOrderedItemIds(itemIds: number[]): Order {
-        this.orderedItemIds = itemIds;
-        return this;
-    }
-
-    withCompletionStatus(isCompleted: boolean): Order {
-        this.isCompleted = isCompleted;
-        return this;
-    }
+    @ManyToOne(() => Restaurant)
+    restaurant: Restaurant;
 }
+
+export enum OrderStatus {
+    New = 'NEW',
+    Doing = 'DOING',
+    Done = 'DONE',
+}
+
+//49:45 5-1 adatbazis kapcsolatok

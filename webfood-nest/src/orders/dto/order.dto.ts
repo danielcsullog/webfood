@@ -1,8 +1,9 @@
+import { OrderStatus } from "../entities/order";
+
 export class OrderDto {
     orderId?: number;
-    orderDate?: string;
+    orderDate?: Date;
     userId?: number;
     userAddress?: string;
-    orderedItemIds?: number[];
-    isCompleted?: boolean;
+    orderStatus?: OrderStatus;
 }

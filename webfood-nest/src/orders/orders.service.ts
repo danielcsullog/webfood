@@ -20,12 +20,11 @@ export class OrdersService {
     }
 
     async create(orderDto: OrderDto): Promise<Order> {
-        const order = new Order()
-            .withOrderDate(orderDto.orderDate)
-            .withUserId(orderDto.userId)
-            .withUserAddress(orderDto.userAddress)
-            .withOrderedItemIds(orderDto.orderedItemIds)
-            .withCompletionStatus(false);
+        const order = new Order();
+        order.orderId = orderDto.orderId;
+        order.userId = orderDto.userId;
+        order.userAddress = orderDto.userAddress;
+        order.orderStatus = orderDto.orderStatus;
 
         await this.orderRepository.persistAndFlush(order);
 

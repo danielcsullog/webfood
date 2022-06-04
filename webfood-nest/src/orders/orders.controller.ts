@@ -33,11 +33,9 @@ export class OrdersController {
     private createOrderDto(order: Order): OrderDto {
         const orderDto = new OrderDto();
         orderDto.orderId = order.orderId;  
-        orderDto.orderDate = order.orderDate;
-        orderDto.orderedItemIds = order.orderedItemIds;
         orderDto.userAddress = order.userAddress;
         orderDto.userId = order.userId;
-        orderDto.isCompleted = order.isCompleted;
+        orderDto.orderStatus = order.orderStatus;
 
         return orderDto;
     }
