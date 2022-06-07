@@ -1,4 +1,6 @@
+import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Meal } from './entities/meal';
 import { MealsService } from './meals.service';
 
 describe('MealsService', () => {
@@ -6,7 +8,10 @@ describe('MealsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MealsService],
+      providers: [
+        MealsService,
+        { provide: getRepositoryToken(Meal), useValue: {} },
+      ],
     }).compile();
 
     service = module.get<MealsService>(MealsService);

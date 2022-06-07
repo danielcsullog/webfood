@@ -1,5 +1,7 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Meal } from '../meals/entities/meal'
+import { Restaurant } from '../restaurants/entities/restaurant';
 import { Order } from './entities/order';
 import { OrdersService } from './orders.service';
 
@@ -8,7 +10,12 @@ describe('OrdersService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrdersService, { provide: getRepositoryToken(Order), useValue: {} }],
+      providers: [
+        OrdersService, 
+        { provide: getRepositoryToken(Order), useValue: {} },
+        { provide: getRepositoryToken(Meal), useValue: {} },
+        { provide: getRepositoryToken(Restaurant), useValue: {}}
+      ]
     }).compile();
 
     service = module.get<OrdersService>(OrdersService);

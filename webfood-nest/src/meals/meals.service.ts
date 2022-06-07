@@ -1,14 +1,39 @@
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { MealDto } from './dto/meal.dto';
+import { Meal } from './entities/meal';
 
 @Injectable()
 export class MealsService {
-  create(createMealDto: MealDto) {
-    return 'This action adds a new meal';
+
+  constructor(
+    @InjectRepository(Meal)
+    private mealRepository: EntityRepository<Meal>
+  ) {}
+
+  async create(createMealDto: MealDto) {
+    const meal = new Meal();
+    meal.name = createMealDto.name;
+    meal.price = createMealDto.price;
+    meal.description = createMealDto.description;
+    meal.category = createMealDto.category;
+    meal.isVegan = createMealDto.isVegan;
+    meal.isSpicy = createMealDto.isSpicy;
+    meal.isVegetarian = createMealDto.isVegetarian;
+    meal.isLactoseFree = createMealDto.isLactoseFree;
+    meal.isGlutenFree = createMealDto.isGlutenFree;
+    meal.isSugarFree = createMealDto.isSugarFree;
+
+    await this.mealRepository.persistAndFlush(meal);
+
+    return meal;
   }
 
-  findAll() {
-    return `This action returns all meals`;
+  async findAll(mealDto: MealDto) {
+    return await this.mealRepository.find({
+      name: { $like: `%${mealDto.name || ''}%`},
+    });
   }
 
   findOne(id: number) {

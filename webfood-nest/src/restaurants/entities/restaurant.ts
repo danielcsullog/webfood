@@ -1,4 +1,4 @@
-import { Collection, Entity, Enum, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { Collection, Entity, Enum, ManyToMany, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { Meal } from "../../meals/entities/meal";
 import { Order } from "../../orders/entities/order";
 
@@ -6,33 +6,33 @@ import { Order } from "../../orders/entities/order";
 export class Restaurant {
 
     @PrimaryKey()
-    id: number;
+    id!: number;
+
+    @Property({ unique: true})
+    name!: string;
 
     @Property()
-    name: string;
+    description!: string;
 
     @Property()
-    description: string;
-
-    @Property()
-    priceCategory: number;
+    priceCategory!: number;
 
     @Enum()
-    category: RestaurantCategory;
+    category!: RestaurantCategory;
 
     @Property()
-    address: string;
+    address!: string;
 
     @Property()
-    openingHours: string[];
+    openingHours!: string[];
 
     @Property()
-    phoneNumber: string;
+    phoneNumber!: string;
 
-    @OneToMany(() => Order, (order) => order.restaurant)
+    @OneToMany(() => Order, (order) => order.restaurants)
     orders = new Collection<Order>(this);
 
-    @OneToMany(() => Meal, (meal) => meal.restaurant)
+    @ManyToMany(() => Meal, (meal) => meal.restaurant)
     meals = new Collection<Meal>(this);
 }
 

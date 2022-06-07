@@ -21,96 +21,6 @@
           "nullable": false,
           "mappedType": "text"
         },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
-        "price_category": {
-          "name": "price_category",
-          "type": "integer",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "category": {
-          "name": "category",
-          "type": "integer",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "enum"
-        },
-        "address": {
-          "name": "address",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
-        "opening_hours": {
-          "name": "opening_hours",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
-        "phone_number": {
-          "name": "phone_number",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        }
-      },
-      "name": "restaurant",
-      "indexes": [
-        {
-          "keyName": "primary",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "text"
-        },
         "price": {
           "name": "price",
           "type": "integer",
@@ -191,27 +101,18 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
-        },
-        "restaurant_id": {
-          "name": "restaurant_id",
-          "type": "integer",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
         }
       },
       "name": "meal",
       "indexes": [
         {
           "columnNames": [
-            "restaurant_id"
+            "name"
           ],
           "composite": false,
-          "keyName": "meal_restaurant_id_index",
+          "keyName": "meal_name_unique",
           "primary": false,
-          "unique": false
+          "unique": true
         },
         {
           "keyName": "primary",
@@ -224,17 +125,185 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {
-        "meal_restaurant_id_foreign": {
-          "constraintName": "meal_restaurant_id_foreign",
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "price_category": {
+          "name": "price_category",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "category": {
+          "name": "category",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "enum"
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "opening_hours": {
+          "name": "opening_hours",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        }
+      },
+      "name": "restaurant",
+      "indexes": [
+        {
+          "columnNames": [
+            "name"
+          ],
+          "composite": false,
+          "keyName": "restaurant_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "meal_id": {
+          "name": "meal_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "restaurant_id": {
+          "name": "restaurant_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        }
+      },
+      "name": "meal_restaurant",
+      "indexes": [
+        {
+          "columnNames": [
+            "meal_id"
+          ],
+          "composite": false,
+          "keyName": "meal_restaurant_meal_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
           "columnNames": [
             "restaurant_id"
           ],
-          "localTableName": "meal",
+          "composite": false,
+          "keyName": "meal_restaurant_restaurant_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "meal_id",
+            "restaurant_id"
+          ],
+          "composite": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "meal_restaurant_meal_id_foreign": {
+          "constraintName": "meal_restaurant_meal_id_foreign",
+          "columnNames": [
+            "meal_id"
+          ],
+          "localTableName": "meal_restaurant",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "meal",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "meal_restaurant_restaurant_id_foreign": {
+          "constraintName": "meal_restaurant_restaurant_id_foreign",
+          "columnNames": [
+            "restaurant_id"
+          ],
+          "localTableName": "meal_restaurant",
           "referencedColumnNames": [
             "id"
           ],
           "referencedTableName": "restaurant",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }
@@ -287,8 +356,8 @@
           "nullable": false,
           "mappedType": "enum"
         },
-        "restaurant_id": {
-          "name": "restaurant_id",
+        "restaurants_id": {
+          "name": "restaurants_id",
           "type": "integer",
           "unsigned": false,
           "autoincrement": false,
@@ -301,10 +370,10 @@
       "indexes": [
         {
           "columnNames": [
-            "restaurant_id"
+            "restaurants_id"
           ],
           "composite": false,
-          "keyName": "order_restaurant_id_index",
+          "keyName": "order_restaurants_id_index",
           "primary": false,
           "unique": false
         },
@@ -320,10 +389,10 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "order_restaurant_id_foreign": {
-          "constraintName": "order_restaurant_id_foreign",
+        "order_restaurants_id_foreign": {
+          "constraintName": "order_restaurants_id_foreign",
           "columnNames": [
-            "restaurant_id"
+            "restaurants_id"
           ],
           "localTableName": "order",
           "referencedColumnNames": [

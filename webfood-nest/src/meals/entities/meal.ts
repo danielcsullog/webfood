@@ -8,7 +8,7 @@ export class Meal {
     @PrimaryKey()
     id!: number;
 
-    @Property()
+    @Property({ unique: true })
     name!: string;
 
     @Property()
@@ -41,6 +41,6 @@ export class Meal {
     @ManyToMany(() => Order)
     orders = new Collection<Order>(this);
 
-    @ManyToOne(() => Restaurant)
-    restaurant: Restaurant;
+    @ManyToMany(() => Restaurant)
+    restaurant = new Collection<Restaurant>(this);
 }

@@ -1,19 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UniqueConstraintViolationException } from '@mikro-orm/core';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { MealDto } from './dto/meal.dto';
 import { MealsService } from './meals.service';
 
 @Controller('meals')
 export class MealsController {
-  constructor(private readonly mealsService: MealsService) {}
+  constructor(private readonly mealsService: MealsService) { }
 
   @Post()
-  create(@Body() createMealDto: MealDto) {
-    return this.mealsService.create(createMealDto);
+  async create(@Body() createMealDto: MealDto) {
+    try {
+      const newMeal = await this.mealsService.create(createMealDto);
+      return new MealDto(newMeal);
+    } catch (e) {
+      if (e instanceof UniqueConstraintViolationException) {
+        throw new HttpException('Meal already exists', HttpStatus.CONFLICT);
+      } else {
+        throw e;
+      }
+    }
   }
 
   @Get()
-  findAll() {
-    return this.mealsService.findAll();
+  async findAll(@Query() mealDto: MealDto) {
+    const meals = await this.mealsService.findAll(mealDto);
+    return meals.map(meal => new MealDto(meal));
   }
 
   @Get(':id')

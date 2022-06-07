@@ -24,7 +24,7 @@ export class Order {
     meals = new Collection<Meal>(this);
 
     @ManyToOne(() => Restaurant)
-    restaurant: Restaurant;
+    restaurants = new Collection<Restaurant>(this);
 }
 
 export enum OrderStatus {
@@ -32,5 +32,3 @@ export enum OrderStatus {
     Doing = 'DOING',
     Done = 'DONE',
 }
-
-//49:45 5-1 adatbazis kapcsolatok
