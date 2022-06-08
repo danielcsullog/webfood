@@ -24,7 +24,7 @@ export class Order {
     meals = new Collection<Meal>(this);
 
     @ManyToOne(() => Restaurant)
-    restaurants = new Collection<Restaurant>(this);
+    restaurant!: Restaurant;
 }
 
 export enum OrderStatus {

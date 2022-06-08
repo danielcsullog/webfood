@@ -247,14 +247,14 @@
           "mappedType": "integer"
         }
       },
-      "name": "meal_restaurant",
+      "name": "meal_restaurants",
       "indexes": [
         {
           "columnNames": [
             "meal_id"
           ],
           "composite": false,
-          "keyName": "meal_restaurant_meal_id_index",
+          "keyName": "meal_restaurants_meal_id_index",
           "primary": false,
           "unique": false
         },
@@ -263,7 +263,7 @@
             "restaurant_id"
           ],
           "composite": false,
-          "keyName": "meal_restaurant_restaurant_id_index",
+          "keyName": "meal_restaurants_restaurant_id_index",
           "primary": false,
           "unique": false
         },
@@ -280,12 +280,12 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "meal_restaurant_meal_id_foreign": {
-          "constraintName": "meal_restaurant_meal_id_foreign",
+        "meal_restaurants_meal_id_foreign": {
+          "constraintName": "meal_restaurants_meal_id_foreign",
           "columnNames": [
             "meal_id"
           ],
-          "localTableName": "meal_restaurant",
+          "localTableName": "meal_restaurants",
           "referencedColumnNames": [
             "id"
           ],
@@ -293,12 +293,12 @@
           "deleteRule": "cascade",
           "updateRule": "cascade"
         },
-        "meal_restaurant_restaurant_id_foreign": {
-          "constraintName": "meal_restaurant_restaurant_id_foreign",
+        "meal_restaurants_restaurant_id_foreign": {
+          "constraintName": "meal_restaurants_restaurant_id_foreign",
           "columnNames": [
             "restaurant_id"
           ],
-          "localTableName": "meal_restaurant",
+          "localTableName": "meal_restaurants",
           "referencedColumnNames": [
             "id"
           ],
@@ -356,8 +356,8 @@
           "nullable": false,
           "mappedType": "enum"
         },
-        "restaurants_id": {
-          "name": "restaurants_id",
+        "restaurant_id": {
+          "name": "restaurant_id",
           "type": "integer",
           "unsigned": false,
           "autoincrement": false,
@@ -370,10 +370,10 @@
       "indexes": [
         {
           "columnNames": [
-            "restaurants_id"
+            "restaurant_id"
           ],
           "composite": false,
-          "keyName": "order_restaurants_id_index",
+          "keyName": "order_restaurant_id_index",
           "primary": false,
           "unique": false
         },
@@ -389,10 +389,10 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "order_restaurants_id_foreign": {
-          "constraintName": "order_restaurants_id_foreign",
+        "order_restaurant_id_foreign": {
+          "constraintName": "order_restaurant_id_foreign",
           "columnNames": [
-            "restaurants_id"
+            "restaurant_id"
           ],
           "localTableName": "order",
           "referencedColumnNames": [

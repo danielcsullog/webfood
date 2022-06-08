@@ -1,3 +1,4 @@
+import { RestaurantDto } from "../../restaurants/dto/restaurant.dto";
 import { Meal } from "../entities/meal";
 
 export class MealDto {
@@ -12,6 +13,7 @@ export class MealDto {
     isLactoseFree?: boolean;
     isGlutenFree?: boolean;
     isSugarFree?: boolean;
+    restaurants?: RestaurantDto[];
 
     constructor(meal?: Meal) {
         if (meal) {
@@ -26,6 +28,12 @@ export class MealDto {
             this.isLactoseFree = meal.isLactoseFree;
             this.isGlutenFree = meal.isGlutenFree;
             this.isSugarFree = meal.isSugarFree;
+            
+            if(meal.restaurants?.isInitialized(true)) {
+                this.restaurants = meal.restaurants
+                    .getItems()
+                    .map((restaurant) => new RestaurantDto(restaurant));   
+            } 
         }
     }
 }

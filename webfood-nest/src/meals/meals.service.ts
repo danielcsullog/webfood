@@ -1,6 +1,7 @@
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
+import { Restaurant } from '../restaurants/entities/restaurant';
 import { MealDto } from './dto/meal.dto';
 import { Meal } from './entities/meal';
 
@@ -9,7 +10,10 @@ export class MealsService {
 
   constructor(
     @InjectRepository(Meal)
-    private mealRepository: EntityRepository<Meal>
+    private mealRepository: EntityRepository<Meal>,
+
+    @InjectRepository(Restaurant)
+    private restaurantRepository: EntityRepository<Restaurant>
   ) {}
 
   async create(createMealDto: MealDto) {
@@ -25,7 +29,16 @@ export class MealsService {
     meal.isGlutenFree = createMealDto.isGlutenFree;
     meal.isSugarFree = createMealDto.isSugarFree;
 
+    if (createMealDto.restaurants) {
+      meal.restaurants.set(
+          createMealDto.restaurants.map((restaurant) => 
+              this.restaurantRepository.getReference(restaurant.id),
+          ),
+      );
+    }
+
     await this.mealRepository.persistAndFlush(meal);
+    await meal.restaurants.init();
 
     return meal;
   }

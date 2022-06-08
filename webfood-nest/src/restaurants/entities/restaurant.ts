@@ -29,10 +29,10 @@ export class Restaurant {
     @Property()
     phoneNumber!: string;
 
-    @OneToMany(() => Order, (order) => order.restaurants)
+    @OneToMany(() => Order, (order) => order.restaurant)
     orders = new Collection<Order>(this);
 
-    @ManyToMany(() => Meal, (meal) => meal.restaurant)
+    @ManyToMany(() => Meal, (meal) => meal.restaurants)
     meals = new Collection<Meal>(this);
 }
 

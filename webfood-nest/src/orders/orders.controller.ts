@@ -1,7 +1,5 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { Restaurant } from 'src/restaurants/entities/restaurant';
 import { OrderDto } from './dto/order.dto';
-import { Order, OrderStatus } from './entities/order';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')

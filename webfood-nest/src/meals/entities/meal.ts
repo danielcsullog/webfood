@@ -42,5 +42,5 @@ export class Meal {
     orders = new Collection<Order>(this);
 
     @ManyToMany(() => Restaurant)
-    restaurant = new Collection<Restaurant>(this);
+    restaurants = new Collection<Restaurant>(this);
 }
