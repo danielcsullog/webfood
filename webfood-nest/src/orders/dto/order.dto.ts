@@ -2,6 +2,7 @@ import { Restaurant } from "src/restaurants/entities/restaurant";
 import { MealDto } from "../../meals/dto/meal.dto";
 import { RestaurantDto } from "../../restaurants/dto/restaurant.dto";
 import { Order, OrderStatus } from "../entities/order";
+import { OrderItemDto } from "./order.item.dto";
 
 export class OrderDto {
     orderId?: number;
@@ -9,7 +10,7 @@ export class OrderDto {
     userId?: number;
     userAddress?: string;
     orderStatus?: OrderStatus;
-    meals?: MealDto[];
+    orderItems?: OrderItemDto[];
     restaurant?: Restaurant;
 
     constructor(order?: Order) {
@@ -21,11 +22,11 @@ export class OrderDto {
             this.orderStatus = order.orderStatus;
             this.restaurant = order.restaurant;
 
-            if(order.meals?.isInitialized(true)) {
-                this.meals = order.meals
+            if(order.orderItems.isInitialized(true)) {
+                this.orderItems = order.orderItems
                     .getItems()
-                    .map((meal) => new MealDto(meal));   
-            } 
+                    .map((item) => new OrderItemDto(item));
+            }
         }
     }
 }

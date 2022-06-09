@@ -1,6 +1,7 @@
-import { Collection, Entity, Enum, ManyToMany, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import { Collection, Entity, Enum, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { Meal } from "../../meals/entities/meal";
 import { Restaurant } from "../../restaurants/entities/restaurant";
+import { OrderItem } from "./order.item";
 
 @Entity()
 export class Order {
@@ -20,8 +21,8 @@ export class Order {
     @Enum()
     orderStatus!: OrderStatus;
 
-    @ManyToMany(() => Meal, (meal) => meal.orders)
-    meals = new Collection<Meal>(this);
+    @OneToMany(() => OrderItem, (item) => item.order)
+    orderItems = new Collection<OrderItem>(this);
 
     @ManyToOne(() => Restaurant)
     restaurant!: Restaurant;

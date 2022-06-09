@@ -1,6 +1,6 @@
 import { Migration } from '@mikro-orm/migrations';
 
-export class Migration20220608133057 extends Migration {
+export class Migration20220609132027 extends Migration {
 
   async up(): Promise<void> {
     this.addSql('create table `meal` (`id` integer not null primary key autoincrement, `name` text not null, `price` integer not null, `description` text not null, `category` text not null, `is_vegan` integer not null, `is_spicy` integer not null, `is_vegetarian` integer not null, `is_lactose_free` integer not null, `is_gluten_free` integer not null, `is_sugar_free` integer not null);');
@@ -16,9 +16,9 @@ export class Migration20220608133057 extends Migration {
     this.addSql('create table `order` (`order_id` integer not null primary key autoincrement, `order_date` datetime not null, `user_id` integer not null, `user_address` text not null, `order_status` integer not null, `restaurant_id` integer not null, constraint `order_restaurant_id_foreign` foreign key(`restaurant_id`) references `restaurant`(`id`) on update cascade);');
     this.addSql('create index `order_restaurant_id_index` on `order` (`restaurant_id`);');
 
-    this.addSql('create table `meal_orders` (`meal_id` integer not null, `order_order_id` integer not null, constraint `meal_orders_meal_id_foreign` foreign key(`meal_id`) references `meal`(`id`) on delete cascade on update cascade, constraint `meal_orders_order_order_id_foreign` foreign key(`order_order_id`) references `order`(`order_id`) on delete cascade on update cascade, primary key (`meal_id`, `order_order_id`));');
-    this.addSql('create index `meal_orders_meal_id_index` on `meal_orders` (`meal_id`);');
-    this.addSql('create index `meal_orders_order_order_id_index` on `meal_orders` (`order_order_id`);');
+    this.addSql('create table `order_item` (`id` integer not null primary key autoincrement, `order_order_id` integer not null, `meal_id` integer not null, `amount` integer not null default 1, constraint `order_item_order_order_id_foreign` foreign key(`order_order_id`) references `order`(`order_id`) on update cascade, constraint `order_item_meal_id_foreign` foreign key(`meal_id`) references `meal`(`id`) on update cascade);');
+    this.addSql('create index `order_item_order_order_id_index` on `order_item` (`order_order_id`);');
+    this.addSql('create index `order_item_meal_id_index` on `order_item` (`meal_id`);');
   }
 
 }

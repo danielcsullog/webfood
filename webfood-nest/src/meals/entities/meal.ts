@@ -38,8 +38,8 @@ export class Meal {
     @Property()
     isSugarFree!: boolean;
 
-    @ManyToMany(() => Order)
-    orders = new Collection<Order>(this);
+    //@ManyToMany(() => Order)
+    //orders = new Collection<Order>(this);
 
     @ManyToMany(() => Restaurant)
     restaurants = new Collection<Restaurant>(this);
