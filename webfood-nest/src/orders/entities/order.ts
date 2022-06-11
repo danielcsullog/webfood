@@ -1,5 +1,6 @@
-import { Collection, Entity, Enum, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
-import { Meal } from "../../meals/entities/meal";
+import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { User } from "../../users/entity/user";
+import { UserAddress } from "../../users/entity/user.address";
 import { Restaurant } from "../../restaurants/entities/restaurant";
 import { OrderItem } from "./order.item";
 
@@ -12,11 +13,11 @@ export class Order {
     @Property({ onCreate: () => new Date() })
     orderDate!: Date;
 
-    @Property()
-    userId!: number;
+    @ManyToOne(() => User)
+    user!: User;
 
-    @Property()
-    userAddress!: string;
+    @ManyToOne(() => UserAddress)
+    userAddress!: UserAddress;
 
     @Enum()
     orderStatus!: OrderStatus;

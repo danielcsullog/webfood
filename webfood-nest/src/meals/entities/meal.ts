@@ -1,5 +1,4 @@
-import { Collection, Entity, ManyToMany, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
-import { Order } from "../../orders/entities/order"
+import { Collection, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { Restaurant } from "../../restaurants/entities/restaurant";
 
 @Entity()
@@ -37,9 +36,6 @@ export class Meal {
 
     @Property()
     isSugarFree!: boolean;
-
-    //@ManyToMany(() => Order)
-    //orders = new Collection<Order>(this);
 
     @ManyToMany(() => Restaurant)
     restaurants = new Collection<Restaurant>(this);

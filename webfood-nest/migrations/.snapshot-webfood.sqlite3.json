@@ -21,6 +21,217 @@
           "nullable": false,
           "mappedType": "text"
         },
+        "user_name": {
+          "name": "user_name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "role": {
+          "name": "role",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "enum"
+        }
+      },
+      "name": "user",
+      "indexes": [
+        {
+          "columnNames": [
+            "user_name"
+          ],
+          "composite": false,
+          "keyName": "user_user_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "zip_code": {
+          "name": "zip_code",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "city": {
+          "name": "city",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "street": {
+          "name": "street",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "house_number": {
+          "name": "house_number",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "staircase": {
+          "name": "staircase",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "doorbell": {
+          "name": "doorbell",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "floor": {
+          "name": "floor",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "door_number": {
+          "name": "door_number",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "note": {
+          "name": "note",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        }
+      },
+      "name": "user_address",
+      "indexes": [
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "user_address_user_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_address_user_id_foreign": {
+          "constraintName": "user_address_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "user_address",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
         "price": {
           "name": "price",
           "type": "integer",
@@ -338,14 +549,14 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "user_address": {
-          "name": "user_address",
-          "type": "text",
+        "user_address_id": {
+          "name": "user_address_id",
+          "type": "integer",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "text"
+          "mappedType": "integer"
         },
         "order_status": {
           "name": "order_status",
@@ -370,6 +581,24 @@
       "indexes": [
         {
           "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "order_user_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "user_address_id"
+          ],
+          "composite": false,
+          "keyName": "order_user_address_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
             "restaurant_id"
           ],
           "composite": false,
@@ -389,6 +618,30 @@
       ],
       "checks": [],
       "foreignKeys": {
+        "order_user_id_foreign": {
+          "constraintName": "order_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "order",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user",
+          "updateRule": "cascade"
+        },
+        "order_user_address_id_foreign": {
+          "constraintName": "order_user_address_id_foreign",
+          "columnNames": [
+            "user_address_id"
+          ],
+          "localTableName": "order",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user_address",
+          "updateRule": "cascade"
+        },
         "order_restaurant_id_foreign": {
           "constraintName": "order_restaurant_id_foreign",
           "columnNames": [

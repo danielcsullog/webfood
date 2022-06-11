@@ -14,7 +14,7 @@ export class MealsService {
 
     @InjectRepository(Restaurant)
     private restaurantRepository: EntityRepository<Restaurant>
-  ) {}
+  ) { }
 
   async create(createMealDto: MealDto) {
     const meal = new Meal();
@@ -31,21 +31,22 @@ export class MealsService {
 
     if (createMealDto.restaurants) {
       meal.restaurants.set(
-          createMealDto.restaurants.map((restaurant) => 
-              this.restaurantRepository.getReference(restaurant.id),
-          ),
+        createMealDto.restaurants.map((restaurant) =>
+          this.restaurantRepository.getReference(restaurant.id),
+        ),
       );
     }
 
     await this.mealRepository.persistAndFlush(meal);
-    await meal.restaurants.init();
+    //await meal.restaurants.init();
+    await this.mealRepository.populate(meal, ['restaurants.id', 'restaurants.name']);
 
     return meal;
   }
 
   async findAll(mealDto: MealDto) {
     return await this.mealRepository.find({
-      name: { $like: `%${mealDto.name || ''}%`},
+      name: { $like: `%${mealDto.name || ''}%` },
     });
   }
 
