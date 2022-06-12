@@ -29,10 +29,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@mikro-orm/core": "^5.1.5",
-    "@mikro-orm/migrations": "^5.1.5",
+    "@mikro-orm/core": "^4.5.10",
     "@mikro-orm/nestjs": "^4.3.1",
-    "@mikro-orm/sqlite": "^5.1.5",
+    "@mikro-orm/sqlite": "^4.5.10",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^7.5.5",
     "@nestjs/jwt": "^8.0.1",
@@ -47,7 +46,7 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^5.1.5",
+    "@mikro-orm/cli": "^4.5.10",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.4.6",
