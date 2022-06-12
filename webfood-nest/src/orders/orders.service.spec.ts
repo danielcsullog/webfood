@@ -5,6 +5,7 @@ import { Meal } from '../meals/entities/meal'
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { Order } from './entities/order';
 import { OrdersService } from './orders.service';
+import { UserAddress } from '../users/entity/user.address';
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -17,6 +18,7 @@ describe('OrdersService', () => {
         { provide: getRepositoryToken(Meal), useValue: {} },
         { provide: getRepositoryToken(Restaurant), useValue: {}},
         { provide: getRepositoryToken(User), useValue: {}},
+        { provide: getRepositoryToken(UserAddress), useValue: {}},
       ]
     }).compile();
 

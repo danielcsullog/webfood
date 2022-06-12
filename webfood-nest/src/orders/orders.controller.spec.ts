@@ -27,11 +27,11 @@ describe('OrdersController', () => {
 
   it('should give empty array when no orders have been created', () => {
     ordersService.findAll.mockReturnValue([]);
-    expect(controller.findAll({})).resolves.toEqual([]);
+    expect(controller.findAll({}, {})).resolves.toEqual([]);
   })
 
   it('should throw an error when the requested issue is missing', () => {
     ordersService.findOne.mockReturnValue(undefined);
-    expect(controller.findOrderById(1)).rejects.toThrow();
-  })
+    expect(controller.findOrderById(1, {})).rejects.toThrow();
+  });
 });

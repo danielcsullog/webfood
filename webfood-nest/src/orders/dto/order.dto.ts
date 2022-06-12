@@ -8,7 +8,7 @@ export class OrderDto {
     orderId?: number;
     orderDate?: Date;
     user?: UserDto;
-    userAddressId: number;
+    userAddressId?: number;
     orderStatus?: OrderStatus;
     orderItems?: OrderItemDto[];
     restaurant?: Restaurant;
