@@ -1,7 +1,6 @@
-import { Restaurant } from "src/restaurants/entities/restaurant";
-import { UserDto } from "src/users/dto/user.dto";
-import { User } from "src/users/entity/user";
-import { UserAddress } from "src/users/entity/user.address";
+import { Restaurant } from "../../restaurants/entities/restaurant";
+import { UserDto } from "../../users/dto/user.dto";
+import { User } from "../../users/entity/user";
 import { Order, OrderStatus } from "../entities/order";
 import { OrderItemDto } from "./order.item.dto";
 

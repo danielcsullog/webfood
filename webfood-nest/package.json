@@ -5,14 +5,19 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "npx rimraf dist",
     "build": "nest build",
+    "heroku-postbuild": "npm run build && npm run migrate:prod",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
+    "migrate:prod": "cd dist && node migrations/migrate && cd .. && env-cmd -e productionSeed mikro-orm database:import migrations/admin-seed.sql",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",

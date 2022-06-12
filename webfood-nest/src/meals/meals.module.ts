@@ -3,7 +3,7 @@ import { MealsService } from './meals.service';
 import { MealsController } from './meals.controller';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Meal } from './entities/meal';
-import { Restaurant } from 'src/restaurants/entities/restaurant';
+import { Restaurant } from '../restaurants/entities/restaurant';
 
 @Module({
   imports: [MikroOrmModule.forFeature({ entities: [Meal, Restaurant]})],

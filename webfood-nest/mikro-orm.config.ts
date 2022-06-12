@@ -15,6 +15,10 @@ export default {
         User,
         UserAddress
     ],
-    dbName: 'webfood.sqlite3',
+    dbName: (process.env.seed ? './dist/' : '') + process.env.dbName,
     type: 'sqlite',
+    migrations: {
+        path: 'migrations',
+        pattern: /^[\w-]+\d+\.(ts|js)$/,
+      },
 } as Options<IDatabaseDriver>;

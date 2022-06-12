@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { UserParam } from 'src/auth/user-param.decorator';
-import { UserDto } from 'src/users/dto/user.dto';
+import { UserParam } from '../auth/user-param.decorator';
+import { UserDto } from '../users/dto/user.dto';
 import { OrderDto } from './dto/order.dto';
 import { OrdersService } from './orders.service';
 

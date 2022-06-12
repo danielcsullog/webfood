@@ -3,11 +3,11 @@ import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Order } from './entities/order';
-import { Restaurant } from 'src/restaurants/entities/restaurant';
-import { Meal } from 'src/meals/entities/meal';
+import { Restaurant } from '../restaurants/entities/restaurant';
+import { Meal } from '../meals/entities/meal';
 import { OrderItem } from './entities/order.item';
-import { User } from 'src/users/entity/user';
-import { UserAddress } from 'src/users/entity/user.address';
+import { User } from '../users/entity/user';
+import { UserAddress } from '../users/entity/user.address';
 
 @Module({
   imports: [MikroOrmModule.forFeature({ 

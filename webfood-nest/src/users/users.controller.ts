@@ -1,9 +1,9 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
-import { AllowAnonymous } from 'src/auth/allow-anonymus';
-import { AuthService } from 'src/auth/auth.service';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
-import { UserParam } from 'src/auth/user-param.decorator';
+import { AllowAnonymous } from '../auth/allow-anonymus';
+import { AuthService } from '../auth/auth.service';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { UserParam } from '../auth/user-param.decorator';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { UserAddressDto } from './dto/user.address.dto';
 import { UserDto } from './dto/user.dto';
