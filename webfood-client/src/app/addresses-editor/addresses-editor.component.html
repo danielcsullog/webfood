@@ -1,0 +1,49 @@
+<h1>New Address</h1>
+<form [formGroup]="addressForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+        <mat-label>ZIP Code</mat-label>
+        <input formControlName="zipCode" name="zipCode" matInput placeholder="ZIP Code" />
+        <mat-error *ngIf="zipCode.invalid">This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input formControlName="city" name="city" matInput placeholder="City" />
+        <mat-error *ngIf="city.invalid">This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Street</mat-label>
+        <input formControlName="street" name="street" matInput placeholder="Street" />
+        <mat-error *ngIf="street.invalid">This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>House number</mat-label>
+        <input formControlName="houseNumber" name="houseNumber" matInput placeholder="House number" />
+        <mat-error *ngIf="houseNumber.invalid">This field is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Staircase</mat-label>
+        <input formControlName="staircase" name="staircase" matInput placeholder="Staircase" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Doorbell</mat-label>
+        <input formControlName="doorbell" name="doorbell" matInput placeholder="Doorbell" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Floor</mat-label>
+        <input formControlName="floor" name="floor" matInput placeholder="Floor" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Door number</mat-label>
+        <input formControlName="doorNumber" name="doorNumber" matInput placeholder="Door number" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Note</mat-label>
+        <textarea formControlName="note" name="note" matInput placeholder="Note for the courier"></textarea>
+    </mat-form-field>
+
+    <div class="button-container">
+        <button mat-raised-button color="primary">
+            SAVE
+        </button>
+    </div>
+</form>

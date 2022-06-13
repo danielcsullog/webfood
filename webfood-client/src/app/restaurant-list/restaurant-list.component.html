@@ -1,0 +1,12 @@
+<h1>Available Restaurants</h1>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let restaurant of restaurants" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{restaurant.name}}
+                <mat-icon *ngIf="restaurant.done">done</mat-icon>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ restaurant.description}}</p>
+    </mat-expansion-panel>
+</mat-accordion>
