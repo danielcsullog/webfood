@@ -4,9 +4,10 @@
         <mat-expansion-panel-header>
             <mat-panel-title>
                 {{restaurant.name}}
-                <mat-icon *ngIf="restaurant.done">done</mat-icon>
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <p>{{ restaurant.description}}</p>
+        <app-restaurant-details
+            [restaurant]="restaurant"
+        ></app-restaurant-details>
     </mat-expansion-panel>
 </mat-accordion>

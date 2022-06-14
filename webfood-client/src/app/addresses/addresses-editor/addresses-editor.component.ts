@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { UserAddress } from '../core/user.address';
+import { UserAddress } from '../../core/user.address';
+import { AddressService } from '../service/address.service';
 
 @Component({
   selector: 'app-addresses-editor',
@@ -28,10 +29,22 @@ export class AddressesEditorComponent implements OnInit {
     note: [''],
   })
 
-
   constructor(
     private fb: FormBuilder,
-  ) { }
+    private addressService: AddressService
+  ) { 
+    if(this.addressService.addressToEdit){
+      this.addressForm.get('zipCode')?.setValue(this.addressService.addressToEdit.zipCode);
+      this.addressForm.get('city')?.setValue(this.addressService.addressToEdit.city);
+      this.addressForm.get('street')?.setValue(this.addressService.addressToEdit.street);
+      this.addressForm.get('houseNumber')?.setValue(this.addressService.addressToEdit.houseNumber);
+      this.addressForm.get('staircase')?.setValue(this.addressService.addressToEdit.staircase);
+      this.addressForm.get('doorbell')?.setValue(this.addressService.addressToEdit.doorbell);
+      this.addressForm.get('floor')?.setValue(this.addressService.addressToEdit.floor);
+      this.addressForm.get('doorNumber')?.setValue(this.addressService.addressToEdit.doorNumber);
+      this.addressForm.get('note')?.setValue(this.addressService.addressToEdit.note);
+    } 
+  }
 
   ngOnInit(): void {
   }
@@ -41,6 +54,8 @@ export class AddressesEditorComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     }
+    //TODO: DeleteOldEntryIfExistsAddNewEntry
+    this.addressForm.reset();
     console.log(this.addressForm.value as UserAddress);
   }
 

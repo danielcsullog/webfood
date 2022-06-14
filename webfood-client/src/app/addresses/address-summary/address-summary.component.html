@@ -1,0 +1,23 @@
+<div>
+    <p>ZIP Code: {{ userAddress.zipCode }}</p>
+</div>
+<div>
+    <p>Staircase: {{ userAddress.staircase }} </p>
+</div>
+<div>
+    <p>Doorbell: {{ userAddress.doorbell }}</p>
+</div>
+<div>
+    <p>Floor: {{ userAddress.floor }}</p>
+</div>
+<div>
+    <p>Door number: {{userAddress.doorNumber}}</p>
+</div>
+<div>
+    <p>Note: {{userAddress.note}} </p>
+</div>
+<div *ngIf="showButtons" class="buttons">
+    <button (click)="edit()" [routerLink]="['/addresses/new']" mat-raised-button color="secondary">
+        Edit
+    </button>
+</div>

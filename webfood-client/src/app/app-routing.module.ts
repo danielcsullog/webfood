@@ -1,37 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddressesEditorComponent } from './addresses-editor/addresses-editor.component';
-import { AddressesListComponent } from './addresses-list/addresses-list.component';
-import { OrderListComponent } from './order-list/order-list.component';
+import { AddressesEditorComponent } from './addresses/addresses-editor/addresses-editor.component';
+import { AddressesListComponent } from './addresses/addresses-list/addresses-list.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
-import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
-import { RestaurantOffersComponent } from './restaurant-offers/restaurant-offers.component';
+import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
+import { RestaurantListComponent } from './restaurants/restaurant-list/restaurant-list.component';
+import { RestaurantOffersComponent } from './restaurants/restaurant-offers/restaurant-offers.component';
 
 const routes: Routes = [{
-  path: 'restaurant-list',
+  path: 'restaurants',
   component: RestaurantListComponent,
 }, {
   path: 'restaurant-details',
   component: RestaurantDetailsComponent,
 }, {
-  path: 'restaurant-offers',
+  path: 'restaurants/:restaurantId',
   component: RestaurantOffersComponent,
 }, {
   path: 'orders',
   component: OrderListComponent,
 }, {
-  path: 'addresses-list',
+  path: 'addresses',
   component: AddressesListComponent,
 }, {
-  path: 'addresses-editor',
+  path: 'addresses/new',
   component: AddressesEditorComponent,
 }, {
   path: 'profile',
   component: ProfileEditorComponent,
 }, {
   path: '**',
-  redirectTo: 'restaurant-list',
+  redirectTo: 'restaurants',
 }
 
 ];

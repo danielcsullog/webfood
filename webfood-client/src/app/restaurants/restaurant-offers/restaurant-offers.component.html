@@ -1,0 +1,8 @@
+<ng-container *ngIf="restaurant; else restaurantMissing">
+    <h1>{{restaurant.name}}</h1>
+    <app-meal-list>
+    </app-meal-list>
+</ng-container>
+<ng-template #restaurantMissing>
+    <h1>Restaurant does not exist.</h1>
+</ng-template>

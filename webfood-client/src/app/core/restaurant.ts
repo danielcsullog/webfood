@@ -1,5 +1,10 @@
 export interface Restaurant {
+    id: number;
     name: string;
     description: string;
-    done: boolean;
+    priceCategory: number;
+    category: string;
+    address: string;
+    openingHours: string[];
+    phoneNumber: string;
 }

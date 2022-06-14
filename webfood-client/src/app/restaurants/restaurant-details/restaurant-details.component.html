@@ -1,0 +1,26 @@
+<div>
+    <p>Price category: {{restaurant.priceCategory}}/5</p>
+</div>
+<div>
+    <p>Category: {{restaurant.category}}</p>
+</div>
+<div>
+    <p>Address: {{restaurant.address}}</p>
+</div>
+<div>
+    <p>Opening hours:</p>
+</div>
+<div *ngFor="let open of restaurant.openingHours">
+    <p>{{open}}</p>
+</div>
+<div>
+    <p>Phone number: {{restaurant.phoneNumber}}</p>
+</div>
+<div>
+    <p>Description: {{restaurant.description}}</p>
+</div>
+<div class="buttons">
+    <button mat-raised-button [routerLink]="['/', 'restaurants', restaurant.id]" color="primary">
+        Offers
+    </button>    
+</div>

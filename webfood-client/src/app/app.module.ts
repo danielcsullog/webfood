@@ -13,14 +13,18 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
+import { RestaurantListComponent } from './restaurants/restaurant-list/restaurant-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
-import { AddressesListComponent } from './addresses-list/addresses-list.component';
-import { AddressesEditorComponent } from './addresses-editor/addresses-editor.component';
-import { RestaurantOffersComponent } from './restaurant-offers/restaurant-offers.component';
-import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
-import { OrderListComponent } from './order-list/order-list.component';
+import { AddressesListComponent } from './addresses/addresses-list/addresses-list.component';
+import { AddressesEditorComponent } from './addresses/addresses-editor/addresses-editor.component';
+import { RestaurantOffersComponent } from './restaurants/restaurant-offers/restaurant-offers.component';
+import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddressSummaryComponent } from './addresses/address-summary/address-summary.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MealListComponent } from './meals/meal-list/meal-list.component';
+import { MealDetailsComponent } from './meals/meal-details/meal-details.component'
 
 
 @NgModule({
@@ -32,7 +36,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AddressesEditorComponent,
     RestaurantOffersComponent,
     RestaurantDetailsComponent,
-    OrderListComponent
+    OrderListComponent,
+    AddressSummaryComponent,
+    MealListComponent,
+    MealDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +53,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTabsModule,
     FormsModule,
     ReactiveFormsModule
   ],

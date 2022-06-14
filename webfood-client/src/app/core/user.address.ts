@@ -1,4 +1,5 @@
 export interface UserAddress {
+    id: number;
     zipCode: number;
     city: string;
     street: string;
