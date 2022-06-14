@@ -20,5 +20,5 @@ export default {
     migrations: {
         path: 'migrations',
         pattern: /^[\w-]+\d+\.(ts|js)$/,
-      },
+    },
 } as Options<IDatabaseDriver>;

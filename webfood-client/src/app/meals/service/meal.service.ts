@@ -71,8 +71,27 @@ export class MealService {
 
   mealCategoriesNotUnique: string[] = [];
 
-  constructor() { 
-    
+  cart: Meal[] = [];
+
+  constructor() { }
+
+  addMealToCart(meal: Meal, amount: number) {
+    this.cart.push(meal);
+  }
+
+  removeMealFromCart(meal: Meal) {
+    const index = this.cart.indexOf(meal, 0);
+    if (index > -1) {
+      this.cart.splice(index, 1);
+    }
+  }
+
+  removeAllFromCart() {
+    this.cart = [];
+  }
+
+  getCartSize(): number {
+    return this.cart.length;
   }
 
   async getMeals(): Promise<Meal[]> {
@@ -87,6 +106,7 @@ export class MealService {
     for (let i = 0; i < this.meals.length; i++) {
       this.mealCategoriesNotUnique[i] = this.meals[i].category;
     }
+   
     return [... new Set(this.mealCategoriesNotUnique)];
   }
 

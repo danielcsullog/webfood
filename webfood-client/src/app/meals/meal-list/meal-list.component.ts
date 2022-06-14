@@ -9,8 +9,10 @@ import { MealService } from '../service/meal.service';
 })
 export class MealListComponent implements OnInit {
 
-  meals?: Meal[];
+  meals: Meal[] = [];
+  filteredMeals: Meal[] = [];
   mealCategories?: string[];
+  searchString: string = "";
 
   constructor(
     private mealService: MealService,
@@ -19,7 +21,18 @@ export class MealListComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.meals = await this.mealService.getMeals();
     this.mealCategories = await this.mealService.getDistinctCategories();
-    console.log("Mealcategories: " + this.mealCategories);
+    this.filteredMeals =  this.meals;
   }
 
+  async search(): Promise<Meal[]> {
+    this.filteredMeals = [];
+    let lowerCaseName: string;
+    for (let i = 0; i < this.meals.length; i++) {
+      lowerCaseName = this.meals[i].name.toLowerCase();
+      if (lowerCaseName.includes(this.searchString.toLowerCase())) {
+        this.filteredMeals.push(this.meals[i]);
+      }
+    }
+    return this.filteredMeals;
+  }
 }

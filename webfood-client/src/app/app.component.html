@@ -4,6 +4,11 @@
   </button>
   <span>{{ appTitle }}</span>
   <span class="spacer"></span>
+  <span>hi, UserName!</span>
+  <button mat-button>
+    <mat-icon [matBadge]="badgeCount" matBadgePosition="before" matBadgeColor="warn">shopping_cart</mat-icon>
+    <span> Cart</span>
+  </button>
   <button mat-button>
     <span>Logout</span>
   </button>
@@ -16,6 +21,7 @@
       <a mat-list-item [routerLink]="['orders']">Orders</a>
       <a mat-list-item [routerLink]="['addresses']">Addresses</a>
       <a mat-list-item [routerLink]="['profile']">Profile</a>
+      <a mat-list-item>My Restaurant</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

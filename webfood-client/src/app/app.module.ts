@@ -25,7 +25,7 @@ import { AddressSummaryComponent } from './addresses/address-summary/address-sum
 import { MatTabsModule } from '@angular/material/tabs';
 import { MealListComponent } from './meals/meal-list/meal-list.component';
 import { MealDetailsComponent } from './meals/meal-details/meal-details.component'
-
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -54,6 +54,7 @@ import { MealDetailsComponent } from './meals/meal-details/meal-details.componen
     MatFormFieldModule,
     MatInputModule,
     MatTabsModule,
+    MatBadgeModule,
     FormsModule,
     ReactiveFormsModule
   ],

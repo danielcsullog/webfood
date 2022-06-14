@@ -23,7 +23,18 @@
     <p>Gluten free: {{meal.isGlutenFree}}</p>
 </div>
 <div class="cartButton">
-    <button mat-raised-button color="primary">
+    <button (click)="addToCartFromDetails(meal)" mat-raised-button color="primary">
         Add to cart
-    </button>    
+    </button>
+    <span class="amount">
+        <button (click)="lowerAmount()" mat-button color="secondary">
+            -
+        </button>
+        <button mat-button color="secondary">
+            {{amount}}
+        </button>
+        <button (click)="increaseAmount()" mat-button color="secondary">
+            +
+        </button>        
+    </span>
 </div>

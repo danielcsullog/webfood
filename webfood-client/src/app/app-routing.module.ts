@@ -27,7 +27,7 @@ const routes: Routes = [{
   path: 'addresses/new',
   component: AddressesEditorComponent,
 }, {
-  path: 'profile',
+  path: 'profile/:userId',
   component: ProfileEditorComponent,
 }, {
   path: '**',

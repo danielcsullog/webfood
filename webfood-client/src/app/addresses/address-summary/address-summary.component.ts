@@ -23,7 +23,8 @@ export class AddressSummaryComponent implements OnInit {
   }
 
   edit() {
-    this.editAddress.emit();
+    //this.editAddress.emit();
     this.addressService.setAddressToEdit(this.userAddress);
+    
   }
 }

@@ -13,10 +13,10 @@ import { RolesGuard } from './auth/roles.guard';
 @Module({
   imports: [MikroOrmModule.forRoot(mikroOrmConfig), OrdersModule, MealsModule, RestaurantsModule, UsersModule, AuthModule],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    //{
+    //  provide: APP_GUARD,
+    //  useClass: JwtAuthGuard,
+    //},
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

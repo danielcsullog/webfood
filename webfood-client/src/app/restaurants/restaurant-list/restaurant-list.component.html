@@ -1,13 +1,28 @@
 <h1>Available Restaurants</h1>
-<mat-accordion>
-    <mat-expansion-panel *ngFor="let restaurant of restaurants" hideToggle>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{restaurant.name}}
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-restaurant-details
-            [restaurant]="restaurant"
-        ></app-restaurant-details>
-    </mat-expansion-panel>
-</mat-accordion>
+<mat-form-field class="example-full-width">
+    <span matPrefix> </span>
+    <input [(ngModel)]="searchString" type="tel" matInput placeholder="Find a restaurant...">
+    <button (click)="search()" matSuffix mat-button>
+        <mat-icon>search</mat-icon>
+    </button>
+</mat-form-field>
+<ng-container *ngIf="filteredRestaurants.length != 0; else searchFail">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let restaurant of filteredRestaurants" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{restaurant.name}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-restaurant-details [restaurant]="restaurant"></app-restaurant-details>
+        </mat-expansion-panel>
+    </mat-accordion>
+</ng-container>
+<ng-template #searchFail>
+    <ng-container *ngIf="restaurants.length != 0; else noRestaurant">
+        <h2>There is no restaurant with this name!</h2>
+    </ng-container>
+    <ng-template #noRestaurant>
+        <h2>There is no restaurant in database!</h2>
+    </ng-template>
+</ng-template>

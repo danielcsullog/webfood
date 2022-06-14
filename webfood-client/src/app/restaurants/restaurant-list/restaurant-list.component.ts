@@ -7,9 +7,11 @@ import { RestaurantService } from '../service/restaurant.service';
   templateUrl: './restaurant-list.component.html',
   styleUrls: ['./restaurant-list.component.scss']
 })
-export class RestaurantListComponent implements OnInit, OnDestroy {    
+export class RestaurantListComponent implements OnInit, OnDestroy {
 
-  restaurants?: Restaurant[];
+  restaurants: Restaurant[] = [];
+  filteredRestaurants: Restaurant[] = [];
+  searchString: string = "";
 
   constructor(
     private restaurantService: RestaurantService,
@@ -17,10 +19,23 @@ export class RestaurantListComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.restaurants = await this.restaurantService.getRestaurants();
+    this.filteredRestaurants =  this.restaurants;
+  }
+
+  async search(): Promise<Restaurant[]> {
+    this.filteredRestaurants = [];
+    let lowerCaseName: string;
+    for (let i = 0; i < this.restaurants.length; i++) {
+      lowerCaseName = this.restaurants[i].name.toLowerCase();
+      if (lowerCaseName.includes(this.searchString.toLowerCase())) {
+        this.filteredRestaurants.push(this.restaurants[i]);
+      }
+    }
+    return this.filteredRestaurants;
   }
 
   ngOnDestroy(): void {
   }
 
-  
+
 }
