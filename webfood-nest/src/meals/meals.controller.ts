@@ -1,7 +1,7 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
-import { UserParam } from 'src/auth/user-param.decorator';
-import { UserDto } from 'src/users/dto/user.dto';
+import { UserParam } from '../auth/user-param.decorator';
+import { UserDto } from '../users/dto/user.dto';
 import { MealDto } from './dto/meal.dto';
 import { MealsService } from './meals.service';
 
