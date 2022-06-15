@@ -1,16 +1,20 @@
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
+import { User } from '../users/entity/user';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { Restaurant } from './entities/restaurant';
 
 @Injectable()
 export class RestaurantsService {
 
-  constructor (
+  constructor(
     @InjectRepository(Restaurant)
-    private restaurantRepository: EntityRepository<Restaurant>
-  ) {}
+    private restaurantRepository: EntityRepository<Restaurant>,
+
+    @InjectRepository(User)
+    private userRepository: EntityRepository<User>
+  ) { }
 
   async create(createRestaurantDto: RestaurantDto) {
     const restaurant = new Restaurant();
@@ -22,6 +26,18 @@ export class RestaurantsService {
     restaurant.openingHours = createRestaurantDto.openingHours;
     restaurant.phoneNumber = createRestaurantDto.phoneNumber;
 
+    restaurant.owner = await this.userRepository.findOne({
+      id: createRestaurantDto.owner.id
+    })
+
+    if(restaurant.workers) {
+      restaurant.workers.set(
+        createRestaurantDto.workers.map((worker) =>
+          this.userRepository.getReference(worker.id)
+        )
+      )
+    }
+
     await this.restaurantRepository.persistAndFlush(restaurant);
 
     return restaurant;
@@ -29,7 +45,7 @@ export class RestaurantsService {
 
   async findAll(restaurantDto: RestaurantDto) {
     return await this.restaurantRepository.find({
-      name: { $like: `%${restaurantDto.name || ''}%`},
+      name: { $like: `%${restaurantDto.name || ''}%` },
     });
   }
 

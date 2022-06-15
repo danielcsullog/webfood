@@ -1,3 +1,5 @@
+import { User } from "../../users/entity/user";
+import { UserDto } from "../../users/dto/user.dto";
 import { Restaurant, RestaurantCategory } from "../entities/restaurant";
 
 export class RestaurantDto {
@@ -9,6 +11,8 @@ export class RestaurantDto {
     address?: string;
     openingHours?: string[];
     phoneNumber?: string;
+    owner?: UserDto;
+    workers?: UserDto[];
 
     constructor(restaurant?: Restaurant) {
         if (restaurant) {
@@ -20,6 +24,20 @@ export class RestaurantDto {
             this.address = restaurant.address;
             this.openingHours = restaurant.openingHours;
             this.phoneNumber = restaurant.phoneNumber;
+            
+            if(restaurant.owner && restaurant.owner instanceof User) {
+                this.owner = {
+                    id: restaurant.owner.id,
+                    name: restaurant.owner.name,
+                    role: restaurant.owner.role
+                }
+            }
+            
+            if(restaurant.workers.isInitialized) {
+                this.workers = restaurant.workers
+                    .getItems()
+                    .map((user) => new UserDto(user));
+            }
         }
     }
 }

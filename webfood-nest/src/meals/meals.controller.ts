@@ -1,5 +1,7 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { UserParam } from 'src/auth/user-param.decorator';
+import { UserDto } from 'src/users/dto/user.dto';
 import { MealDto } from './dto/meal.dto';
 import { MealsService } from './meals.service';
 
@@ -8,9 +10,17 @@ export class MealsController {
   constructor(private readonly mealsService: MealsService) { }
 
   @Post()
-  async create(@Body() createMealDto: MealDto) {
+  async create(
+    @Body() createMealDto: MealDto,
+    @UserParam() userDto: UserDto
+  ): Promise<MealDto> {
     try {
-      const newMeal = await this.mealsService.create(createMealDto);
+      const newMeal = await this.mealsService.create(createMealDto, userDto);
+      
+      if(!newMeal) {
+        throw new HttpException('Only RestaurantAdmin or Admin can add new meals!', HttpStatus.FORBIDDEN);
+      }
+
       return new MealDto(newMeal);
     } catch (e) {
       if (e instanceof UniqueConstraintViolationException) {
@@ -28,8 +38,14 @@ export class MealsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealsService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<MealDto>{
+    const meal = await this.mealsService.findOne(+id);
+
+    if (!meal) {
+      throw new HttpException('Meal not found!', HttpStatus.NOT_FOUND);
+    }
+
+    return new MealDto(meal);
   }
 
   @Patch(':id')

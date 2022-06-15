@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../core/user';
 
 @Component({
   selector: 'app-profile-editor',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-editor.component.scss']
 })
 export class ProfileEditorComponent implements OnInit {
+
+  user?: User;
 
   constructor() { }
 

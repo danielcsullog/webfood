@@ -1,6 +1,8 @@
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
+import { UserDto } from 'src/users/dto/user.dto';
+import { UserRole } from 'src/users/entity/user';
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { MealDto } from './dto/meal.dto';
 import { Meal } from './entities/meal';
@@ -16,7 +18,11 @@ export class MealsService {
     private restaurantRepository: EntityRepository<Restaurant>
   ) { }
 
-  async create(createMealDto: MealDto) {
+  async create(createMealDto: MealDto, userDto: UserDto): Promise<Meal> {
+    if (false) {
+      return;
+    }
+    
     const meal = new Meal();
     meal.name = createMealDto.name;
     meal.price = createMealDto.price;
@@ -29,17 +35,25 @@ export class MealsService {
     meal.isGlutenFree = createMealDto.isGlutenFree;
     meal.isSugarFree = createMealDto.isSugarFree;
 
-    if (createMealDto.restaurants) {
-      meal.restaurants.set(
-        createMealDto.restaurants.map((restaurant) =>
-          this.restaurantRepository.getReference(restaurant.id),
-        ),
-      );
+    if (createMealDto.restaurantIds) {
+      for (let restaurantId of createMealDto.restaurantIds) {
+        const restaurant = await this.restaurantRepository.findOne({ id: restaurantId });
+        meal.restaurants.add(restaurant);
+      }
     }
+
+
+    //if (createMealDto.restaurants) {
+    //  meal.restaurants.set(
+    //    createMealDto.restaurants.map((restaurant) =>
+    //      this.restaurantRepository.getReference(restaurant.id),
+    //    ),
+    //  );
+    //}
 
     await this.mealRepository.persistAndFlush(meal);
     //await meal.restaurants.init();
-    await this.mealRepository.populate(meal, ['restaurants.id', 'restaurants.name']);
+    //await this.mealRepository.populate(meal, ['restaurants.name']);
 
     return meal;
   }
@@ -50,8 +64,8 @@ export class MealsService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} meal`;
+  async findOne(mealId: number) {
+    return await this.mealRepository.findOne({ id: mealId });
   }
 
   update(id: number, updateMealDto: MealDto) {

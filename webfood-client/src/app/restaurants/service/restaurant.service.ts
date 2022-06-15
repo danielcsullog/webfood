@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Restaurant } from '../../core/restaurant';
 
 @Injectable({
@@ -45,10 +47,16 @@ export class RestaurantService {
 
   private _currentId: number = 100;
 
-  constructor() { }
+  constructor(
+    private httpClient: HttpClient
+  ) {
+
+  }
 
   async getRestaurants(): Promise<Restaurant[]> {
-    return this.restaurants;
+    return (
+      this.httpClient.get('restaurants/') as Observable<Restaurant[]>
+    ).toPromise();
   }
 
   async getRestaurant(id: number): Promise<Restaurant | undefined> {
