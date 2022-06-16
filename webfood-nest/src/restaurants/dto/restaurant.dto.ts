@@ -25,15 +25,15 @@ export class RestaurantDto {
             this.openingHours = restaurant.openingHours;
             this.phoneNumber = restaurant.phoneNumber;
             
-            if(restaurant.owner && restaurant.owner instanceof User) {
-                this.owner = {
-                    id: restaurant.owner.id,
-                    name: restaurant.owner.name,
-                    role: restaurant.owner.role
-                }
-            }
+           if(restaurant.owner && restaurant.owner instanceof User) {
+               this.owner = {
+                   id: restaurant.owner.id,
+                   name: restaurant.owner.name,
+                   role: restaurant.owner.role
+               }
+           }
             
-            if(restaurant.workers.isInitialized) {
+            if(restaurant.workers.isInitialized(true)) {
                 this.workers = restaurant.workers
                     .getItems()
                     .map((user) => new UserDto(user));

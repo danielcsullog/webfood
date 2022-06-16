@@ -19,6 +19,7 @@ export class MealsService {
   ) { }
 
   async create(createMealDto: MealDto, userDto: UserDto): Promise<Meal> {
+    //check if user is a restaurant admin 
     if (false) {
       return;
     }

@@ -1,16 +1,23 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
+import { UserDto } from '../users/dto/user.dto';
+import { UserParam } from '../auth/user-param.decorator';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
+import { Roles } from 'src/auth/roles';
+import { UserRole } from 'src/users/entity/user';
 
 @Controller('restaurants')
 export class RestaurantsController {
   constructor(private readonly restaurantsService: RestaurantsService) { }
 
   @Post()
-  async create(@Body() createRestaurantDto: RestaurantDto) {
+  async create(
+    @Body() createRestaurantDto: RestaurantDto,
+    @UserParam() userDto: UserDto
+  ): Promise<RestaurantDto> {
     try {
-      const newRestaurant = await this.restaurantsService.create(createRestaurantDto);
+      const newRestaurant = await this.restaurantsService.create(createRestaurantDto, userDto);
       return new RestaurantDto(newRestaurant);
     } catch (e) {
       if (e instanceof UniqueConstraintViolationException) {
@@ -22,22 +29,44 @@ export class RestaurantsController {
   }
 
   @Get()
-  findAll(@Query() restaurantDto: RestaurantDto) {
-    return this.restaurantsService.findAll(restaurantDto);
+  async findAll(@Query() restaurantDto: RestaurantDto): Promise<RestaurantDto[]> {
+    const restaurants = await this.restaurantsService.findAll(restaurantDto);
+    return restaurants.map((restaurant) => new RestaurantDto(restaurant));
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.restaurantsService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<RestaurantDto> {
+    const restaurant = await this.restaurantsService.findOne(id);
+
+    if (!restaurant) {
+      throw new HttpException('Restaurant not found!', HttpStatus.NOT_FOUND);
+    }
+
+    return new RestaurantDto(restaurant);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRestaurantDto: RestaurantDto) {
-    return this.restaurantsService.update(+id, updateRestaurantDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRestaurantDto: RestaurantDto,
+    @UserParam() userDto: UserDto
+  ): Promise<RestaurantDto> {
+    const newRestaurant = await this.restaurantsService.update(id, updateRestaurantDto, userDto);
+    
+    if(!newRestaurant) {
+      throw new HttpException('Restaurant not found for update!', HttpStatus.NOT_FOUND);
+    }
+
+    return new RestaurantDto(newRestaurant);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.restaurantsService.remove(+id);
+  @Roles(UserRole.Admin)
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<RestaurantDto> {
+    const deletedRestaurant = await this.restaurantsService.remove(id);
+
+    return new RestaurantDto(deletedRestaurant);
   }
 }

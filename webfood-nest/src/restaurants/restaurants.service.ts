@@ -1,7 +1,9 @@
+import { FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/entity/user';
+import { UserDto } from 'src/users/dto/user.dto';
+import { User, UserRole } from '../users/entity/user';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { Restaurant } from './entities/restaurant';
 
@@ -16,7 +18,7 @@ export class RestaurantsService {
     private userRepository: EntityRepository<User>
   ) { }
 
-  async create(createRestaurantDto: RestaurantDto) {
+  async create(createRestaurantDto: RestaurantDto, user: UserDto) {
     const restaurant = new Restaurant();
     restaurant.name = createRestaurantDto.name;
     restaurant.description = createRestaurantDto.description;
@@ -26,11 +28,9 @@ export class RestaurantsService {
     restaurant.openingHours = createRestaurantDto.openingHours;
     restaurant.phoneNumber = createRestaurantDto.phoneNumber;
 
-    restaurant.owner = await this.userRepository.findOne({
-      id: createRestaurantDto.owner.id
-    })
+    restaurant.owner = this.userRepository.getReference(user.id);
 
-    if(restaurant.workers) {
+    if (restaurant.workers) {
       restaurant.workers.set(
         createRestaurantDto.workers.map((worker) =>
           this.userRepository.getReference(worker.id)
@@ -39,25 +39,70 @@ export class RestaurantsService {
     }
 
     await this.restaurantRepository.persistAndFlush(restaurant);
+    await this.restaurantRepository.populate(restaurant, ['owner', 'workers']);
 
     return restaurant;
   }
 
-  async findAll(restaurantDto: RestaurantDto) {
-    return await this.restaurantRepository.find({
+  async findAll(restaurantDto: RestaurantDto): Promise<Restaurant[]> {
+    const filters: FilterQuery<Restaurant> = {
       name: { $like: `%${restaurantDto.name || ''}%` },
+    };
+
+    return await this.restaurantRepository.find(filters, {
+      populate: ['owner', 'workers']
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} restaurant`;
+  async findOne(restaurantId: number): Promise<Restaurant> {
+    return await this.restaurantRepository.findOne(
+      { id: restaurantId },
+      { populate: ['owner', 'workers'] }
+    );
   }
 
-  update(id: number, updateRestaurantDto: RestaurantDto) {
-    return `This action updates a #${id} restaurant`;
+  async update(
+    restaurantId: number,
+    restaurantDto: RestaurantDto,
+    user: UserDto
+  ): Promise<Restaurant> {
+    const filters: FilterQuery<Restaurant> = { id: restaurantId };
+    if (user.role === UserRole.User) {
+      filters.owner = { id: user.id };
+    }
+
+    const restaurant = await this.restaurantRepository.findOne(filters)
+
+    if(!restaurant) {
+      return;
+    }
+
+    restaurant.name = restaurantDto.name || restaurant.name;
+    restaurant.description = restaurantDto.description || restaurant.description;
+    restaurant.priceCategory = restaurantDto.priceCategory || restaurant.priceCategory;
+    restaurant.category = restaurantDto.category || restaurant.category;
+    restaurant.address = restaurantDto.address || restaurant.address;
+    restaurant.openingHours = restaurantDto.openingHours || restaurant.openingHours;
+    restaurant.phoneNumber = restaurantDto.phoneNumber || restaurant.phoneNumber;
+
+    if (restaurantDto.workers) {
+      restaurant.workers.set(
+        restaurantDto.workers.map((worker) =>
+          this.userRepository.getReference(worker.id)
+        )
+      )
+    }
+
+    await this.restaurantRepository.persistAndFlush(restaurant);
+    await this.restaurantRepository.populate(restaurant, ['owner', 'workers']);
+
+    return restaurant;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} restaurant`;
+  async remove(id: number): Promise<Restaurant> {
+    const restaurant = await this.restaurantRepository.findOne({ id });
+    await this.restaurantRepository.removeAndFlush(restaurant);
+
+    return restaurant;
   }
 }
