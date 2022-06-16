@@ -4,8 +4,8 @@ import { UserDto } from '../users/dto/user.dto';
 import { UserParam } from '../auth/user-param.decorator';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
-import { Roles } from 'src/auth/roles';
-import { UserRole } from 'src/users/entity/user';
+import { Roles } from '../auth/roles';
+import { UserRole } from '../users/entity/user';
 
 @Controller('restaurants')
 export class RestaurantsController {
