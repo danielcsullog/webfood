@@ -19,6 +19,9 @@ export class Order {
     @ManyToOne(() => UserAddress)
     userAddress!: UserAddress;
 
+    @Property()
+    shortAddress!: string;
+
     @Enum()
     orderStatus!: OrderStatus;
 

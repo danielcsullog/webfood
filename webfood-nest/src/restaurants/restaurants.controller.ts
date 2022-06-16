@@ -53,10 +53,14 @@ export class RestaurantsController {
     @Body() updateRestaurantDto: RestaurantDto,
     @UserParam() userDto: UserDto
   ): Promise<RestaurantDto> {
-    const newRestaurant = await this.restaurantsService.update(id, updateRestaurantDto, userDto);
-    
-    if(!newRestaurant) {
-      throw new HttpException('Restaurant not found for update!', HttpStatus.NOT_FOUND);
+    const newRestaurant = await this.restaurantsService
+      .update(id, updateRestaurantDto, userDto);
+
+    if (!newRestaurant) {
+      throw new HttpException(
+        'Update failed. Restaurant not found!',
+        HttpStatus.NOT_FOUND
+      );
     }
 
     return new RestaurantDto(newRestaurant);
@@ -64,8 +68,13 @@ export class RestaurantsController {
 
   @Delete(':id')
   @Roles(UserRole.Admin)
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<RestaurantDto> {
+  async remove(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<RestaurantDto> {
     const deletedRestaurant = await this.restaurantsService.remove(id);
+    if (!deletedRestaurant) {
+      throw new HttpException('Restaurant not found!', HttpStatus.NOT_FOUND);
+    }
 
     return new RestaurantDto(deletedRestaurant);
   }

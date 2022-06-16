@@ -1,8 +1,9 @@
+import { FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
-import { UserDto } from 'src/users/dto/user.dto';
-import { UserRole } from 'src/users/entity/user';
+import { UserDto } from '../users/dto/user.dto';
+import { UserRole } from '../users/entity/user';
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { MealDto } from './dto/meal.dto';
 import { Meal } from './entities/meal';
@@ -18,13 +19,26 @@ export class MealsService {
     private restaurantRepository: EntityRepository<Restaurant>
   ) { }
 
-  async create(createMealDto: MealDto, userDto: UserDto): Promise<Meal> {
-    //check if user is a restaurant admin 
-    if (false) {
-      return;
+  async create(createMealDto: MealDto, user: UserDto): Promise<Meal> {
+    const meal = new Meal();
+
+    if (createMealDto.restaurantIds) {
+      for (let restaurantId of createMealDto.restaurantIds) {
+        const filters: FilterQuery<Restaurant> = { id: restaurantId };
+        
+        if (user.role === UserRole.User) {
+          filters.owner = { id: user.id };
+        }
+
+        const restaurant = await this.restaurantRepository.findOne(filters);
+        if (!restaurant) {
+          return;
+        }
+        
+        meal.restaurants.add(restaurant);
+      }
     }
     
-    const meal = new Meal();
     meal.name = createMealDto.name;
     meal.price = createMealDto.price;
     meal.description = createMealDto.description;
@@ -36,30 +50,12 @@ export class MealsService {
     meal.isGlutenFree = createMealDto.isGlutenFree;
     meal.isSugarFree = createMealDto.isSugarFree;
 
-    if (createMealDto.restaurantIds) {
-      for (let restaurantId of createMealDto.restaurantIds) {
-        const restaurant = await this.restaurantRepository.findOne({ id: restaurantId });
-        meal.restaurants.add(restaurant);
-      }
-    }
-
-
-    //if (createMealDto.restaurants) {
-    //  meal.restaurants.set(
-    //    createMealDto.restaurants.map((restaurant) =>
-    //      this.restaurantRepository.getReference(restaurant.id),
-    //    ),
-    //  );
-    //}
-
     await this.mealRepository.persistAndFlush(meal);
-    //await meal.restaurants.init();
-    //await this.mealRepository.populate(meal, ['restaurants.name']);
 
     return meal;
   }
 
-  async findAll(mealDto: MealDto) {
+  async findAll(mealDto: MealDto): Promise<Meal[]> {
     return await this.mealRepository.find({
       name: { $like: `%${mealDto.name || ''}%` },
     });
@@ -69,11 +65,68 @@ export class MealsService {
     return await this.mealRepository.findOne({ id: mealId });
   }
 
-  update(id: number, updateMealDto: MealDto) {
-    return `This action updates a #${id} meal`;
+  async update(
+    mealId: number, 
+    updateMealDto: MealDto, 
+    user: UserDto
+  ): Promise<Meal> {
+
+    const meal = await this.mealRepository.findOne(mealId);
+    await this.mealRepository.populate(meal, ['restaurants']);
+
+    if (!meal) {
+      return;
+    }
+
+    for(let item of meal.restaurants) {
+      const filters: FilterQuery<Restaurant> = { id: item.id };
+      if (user.role === UserRole.User) {
+        filters.owner = { id: user.id };
+      }
+
+      const restaurant = await this.restaurantRepository.findOne(filters);
+      if (!restaurant) {
+        return;
+      }
+    }
+
+    meal.name = updateMealDto.name || meal.name;
+    meal.price = updateMealDto.price || meal.price;
+    meal.description = updateMealDto.description || meal.description;
+    meal.category = updateMealDto.category || meal.category;
+    meal.isVegan = updateMealDto.isVegan || meal.isVegan;
+    meal.isSpicy = updateMealDto.isSpicy || meal.isSpicy;
+    meal.isVegetarian = updateMealDto.isVegetarian || meal.isVegetarian;
+    meal.isLactoseFree = updateMealDto.isLactoseFree || meal.isLactoseFree;
+    meal.isGlutenFree = updateMealDto.isGlutenFree || meal.isGlutenFree;
+    meal.isSugarFree = updateMealDto.isSugarFree || meal.isSugarFree;
+
+    await this.restaurantRepository.persistAndFlush(meal);
+
+    return meal;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} meal`;
+  async remove(mealId: number, user: UserDto): Promise<Meal> {
+    const meal = await this.mealRepository.findOne(mealId);
+    if(!meal) {
+      return;
+    }
+
+    for(let item of meal.restaurants) {
+      const filters: FilterQuery<Restaurant> = { id: item.id };
+        
+      if (user.role === UserRole.User) {
+        filters.owner = { id: user.id };
+      }
+
+      const restaurant = await this.restaurantRepository.findOne(filters);
+      if (!restaurant) {
+        return;
+      }
+    }
+
+    await this.mealRepository.removeAndFlush(meal);
+
+    return meal;
   }
 }

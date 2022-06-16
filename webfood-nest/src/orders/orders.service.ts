@@ -51,6 +51,11 @@ export class OrdersService {
         const order = new Order();
         order.user = this.userRepository.getReference(userDto.id);
         order.userAddress = this.userAddressRepository.getReference(orderDto.userAddressId);        
+        order.shortAddress = order.userAddress.city 
+            + " " + 
+            order.userAddress.street 
+            + " " + 
+            order.userAddress.houseNumber;
         order.orderStatus = OrderStatus.New;
         order.restaurant = orderDto.restaurant;
 
@@ -65,8 +70,6 @@ export class OrdersService {
         }
 
         await this.orderRepository.persistAndFlush(order);
-        //await order.meals.init();
-        //await order.orderItems.init();
         await this.orderRepository.populate(order, ['orderItems', 'user', 'userAddress']);
 
         return order;

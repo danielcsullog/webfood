@@ -11,7 +11,7 @@ import { UserAddress } from './entity/user.address';
 
 @Injectable()
 export class UsersService {
-    
+
     constructor(
         @InjectRepository(User)
         private userRepository: EntityRepository<User>,
@@ -22,7 +22,7 @@ export class UsersService {
         private authService: AuthService,
     ) { }
 
-    async createUser(userAuthDto: UserAuthDto) {
+    async createUser(userAuthDto: UserAuthDto): Promise<User> {
         const user = new User();
 
         user.name = userAuthDto.name;
@@ -35,10 +35,13 @@ export class UsersService {
         return user;
     }
 
-    async createAddress(userAddressDto: UserAddressDto) {
+    async createAddress(
+        userAddressDto: UserAddressDto,
+        user: UserDto
+    ): Promise<UserAddress> {
         const address = new UserAddress();
 
-        address.user = await this.userRepository.getReference(userAddressDto.userId);
+        address.user = this.userRepository.getReference(user.id);
         address.zipCode = userAddressDto.zipCode;
         address.city = userAddressDto.city;
         address.street = userAddressDto.street;
@@ -49,28 +52,85 @@ export class UsersService {
         address.doorNumber = userAddressDto.doorNumber;
         address.note = userAddressDto.note;
 
-        await this.userRepository.persistAndFlush(address);
+        await this.userAddressRepository.persistAndFlush(address);
+        await this.userAddressRepository.populate(address, ['user']);
 
         return address;
     }
 
-    async findAllAddress(user: UserDto) {
+    async findAllAddress(user: UserDto): Promise<UserAddress[]> {
         const filters: FilterQuery<UserAddress> = { user };
 
-        if(user.role !== UserRole.Admin) {
+        if (user.role === UserRole.User) {
             filters.user = { id: user.id };
         }
 
-        return await this.userAddressRepository.find(filters);
+        return await this.userAddressRepository.find(filters, {
+            populate: ['user']
+        });
     }
 
-    async findAddressById(id: number, user: UserDto) {
-        const filters: FilterQuery<UserAddress> = { id };
-        if (user.role !== UserRole.Admin) {
+    async findAddressById(
+        addressId: number,
+        user: UserDto
+    ): Promise<UserAddress> {
+        const filters: FilterQuery<UserAddress> = { id: addressId };
+        if (user.role === UserRole.User) {
+            console.log(addressId, user.id);
+            filters.user = { id: user.id };
+        }
+        return await this.userAddressRepository.findOne(filters, {
+            populate: ['user']
+        });
+    }
+
+    async updateAddress(
+        addressId: number,
+        userAddressDto: UserAddressDto,
+        user: UserDto
+    ): Promise<UserAddress> {
+        const filters: FilterQuery<UserAddress> = { id: addressId };
+
+        if (user.role === UserRole.User) {
             filters.user = { id: user.id };
         }
 
-        return await this.userAddressRepository.findOne(filters);
+        const address = await this.userAddressRepository.findOne(filters);
+
+        if (!address) {
+            return;
+        }
+
+        address.zipCode = userAddressDto.zipCode || address.zipCode;
+        address.city = userAddressDto.city || address.city;
+        address.street = userAddressDto.street || address.street;
+        address.houseNumber = userAddressDto.houseNumber || address.houseNumber;
+        address.staircase = userAddressDto.staircase || address.staircase;
+        address.doorbell = userAddressDto.doorbell || address.doorbell;
+        address.floor = userAddressDto.floor || address.floor;
+        address.doorNumber = userAddressDto.doorNumber || address.doorNumber;
+        address.note = userAddressDto.note || address.note;
+
+        await this.userAddressRepository.persistAndFlush(address);
+        await this.userAddressRepository.populate(address, ['user']);
+
+        return address;
     }
-    
+
+    async removeAddress(addressId: number, user: UserDto): Promise<UserAddress> {
+        const filters: FilterQuery<UserAddress> = { id: addressId };
+        if (user.role === UserRole.User) {
+            filters.user = { id: user.id };
+        }
+
+        const userAddress = await this.userAddressRepository.findOne(filters);
+
+        if (!userAddress) {
+            return;
+        }
+
+        await this.userAddressRepository.removeAndFlush(userAddress);
+
+        return userAddress;
+    }
 }

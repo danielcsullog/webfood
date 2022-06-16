@@ -66,14 +66,17 @@ export class RestaurantsService {
     restaurantDto: RestaurantDto,
     user: UserDto
   ): Promise<Restaurant> {
+    
     const filters: FilterQuery<Restaurant> = { id: restaurantId };
+    
     if (user.role === UserRole.User) {
       filters.owner = { id: user.id };
     }
 
-    const restaurant = await this.restaurantRepository.findOne(filters)
+    const restaurant = await this.restaurantRepository
+      .findOne(filters)
 
-    if(!restaurant) {
+    if (!restaurant) {
       return;
     }
 
@@ -101,6 +104,10 @@ export class RestaurantsService {
 
   async remove(id: number): Promise<Restaurant> {
     const restaurant = await this.restaurantRepository.findOne({ id });
+    if (!restaurant) {
+      return;
+    }
+
     await this.restaurantRepository.removeAndFlush(restaurant);
 
     return restaurant;

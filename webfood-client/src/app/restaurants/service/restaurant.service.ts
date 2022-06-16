@@ -76,11 +76,11 @@ export class RestaurantService {
   ): Promise<Restaurant> {
     const restaurantIndex = this.restaurants
       .findIndex(restaurant => restaurant.id === restaurantId);
-    const modifiedIssue = {
+    const modifiedRestaurant = {
       ...this.restaurants[restaurantIndex],
       ...restaurant,
     }
-    this.restaurants.splice(restaurantIndex, 1, modifiedIssue);
+    this.restaurants.splice(restaurantIndex, 1, modifiedRestaurant);
     return restaurant;
   }
 

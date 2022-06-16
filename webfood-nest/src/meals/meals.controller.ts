@@ -1,5 +1,5 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { UserParam } from '../auth/user-param.decorator';
 import { UserDto } from '../users/dto/user.dto';
 import { MealDto } from './dto/meal.dto';
@@ -16,9 +16,9 @@ export class MealsController {
   ): Promise<MealDto> {
     try {
       const newMeal = await this.mealsService.create(createMealDto, userDto);
-      
-      if(!newMeal) {
-        throw new HttpException('Only RestaurantAdmin or Admin can add new meals!', HttpStatus.FORBIDDEN);
+
+      if (!newMeal) {
+        throw new HttpException('Only restaurant Owner or Admin can add new meals!', HttpStatus.FORBIDDEN);
       }
 
       return new MealDto(newMeal);
@@ -32,14 +32,16 @@ export class MealsController {
   }
 
   @Get()
-  async findAll(@Query() mealDto: MealDto) {
+  async findAll(@Query() mealDto: MealDto): Promise<MealDto[]> {
     const meals = await this.mealsService.findAll(mealDto);
     return meals.map(meal => new MealDto(meal));
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<MealDto>{
-    const meal = await this.mealsService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<MealDto> {
+    const meal = await this.mealsService.findOne(id);
 
     if (!meal) {
       throw new HttpException('Meal not found!', HttpStatus.NOT_FOUND);
@@ -49,12 +51,34 @@ export class MealsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: MealDto) {
-    return this.mealsService.update(+id, updateMealDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateMealDto: MealDto,
+    @UserParam() userDto: UserDto
+  ): Promise<MealDto> {
+    const newMeal = await this.mealsService
+      .update(id, updateMealDto, userDto);
+
+    if (!newMeal) {
+      throw new HttpException(
+        'Update failed. Meal not found!',
+        HttpStatus.NOT_FOUND
+      );
+    }
+
+    return new MealDto(newMeal);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mealsService.remove(+id);
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+    @UserParam() userDto: UserDto
+  ): Promise<MealDto> {
+    const deletedMeal = await this.mealsService.remove(id, userDto);
+    if (!deletedMeal) {
+      throw new HttpException('Meal not found!', HttpStatus.NOT_FOUND);
+    }
+
+    return new MealDto(deletedMeal);
   }
 }

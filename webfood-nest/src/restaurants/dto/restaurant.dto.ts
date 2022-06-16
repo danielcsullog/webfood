@@ -30,7 +30,7 @@ export class RestaurantDto {
                    id: restaurant.owner.id,
                    name: restaurant.owner.name,
                    role: restaurant.owner.role
-               }
+               };
            }
             
             if(restaurant.workers.isInitialized(true)) {

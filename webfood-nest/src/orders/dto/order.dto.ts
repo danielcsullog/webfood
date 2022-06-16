@@ -9,6 +9,7 @@ export class OrderDto {
     orderDate?: Date;
     user?: UserDto;
     userAddressId?: number;
+    shortAddress?: string;
     orderStatus?: OrderStatus;
     orderItems?: OrderItemDto[];
     restaurant?: Restaurant;
@@ -27,6 +28,7 @@ export class OrderDto {
             }
             
             this.userAddressId = order.userAddress.id;
+            this.shortAddress = order.shortAddress;
             this.orderStatus = order.orderStatus;
             this.restaurant = order.restaurant;
 

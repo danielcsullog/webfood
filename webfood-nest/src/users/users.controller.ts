@@ -1,5 +1,5 @@
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { AllowAnonymous } from '../auth/allow-anonymus';
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
@@ -18,14 +18,14 @@ export class UsersController {
     ) { }
 
     @AllowAnonymous()
-    @Post('')
+    @Post()
     async create(@Body() userAuthDto: UserAuthDto) {
         try {
             const newUser = await this.usersService.createUser(userAuthDto);
             return new UserDto(newUser);
         } catch (e) {
             if (e instanceof UniqueConstraintViolationException) {
-                throw new HttpException('UserName is already taken', HttpStatus.CONFLICT);
+                throw new HttpException('Username is already in use.', HttpStatus.CONFLICT);
             } else {
                 throw e;
             }
@@ -44,30 +44,65 @@ export class UsersController {
     }
 
     @Post('addresses')
-    async createAddress(@Body() userAddressDto: UserAddressDto) {
-        const newAddress = await this.usersService.createAddress(userAddressDto);
+    async createAddress(
+        @Body() userAddressDto: UserAddressDto,
+        @UserParam() userDto: UserDto
+    ): Promise<UserAddressDto> {
+        const newAddress = await this.usersService.createAddress(userAddressDto, userDto);
         return new UserAddressDto(newAddress);
     }
 
     @Get('addresses')
     async findAllAddresses(
         @UserParam() userDto: UserDto,
-    ): Promise<UserDto[]> {
+    ): Promise<UserAddressDto[]> {
         const addresses = await this.usersService.findAllAddress(userDto);
         return addresses.map(address => new UserAddressDto(address));
     }
 
     @Get('addresses/:addressId')
-    async getAddresses(
+    async findOneAddress(
         @Param('addressId', ParseIntPipe) id: number,
         @UserParam() userDto: UserDto,
-        ): Promise<UserAddressDto> {
+    ): Promise<UserAddressDto> {
+        console.log(userDto.id);
         const userAddress = await this.usersService.findAddressById(id, userDto);
 
-        if(!userAddress) {
-            throw new HttpException('UserAddress not found!', HttpStatus.NOT_FOUND);
+        if (!userAddress) {
+            throw new HttpException('User address not found!', HttpStatus.NOT_FOUND);
         }
 
         return new UserAddressDto(userAddress);
+    }
+
+    @Patch('addresses/:addressId')
+    async updateAddress(
+        @Param('addressId', ParseIntPipe) id: number,
+        @Body() userAddressDto: UserAddressDto,
+        @UserParam() userDto: UserDto
+    ): Promise<UserAddressDto> {
+        const newAddress = await this.usersService
+            .updateAddress(id, userAddressDto, userDto);
+
+        if (!newAddress) {
+            throw new HttpException('User address not found!', HttpStatus.NOT_FOUND);
+        }
+
+        return new UserAddressDto(newAddress);
+    }
+
+    @Delete('addresses/:addressId')
+    async removeAddress(
+        @Param('addressId', ParseIntPipe) id: number,
+        @UserParam() userDto: UserDto
+    ): Promise<UserAddressDto> {
+        const deletedUserAddress = await this.usersService.removeAddress(id, userDto);
+
+        if(!deletedUserAddress) {
+            throw new HttpException('User address not found!', HttpStatus.NOT_FOUND);
+            
+        }
+
+        return new UserAddressDto(deletedUserAddress);
     }
 }
