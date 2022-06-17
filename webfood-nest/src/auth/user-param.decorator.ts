@@ -12,7 +12,7 @@ export function getUserFromRequest(ctx: ExecutionContext) {
 export const UserParam = createParamDecorator(
     (_: never, ctx: ExecutionContext) => {
         const user = new User();
-        user.id = 3;
+        user.id = 2;
         user.role = UserRole.User;
         return user;
         //return getUserFromRequest(ctx);

@@ -1,5 +1,6 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Order } from '../orders/entities/order';
 import { User } from '../users/entity/user';
 import { Restaurant } from './entities/restaurant';
 import { RestaurantsService } from './restaurants.service';
@@ -13,6 +14,7 @@ describe('RestaurantsService', () => {
         RestaurantsService, 
         { provide: getRepositoryToken(Restaurant), useValue: {} },
         { provide: getRepositoryToken(User), useValue: {} },
+        { provide: getRepositoryToken(Order), useValue: {} },
       ],
     }).compile();
 

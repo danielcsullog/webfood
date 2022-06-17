@@ -2,7 +2,9 @@ import { FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
-import { UserDto } from 'src/users/dto/user.dto';
+import { Order, OrderStatus } from '../orders/entities/order';
+import { OrderDto } from '../orders/dto/order.dto';
+import { UserDto } from '../users/dto/user.dto';
 import { User, UserRole } from '../users/entity/user';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { Restaurant } from './entities/restaurant';
@@ -15,7 +17,10 @@ export class RestaurantsService {
     private restaurantRepository: EntityRepository<Restaurant>,
 
     @InjectRepository(User)
-    private userRepository: EntityRepository<User>
+    private userRepository: EntityRepository<User>,
+
+    @InjectRepository(Order)
+    private orderRepository: EntityRepository<Order>
   ) { }
 
   async create(createRestaurantDto: RestaurantDto, user: UserDto) {
@@ -66,9 +71,9 @@ export class RestaurantsService {
     restaurantDto: RestaurantDto,
     user: UserDto
   ): Promise<Restaurant> {
-    
+
     const filters: FilterQuery<Restaurant> = { id: restaurantId };
-    
+
     if (user.role === UserRole.User) {
       filters.owner = { id: user.id };
     }
@@ -111,5 +116,90 @@ export class RestaurantsService {
     await this.restaurantRepository.removeAndFlush(restaurant);
 
     return restaurant;
+  }
+
+  async updateRestaurantOrder(
+    restaurantId: number,
+    orderId: number,
+    updateOrderDto: OrderDto,
+    user: UserDto
+  ): Promise<Order> {
+
+    const restaurant = await this.restaurantRepository.findOne(restaurantId, {
+      populate: ['workers']
+    });
+
+    if (!restaurant) {
+      return;
+    }
+
+    if (user.role === UserRole.User) {
+      let userHasAccess = false;
+
+      if (restaurant.owner.id != user.id) {
+
+        for (const worker of restaurant.workers) {
+          if (worker.id == user.id) {
+            userHasAccess = true;
+            break;
+          }
+        }
+
+        if (userHasAccess == false) {
+          return;
+        }
+      }
+    }
+
+    const order = await this.orderRepository.findOne({ orderId }, {
+      populate: ['user', 'userAddress', 'orderItems', 'restaurant']
+    });
+
+    if (!order) {
+      return;
+    }
+
+    order.orderStatus = updateOrderDto.orderStatus || order.orderStatus;
+    if (order.orderStatus === OrderStatus.Done) {
+      order.orderDoneDate = new Date();
+    }
+
+    await this.orderRepository.persistAndFlush(order);
+
+    return order;
+  }
+
+  async getRestaurantsOrders(
+    restaurantId: number,
+    user: UserDto
+  ): Promise<Order[]> {
+
+    const restaurantFromId = await this.restaurantRepository.findOne(restaurantId, {
+      populate: ['workers', 'orders']
+    });
+
+    if (!restaurantFromId) {
+      return;
+    }
+
+    if (user.role == UserRole.User) {
+      let userHasAccess = false;
+      
+      if (restaurantFromId.owner.id != user.id) {
+
+        for (const worker of restaurantFromId.workers) {
+          if (worker.id == user.id) {
+            userHasAccess = true;
+            break;
+          }
+        }
+
+        if (userHasAccess == false) {
+          return;
+        }
+      }
+    }
+
+    return restaurantFromId.orders.getItems();
   }
 }

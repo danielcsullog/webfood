@@ -1,3 +1,4 @@
+import { RestaurantDto } from "../../restaurants/dto/restaurant.dto";
 import { Restaurant } from "../../restaurants/entities/restaurant";
 import { UserDto } from "../../users/dto/user.dto";
 import { User } from "../../users/entity/user";
@@ -12,7 +13,7 @@ export class OrderDto {
     shortAddress?: string;
     orderStatus?: OrderStatus;
     orderItems?: OrderItemDto[];
-    restaurant?: Restaurant;
+    restaurant?: RestaurantDto;
 
     constructor(order?: Order) {
         if (order) {
@@ -30,7 +31,7 @@ export class OrderDto {
             this.userAddressId = order.userAddress.id;
             this.shortAddress = order.shortAddress;
             this.orderStatus = order.orderStatus;
-            this.restaurant = order.restaurant;
+            this.restaurant = new RestaurantDto(order.restaurant);
 
             if (order.orderItems.isInitialized(true)) {
                 this.orderItems = order.orderItems

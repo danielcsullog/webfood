@@ -5,7 +5,8 @@ import { UserParam } from '../auth/user-param.decorator';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { Roles } from '../auth/roles';
-import { UserRole } from '../users/entity/user';
+import { User, UserRole } from '../users/entity/user';
+import { OrderDto } from '../orders/dto/order.dto';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -53,17 +54,17 @@ export class RestaurantsController {
     @Body() updateRestaurantDto: RestaurantDto,
     @UserParam() userDto: UserDto
   ): Promise<RestaurantDto> {
-    const newRestaurant = await this.restaurantsService
+    const updatedRestaurant = await this.restaurantsService
       .update(id, updateRestaurantDto, userDto);
 
-    if (!newRestaurant) {
+    if (!updatedRestaurant) {
       throw new HttpException(
         'Update failed. Restaurant not found!',
         HttpStatus.NOT_FOUND
       );
     }
 
-    return new RestaurantDto(newRestaurant);
+    return new RestaurantDto(updatedRestaurant);
   }
 
   @Delete(':id')
@@ -77,5 +78,40 @@ export class RestaurantsController {
     }
 
     return new RestaurantDto(deletedRestaurant);
+  }
+
+  @Get(':restaurantId/orders')
+  async getRestaurantsOrders (
+    @Param('restaurantId', ParseIntPipe) restaurantId: number,
+    @UserParam() userDto: UserDto
+  ): Promise<OrderDto[]> {
+    const orders = await this.restaurantsService
+      .getRestaurantsOrders(restaurantId, userDto);
+
+    if (!orders) {
+      throw new HttpException('No access rights!', HttpStatus.FORBIDDEN);
+    }
+
+    return orders.map(order => new OrderDto(order));
+  }
+
+  @Patch(':restaurantId/orders/:orderId')
+  async updateRestaurantOrder(
+    @Param('restaurantId', ParseIntPipe) restaurantId: number,
+    @Param('orderId', ParseIntPipe) orderId: number,
+    @Body() updateOrderDto: OrderDto,
+    @UserParam() userDto: User
+  ): Promise<OrderDto> {
+    const updatedOrder = await this.restaurantsService
+      .updateRestaurantOrder(restaurantId, orderId, updateOrderDto, userDto);
+
+    if(!updatedOrder) {
+      throw new HttpException(
+        'Update failed. Order not found!',
+        HttpStatus.NOT_FOUND
+      );
+    }
+
+    return new OrderDto(updatedOrder);
   }
 }

@@ -13,6 +13,9 @@ export class Order {
     @Property({ onCreate: () => new Date() })
     orderDate!: Date;
 
+    @Property()
+    orderDoneDate?: Date;
+
     @ManyToOne(() => User)
     user!: User;
 

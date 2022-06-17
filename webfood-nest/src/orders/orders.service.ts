@@ -9,6 +9,7 @@ import { Meal } from '../meals/entities/meal';
 import { OrderDto } from './dto/order.dto';
 import { Order, OrderStatus } from './entities/order';
 import { OrderItem } from './entities/order.item';
+import { Restaurant } from '../restaurants/entities/restaurant';
 
 @Injectable()
 export class OrdersService {
@@ -24,7 +25,10 @@ export class OrdersService {
         private userRepository: EntityRepository<User>,
 
         @InjectRepository(UserAddress)
-        private userAddressRepository: EntityRepository<UserAddress>
+        private userAddressRepository: EntityRepository<UserAddress>,
+
+        @InjectRepository(Restaurant)
+        private restaurantRepository: EntityRepository<Restaurant>
     ) { }
 
     async findAll(user: UserDto, orderDto?: OrderDto): Promise<Order[]> {
@@ -58,7 +62,7 @@ export class OrdersService {
             + " " +
             order.userAddress.houseNumber;
         order.orderStatus = OrderStatus.New;
-        order.restaurant = orderDto.restaurant;
+        order.restaurant = this.restaurantRepository.getReference(orderDto.restaurant.id);
 
         if (orderDto.orderItems) {
             for (const item of orderDto.orderItems) {
@@ -71,7 +75,7 @@ export class OrdersService {
         }
 
         await this.orderRepository.persistAndFlush(order);
-        await this.orderRepository.populate(order, ['orderItems', 'user']);
+        await this.orderRepository.populate(order, ['orderItems', 'user', 'restaurant']);
 
         return order;
     }
@@ -99,7 +103,6 @@ export class OrdersService {
         if (orderDto.userAddressId) {
             order.userAddress = await this.userAddressRepository
                 .findOne(orderDto.userAddressId) || order.userAddress;
-            console.log(order.userAddress);
             order.shortAddress = order.userAddress.city + " " +
                 order.userAddress.street + " " +
                 order.userAddress.houseNumber;
