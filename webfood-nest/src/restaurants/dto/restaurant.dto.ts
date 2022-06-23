@@ -33,7 +33,7 @@ export class RestaurantDto {
                };
            }
             
-            if(restaurant.workers.isInitialized(true)) {
+            if(restaurant.workers && restaurant.workers.isInitialized(true)) {
                 this.workers = restaurant.workers
                     .getItems()
                     .map((user) => new UserDto(user));

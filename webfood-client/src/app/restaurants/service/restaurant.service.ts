@@ -8,7 +8,7 @@ import { Restaurant } from '../../core/restaurant';
 })
 export class RestaurantService {
 
-  restaurants: Restaurant[] = [
+  private restaurants: Restaurant[] = [
     {
       id: 1,
       name: "McDonald\'s",
@@ -55,7 +55,7 @@ export class RestaurantService {
 
   async getRestaurants(): Promise<Restaurant[]> {
     return (
-      this.httpClient.get('restaurants/') as Observable<Restaurant[]>
+      this.httpClient.get('/api/restaurants') as Observable<Restaurant[]>
     ).toPromise();
   }
 

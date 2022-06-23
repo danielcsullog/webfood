@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserAddress } from '../../core/user.address';
 
 @Injectable({
@@ -33,10 +35,14 @@ export class AddressService {
 
   addressToEdit?: UserAddress;
 
-  constructor() { }
+  constructor(
+    private httpClient: HttpClient
+  ) { }
 
   async getAddresses(): Promise<UserAddress[]> {
-    return this.addresses;
+    return (
+      this.httpClient.get('/api/users/addresses') as Observable<UserAddress[]>
+    ).toPromise();
   }
 
   async getAddress(id: number): Promise<UserAddress | undefined> {

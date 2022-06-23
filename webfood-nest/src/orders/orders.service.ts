@@ -39,7 +39,7 @@ export class OrdersService {
         }
 
         return await this.orderRepository
-            .find(filters, { populate: ['orderItems', 'user'] });
+            .find(filters, { populate: ['orderItems.meal', 'user', 'restaurant', 'userAddress'] });
     }
 
     async findOrderById(orderId: number, user: UserDto): Promise<Order> {
@@ -55,7 +55,7 @@ export class OrdersService {
     async create(orderDto: OrderDto, userDto: UserDto): Promise<Order> {
         const order = new Order();
         order.user = this.userRepository.getReference(userDto.id);
-        order.userAddress = await this.userAddressRepository.findOne(orderDto.userAddressId);
+        order.userAddress = await this.userAddressRepository.findOne(orderDto.userAddress.id);
         order.shortAddress = order.userAddress.city
             + " " +
             order.userAddress.street
@@ -68,7 +68,7 @@ export class OrdersService {
             for (const item of orderDto.orderItems) {
                 const newOrderItem = new OrderItem();
                 newOrderItem.order = order;
-                newOrderItem.meal = this.mealRepository.getReference(item.mealId);
+                newOrderItem.meal = this.mealRepository.getReference(item.meal.id);
                 newOrderItem.amount = item.amount;
                 order.orderItems.add(newOrderItem);
             }
@@ -100,9 +100,9 @@ export class OrdersService {
             return;
         }
 
-        if (orderDto.userAddressId) {
+        if (orderDto.userAddress) {
             order.userAddress = await this.userAddressRepository
-                .findOne(orderDto.userAddressId) || order.userAddress;
+                .findOne(orderDto.userAddress.id) || order.userAddress;
             order.shortAddress = order.userAddress.city + " " +
                 order.userAddress.street + " " +
                 order.userAddress.houseNumber;
@@ -115,7 +115,7 @@ export class OrdersService {
             for (const item of orderDto.orderItems) {
                 const newOrderItem = new OrderItem();
                 newOrderItem.order = order;
-                newOrderItem.meal = this.mealRepository.getReference(item.mealId);
+                newOrderItem.meal = this.mealRepository.getReference(item.meal.id);
                 newOrderItem.amount = item.amount;
                 order.orderItems.add(newOrderItem);
             }

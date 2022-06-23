@@ -26,6 +26,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MealListComponent } from './meals/meal-list/meal-list.component';
 import { MealDetailsComponent } from './meals/meal-details/meal-details.component'
 import { MatBadgeModule } from '@angular/material/badge';
+import { HttpClientModule } from '@angular/common/http';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
+import { MealSummaryComponent } from './meals/meal-summary/meal-summary.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     AddressSummaryComponent,
     MealListComponent,
     MealDetailsComponent,
+    OrderDetailsComponent,
+    MealSummaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatTabsModule,
     MatBadgeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

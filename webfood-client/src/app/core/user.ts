@@ -3,5 +3,10 @@ export interface User {
     name: string;
     userName: string;
     password: string;
-    role: string;
+    role: UserRole;
+}
+
+export enum UserRole {
+    Admin = 'ADMIN',
+    User = 'USER',
 }

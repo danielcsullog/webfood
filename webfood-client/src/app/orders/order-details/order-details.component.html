@@ -1,0 +1,16 @@
+<div>
+    <p>Address: {{order.shortAddress}}</p>
+</div>
+<div>
+    <p>Status: {{order.orderStatus}}</p>
+</div>
+<div>
+    <p>Restaurant: {{order.restaurant.name}}</p>
+</div>
+<div>
+    <h3>Ordered items: </h3>
+</div>
+<div *ngFor="let item of order.orderItems">
+    <app-meal-summary [meal] = "item.meal"></app-meal-summary>
+    <p>Amount: {{item.amount}}</p>
+</div>

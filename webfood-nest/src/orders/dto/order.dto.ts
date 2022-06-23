@@ -1,15 +1,15 @@
 import { RestaurantDto } from "../../restaurants/dto/restaurant.dto";
-import { Restaurant } from "../../restaurants/entities/restaurant";
 import { UserDto } from "../../users/dto/user.dto";
 import { User } from "../../users/entity/user";
 import { Order, OrderStatus } from "../entities/order";
 import { OrderItemDto } from "./order.item.dto";
+import { UserAddressDto } from "../../users/dto/user.address.dto";
 
 export class OrderDto {
     orderId?: number;
     orderDate?: Date;
     user?: UserDto;
-    userAddressId?: number;
+    userAddress?: UserAddressDto;
     shortAddress?: string;
     orderStatus?: OrderStatus;
     orderItems?: OrderItemDto[];
@@ -28,7 +28,7 @@ export class OrderDto {
                 };
             }
             
-            this.userAddressId = order.userAddress.id;
+            this.userAddress = new UserAddressDto(order.userAddress);
             this.shortAddress = order.shortAddress;
             this.orderStatus = order.orderStatus;
             this.restaurant = new RestaurantDto(order.restaurant);
