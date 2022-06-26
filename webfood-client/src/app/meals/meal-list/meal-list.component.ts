@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Restaurant } from 'src/app/core/restaurant';
 import { Meal } from '../../core/meal';
 import { MealService } from '../service/meal.service';
 
@@ -14,14 +15,16 @@ export class MealListComponent implements OnInit {
   mealCategories?: string[];
   searchString: string = "";
 
+  @Input() restaurant!: Restaurant;
+
   constructor(
     private mealService: MealService,
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.meals = await this.mealService.getMeals();
-    this.mealCategories = await this.mealService.getDistinctCategories();
-    this.filteredMeals =  this.meals;
+    this.meals = await this.mealService.getMeals(this.restaurant.id);
+    this.mealCategories = await this.mealService.getDistinctCategories(this.restaurant.id);
+    this.filteredMeals = this.meals;
   }
 
   async search(): Promise<Meal[]> {

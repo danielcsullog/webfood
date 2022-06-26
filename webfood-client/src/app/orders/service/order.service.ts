@@ -18,11 +18,5 @@ export class OrderService {
       this.httpClient.get('/api/orders') as Observable<Order[]>
     ).toPromise();
   }
-  
-  async getOrderUserAddressFromId(userAddressId: number): Promise<UserAddress> {
-    return (
-      this.httpClient.get('/api/users/addresses/' + userAddressId) as Observable<UserAddress>
-    ).toPromise();
-  }
 
 }

@@ -43,6 +43,13 @@ export class UsersController {
         };
     }
 
+    @Get('current-user')
+    getCurrentUser(
+        @UserParam() user: UserDto
+    ): UserDto {
+        return user;
+    }
+
     @Post('addresses')
     async createAddress(
         @Body() userAddressDto: UserAddressDto,
@@ -98,9 +105,9 @@ export class UsersController {
     ): Promise<UserAddressDto> {
         const deletedUserAddress = await this.usersService.removeAddress(id, userDto);
 
-        if(!deletedUserAddress) {
+        if (!deletedUserAddress) {
             throw new HttpException('User address not found!', HttpStatus.NOT_FOUND);
-            
+
         }
 
         return new UserAddressDto(deletedUserAddress);

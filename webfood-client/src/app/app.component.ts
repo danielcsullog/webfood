@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from './core/user';
 import { MealService } from './meals/service/meal.service';
 
 @Component({
@@ -8,13 +11,25 @@ import { MealService } from './meals/service/meal.service';
 })
 export class AppComponent {
 
-  constructor(
-    private mealService: MealService
-  ) {
+  currentUser!: User;
 
+  constructor(
+    private httpClient: HttpClient
+  ) {
+    
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.currentUser = await this.getCurrentUser();
+  }
+
+  async getCurrentUser(): Promise<User> {
+    return await (
+      this.httpClient.get('/api/users/current-user') as Observable<User>
+    ).toPromise();
   }
 
   appTitle = 'webFood';
-  badgeCount = this.mealService.getCartSize();
+  badgeCount = 0;
 
 }

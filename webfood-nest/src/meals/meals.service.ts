@@ -65,6 +65,14 @@ export class MealsService {
     return await this.mealRepository.findOne({ id: mealId });
   }
 
+  async findAllRestaurantMeals(restaurantId: number): Promise<Meal[]> {
+    const filters: FilterQuery<Meal> = { restaurants: {
+      id: restaurantId
+    } };
+    const meals = await this.mealRepository.find(filters);
+    return meals;
+  }
+
   async update(
     mealId: number, 
     updateMealDto: MealDto, 

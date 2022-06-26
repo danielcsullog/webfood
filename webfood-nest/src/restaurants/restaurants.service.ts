@@ -8,9 +8,12 @@ import { UserDto } from '../users/dto/user.dto';
 import { User, UserRole } from '../users/entity/user';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { Restaurant } from './entities/restaurant';
+import { MealsService } from '../meals/meals.service';
+import { Meal } from '../meals/entities/meal';
 
 @Injectable()
 export class RestaurantsService {
+  
 
   constructor(
     @InjectRepository(Restaurant)
@@ -20,7 +23,9 @@ export class RestaurantsService {
     private userRepository: EntityRepository<User>,
 
     @InjectRepository(Order)
-    private orderRepository: EntityRepository<Order>
+    private orderRepository: EntityRepository<Order>,
+
+    private mealService: MealsService
   ) { }
 
   async create(createRestaurantDto: RestaurantDto, user: UserDto) {
@@ -201,5 +206,11 @@ export class RestaurantsService {
     }
 
     return restaurantFromId.orders.getItems();
+  }
+
+  async getMeals(restaurantId: number): Promise<Meal[]> {
+    const meals = await this.mealService
+      .findAllRestaurantMeals(restaurantId);
+    return meals;
   }
 }

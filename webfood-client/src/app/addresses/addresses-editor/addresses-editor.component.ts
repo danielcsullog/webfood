@@ -33,6 +33,10 @@ export class AddressesEditorComponent implements OnInit {
     private fb: FormBuilder,
     private addressService: AddressService
   ) { 
+  
+  }
+
+  ngOnInit(): void {
     if(this.addressService.addressToEdit){
       this.addressForm.get('zipCode')?.setValue(this.addressService.addressToEdit.zipCode);
       this.addressForm.get('city')?.setValue(this.addressService.addressToEdit.city);
@@ -46,17 +50,15 @@ export class AddressesEditorComponent implements OnInit {
     } 
   }
 
-  ngOnInit(): void {
-  }
-
   submit() {
-    if (!this.addressForm.valid) {
-      this.addressForm.markAllAsTouched();
-      return;
-    }
+    //if (!this.addressForm.valid) {
+    //  this.addressForm.markAllAsTouched();
+    //  return;
+   // }
     //TODO: DeleteOldEntryIfExistsAddNewEntry
-    this.addressForm.reset();
     console.log(this.addressForm.value as UserAddress);
+    this.addressForm.reset();
+    //show dialog: modified address done
   }
 
   get zipCode(): FormControl {

@@ -7,6 +7,7 @@ import { RestaurantsService } from './restaurants.service';
 import { Roles } from '../auth/roles';
 import { User, UserRole } from '../users/entity/user';
 import { OrderDto } from '../orders/dto/order.dto';
+import { MealDto } from '../meals/dto/meal.dto';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -113,5 +114,14 @@ export class RestaurantsController {
     }
 
     return new OrderDto(updatedOrder);
+  }
+
+  @Get(':restaurantId/meals')
+  async getRestaurantMeals(
+    @Param('restaurantId', ParseIntPipe) restaurantId: number,
+  ): Promise<MealDto[]> {
+    const meals = await this.restaurantsService.getMeals(restaurantId);
+
+    return meals.map(meal => new MealDto(meal));
   }
 }

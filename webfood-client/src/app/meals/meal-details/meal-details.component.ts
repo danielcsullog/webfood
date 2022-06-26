@@ -28,10 +28,6 @@ export class MealDetailsComponent implements OnInit {
 
   }
 
-  addToCartFromDetails(meal: Meal) {
-    this.mealService.addMealToCart(meal, this.amount);
-  }
-
   get getAmount(): FormControl {
     return this.amountForm.get('zipCode') as FormControl;
   }

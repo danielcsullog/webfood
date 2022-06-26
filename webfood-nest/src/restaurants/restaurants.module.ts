@@ -6,10 +6,12 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entity/user';
 import { Order } from '../orders/entities/order';
+import { Meal } from '../meals/entities/meal';
+import { MealsService } from '../meals/meals.service';
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: [Restaurant, User, Order]})],
+  imports: [MikroOrmModule.forFeature({ entities: [Restaurant, User, Order, Meal]})],
   controllers: [RestaurantsController],
-  providers: [RestaurantsService]
+  providers: [RestaurantsService, MealsService]
 })
 export class RestaurantsModule {}

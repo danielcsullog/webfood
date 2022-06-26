@@ -4,7 +4,7 @@
   </button>
   <span>{{ appTitle }}</span>
   <span class="spacer"></span>
-  <span>hi, UserName!</span>
+  <span>hi, {{ currentUser!.name }}</span>
   <button mat-button>
     <mat-icon [matBadge]="badgeCount" matBadgePosition="before" matBadgeColor="warn">shopping_cart</mat-icon>
     <span> Cart</span>
