@@ -11,4 +11,5 @@ export interface Order {
     orderStatus: string;
     restaurant: Restaurant;
     orderItems: OrderItem[];
+    comment?: string;
 }

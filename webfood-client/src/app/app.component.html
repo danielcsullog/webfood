@@ -5,10 +5,7 @@
   <span>{{ appTitle }}</span>
   <span class="spacer"></span>
   <span>hi, {{ currentUser!.name }}</span>
-  <button mat-button>
-    <mat-icon [matBadge]="badgeCount" matBadgePosition="before" matBadgeColor="warn">shopping_cart</mat-icon>
-    <span> Cart</span>
-  </button>
+  <app-cart-icon></app-cart-icon>
   <button mat-button>
     <span>Logout</span>
   </button>

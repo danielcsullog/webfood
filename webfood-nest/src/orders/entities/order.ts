@@ -33,6 +33,9 @@ export class Order {
 
     @ManyToOne(() => Restaurant)
     restaurant!: Restaurant;
+
+    @Property()
+    comment?: string;
 }
 
 export enum OrderStatus {

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from './core/user';
-import { MealService } from './meals/service/meal.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +10,18 @@ import { MealService } from './meals/service/meal.service';
 })
 export class AppComponent {
 
+  appTitle = 'webFood';
   currentUser!: User;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {
     
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<User> {
     this.currentUser = await this.getCurrentUser();
+    return this.currentUser;
   }
 
   async getCurrentUser(): Promise<User> {
@@ -28,8 +29,5 @@ export class AppComponent {
       this.httpClient.get('/api/users/current-user') as Observable<User>
     ).toPromise();
   }
-
-  appTitle = 'webFood';
-  badgeCount = 0;
 
 }

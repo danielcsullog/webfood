@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserAddress } from 'src/app/core/user.address';
 import { Order } from '../../core/order';
-import { OrderItem } from '../../core/order.item';
 import { OrderService } from '../service/order.service';
 
 @Component({

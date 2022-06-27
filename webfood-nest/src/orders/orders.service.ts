@@ -74,6 +74,10 @@ export class OrdersService {
             }
         }
 
+        if (orderDto.comment) {
+            order.comment = orderDto.comment;
+        }
+
         await this.orderRepository.persistAndFlush(order);
         await this.orderRepository.populate(order, ['orderItems', 'user', 'restaurant']);
 
@@ -119,6 +123,10 @@ export class OrdersService {
                 newOrderItem.amount = item.amount;
                 order.orderItems.add(newOrderItem);
             }
+        }
+
+        if (orderDto.comment) {
+            order.comment = orderDto.comment;
         }
 
         await this.orderRepository.persistAndFlush(order);

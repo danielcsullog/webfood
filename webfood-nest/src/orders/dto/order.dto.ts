@@ -14,6 +14,7 @@ export class OrderDto {
     orderStatus?: OrderStatus;
     orderItems?: OrderItemDto[];
     restaurant?: RestaurantDto;
+    comment?: string;
 
     constructor(order?: Order) {
         if (order) {
@@ -39,7 +40,7 @@ export class OrderDto {
                     .map((item) => new OrderItemDto(item));
             }
 
-            
+            this.comment = order.comment;
         }
     }
 }

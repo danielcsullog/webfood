@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CartService } from 'src/app/cart/service/cart.service';
 import { Restaurant } from '../../core/restaurant';
 
 @Component({
@@ -18,4 +19,5 @@ export class RestaurantDetailsComponent implements OnInit {
   openOffers(restaurant: Restaurant) {
     console.log(restaurant);
   }
+
 }

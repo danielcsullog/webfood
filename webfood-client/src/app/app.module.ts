@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RestaurantListComponent } from './restaurants/restaurant-list/restaurant-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { AddressesListComponent } from './addresses/addresses-list/addresses-list.component';
@@ -29,6 +30,11 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 import { MealSummaryComponent } from './meals/meal-summary/meal-summary.component';
+import { CartComponent } from './cart/cart.component';
+import { CartRestaurantWarnComponent } from './cart/cart-restaurant-warn/cart-restaurant-warn.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { CartIconComponent } from './cart/cart-icon/cart-icon.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +51,9 @@ import { MealSummaryComponent } from './meals/meal-summary/meal-summary.componen
     MealDetailsComponent,
     OrderDetailsComponent,
     MealSummaryComponent,
+    CartComponent,
+    CartRestaurantWarnComponent,
+    CartIconComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +71,10 @@ import { MealSummaryComponent } from './meals/meal-summary/meal-summary.componen
     MatBadgeModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatCardModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

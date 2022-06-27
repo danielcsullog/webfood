@@ -1,5 +1,5 @@
 <ng-container *ngIf="restaurant; else restaurantMissing">
-    <h1>{{restaurant.name}}</h1>
+    <h1>{{restaurant?.name}}</h1>
     <app-meal-list [restaurant]="restaurant">
     </app-meal-list>
 </ng-container>
