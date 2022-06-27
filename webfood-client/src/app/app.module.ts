@@ -35,6 +35,11 @@ import { CartRestaurantWarnComponent } from './cart/cart-restaurant-warn/cart-re
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { CartIconComponent } from './cart/cart-icon/cart-icon.component';
+import { CartItemsComponent } from './cart/cart-items/cart-items.component';
+import { CartAddressComponent } from './cart/cart-address/cart-address.component';
+import { CartCommentComponent } from './cart/cart-comment/cart-comment.component';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -54,6 +59,9 @@ import { CartIconComponent } from './cart/cart-icon/cart-icon.component';
     CartComponent,
     CartRestaurantWarnComponent,
     CartIconComponent,
+    CartItemsComponent,
+    CartAddressComponent,
+    CartCommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +83,7 @@ import { CartIconComponent } from './cart/cart-icon/cart-icon.component';
     MatDialogModule,
     MatCardModule,
     MatDividerModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

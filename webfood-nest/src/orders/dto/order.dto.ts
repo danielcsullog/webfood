@@ -28,8 +28,8 @@ export class OrderDto {
                     role: order.user.role
                 };
             }
-            
-            this.userAddress = new UserAddressDto(order.userAddress);
+           
+            this.userAddress = new UserAddressDto(order.userAddress);  
             this.shortAddress = order.shortAddress;
             this.orderStatus = order.orderStatus;
             this.restaurant = new RestaurantDto(order.restaurant);

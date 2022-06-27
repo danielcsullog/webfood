@@ -55,7 +55,7 @@ export class OrdersService {
     async create(orderDto: OrderDto, userDto: UserDto): Promise<Order> {
         const order = new Order();
         order.user = this.userRepository.getReference(userDto.id);
-        order.userAddress = await this.userAddressRepository.findOne(orderDto.userAddress.id);
+        order.userAddress = await this.userAddressRepository.findOne(orderDto.userAddress);
         order.shortAddress = order.userAddress.city
             + " " +
             order.userAddress.street

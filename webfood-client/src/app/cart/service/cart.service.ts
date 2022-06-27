@@ -1,6 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { Order } from 'src/app/core/order';
+import { UserAddress } from 'src/app/core/user.address';
 import { OrderItem } from '../../../app/core/order.item';
 import { Restaurant } from '../../../app/core/restaurant';
+import { CartComponent } from '../cart.component';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +15,14 @@ export class CartService {
 
   restaurant?: Restaurant;
   cartItems: OrderItem[] = [];
+  comment = "";
+  deliveryAddress!: UserAddress;
 
-  constructor() { }
+  constructor(
+    private httpClient: HttpClient
+  ) {
+
+  }
 
   addOrderItemToCart(orderItem: OrderItem) {
     const resultItem = this.cartItems.find((item) => {
@@ -67,5 +79,33 @@ export class CartService {
       count += item.amount
     }
     return count;
+  }
+
+  setAddress(userAddress: UserAddress) {
+    this.deliveryAddress = userAddress;
+    console.log(this.deliveryAddress.id);
+  }
+
+  async sendOrder(): Promise<Order | undefined> {
+    if (this.restaurant && this.cartItems.length > 0 && this.deliveryAddress) {
+      const order: Order = {
+        restaurant: this.restaurant,
+        orderItems: this.cartItems,
+        userAddress: this.deliveryAddress,
+        comment: this.comment
+      }
+
+      const createdOrder = await (
+        this.httpClient.post(
+          '/api/orders',
+          order
+        ) as Observable<Order>
+      ).toPromise();
+      this.clearCart();
+      return createdOrder;
+    } else {
+      return;
+      //toltse ki helyesen a dolgokat, es visszadob
+    }
   }
 }

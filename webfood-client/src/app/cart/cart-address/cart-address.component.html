@@ -1,0 +1,13 @@
+<h2 class="selectAddressTitle">Select your delivery address:</h2>
+<div class="center">
+    <p mat-line class="selectAddressForm">
+        <mat-form-field appearance="fill" class="addressSelector">
+            <mat-label>Choose one</mat-label>
+            <mat-select [(ngModel)]="selectedAddress">
+                <mat-option *ngFor="let address of addresses" [value]="address" (click)="setAddressForCartService()">
+                    {{address.city + ", " + address.street + " " + address.houseNumber + "."}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+</div>

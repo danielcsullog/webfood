@@ -1,30 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { OrderItem } from '../core/order.item';
-import { Restaurant } from '../core/restaurant';
-import { CartService } from './service/cart.service';
+import { OrderItem } from 'src/app/core/order.item';
+import { CartService } from '../service/cart.service';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  selector: 'app-cart-items',
+  templateUrl: './cart-items.component.html',
+  styleUrls: ['./cart-items.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartItemsComponent implements OnInit {
 
   constructor(
-    private dialogRef: MatDialogRef<CartComponent>,
     private cartService: CartService
   ) { }
 
   ngOnInit(): void {
-  }
-
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
-  getCartRestaurant(): Restaurant | undefined {
-    return this.cartService.restaurant;
   }
 
   getCartItems(): OrderItem[] {
@@ -58,4 +47,5 @@ export class CartComponent implements OnInit {
       orderItem.amount--;
     }
   }
+
 }

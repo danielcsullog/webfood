@@ -1,0 +1,16 @@
+<h2 class="cartNotesTitle">Notes for the cook:</h2>
+<div class="center">
+    <mat-form-field appearance="fill" class="notes">
+        <mat-label>Write your specific needs here...</mat-label>
+        <textarea 
+            matInput 
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="5"
+            cdkAutosizeMaxRows="10"
+            [(ngModel)]="comment">
+        </textarea>
+    </mat-form-field>
+</div>
+<div class="center">
+    <button mat-raised-button color="primary" (click)="sendOrder()">Send order</button>
+</div>

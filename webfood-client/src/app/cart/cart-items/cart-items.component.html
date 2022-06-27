@@ -1,0 +1,36 @@
+<mat-list>
+    <mat-list-item *ngFor="let item of getCartItems()">
+        <h3 mat-line>{{item.meal.name}}</h3>
+        <p mat-line>
+            <span>
+                Amount:
+                <button mat-icon-button (click)="lowerAmount(item)" color="secondary">
+                    -
+                </button>
+                {{item.amount}}
+                <button mat-icon-button (click)="increaseAmount(item)" color="secondary">
+                    +
+                </button>
+            </span>
+        </p>
+        <div>
+            {{item.meal.price*item.amount}} Ft
+        </div>
+        <button mat-icon-button (click)="removeItem(item)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+    </mat-list-item>
+    <mat-list-item>
+        <h3 mat-line>Total: {{getTotalPrice()}}</h3>
+        <p mat-line>
+            <span>Number of items: {{getNumberOfItems()}}</span>
+        </p>
+        <div>
+            {{getTotalPrice()}} Ft
+        </div>
+    </mat-list-item>
+</mat-list>
+<button mat-button (click)="removeAllItems()" color="primary">
+    CLEAR CART
+</button>
