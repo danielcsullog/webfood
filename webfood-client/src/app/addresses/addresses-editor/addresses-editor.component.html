@@ -42,8 +42,18 @@
     </mat-form-field>
 
     <div class="button-container">
-        <button (click)="submit()" mat-raised-button color="primary">
-            SAVE
-        </button>
+        <ng-container *ngIf="isAddressFormValid(); else notValidAddressForm">
+            <button 
+                mat-raised-button 
+                (click)="submit()" 
+                color="primary">
+                SAVE
+            </button>
+        </ng-container>
+        <ng-template #notValidAddressForm>
+            <button disabled mat-raised-button color="secondary">
+                SAVE
+            </button>
+        </ng-template>
     </div>
 </form>

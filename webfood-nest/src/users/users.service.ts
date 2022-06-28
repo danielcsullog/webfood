@@ -46,11 +46,11 @@ export class UsersService {
         address.city = userAddressDto.city;
         address.street = userAddressDto.street;
         address.houseNumber = userAddressDto.houseNumber;
-        address.staircase = userAddressDto.staircase;
-        address.doorbell = userAddressDto.doorbell;
-        address.floor = userAddressDto.floor;
-        address.doorNumber = userAddressDto.doorNumber;
-        address.note = userAddressDto.note;
+        address.staircase = userAddressDto.staircase | 0;
+        address.doorbell = userAddressDto.doorbell | 0;
+        address.floor = userAddressDto.floor | 0;
+        address.doorNumber = userAddressDto.doorNumber | 0;
+        address.note = userAddressDto.note || "";
 
         await this.userAddressRepository.persistAndFlush(address);
         await this.userAddressRepository.populate(address, ['user']);

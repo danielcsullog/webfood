@@ -6,7 +6,6 @@ import { Order } from 'src/app/core/order';
 import { UserAddress } from 'src/app/core/user.address';
 import { OrderItem } from '../../../app/core/order.item';
 import { Restaurant } from '../../../app/core/restaurant';
-import { CartComponent } from '../cart.component';
 
 @Injectable({
   providedIn: 'root'
@@ -96,16 +95,25 @@ export class CartService {
       }
 
       const createdOrder = await (
-        this.httpClient.post(
-          '/api/orders',
-          order
-        ) as Observable<Order>
+        this.httpClient.post('/api/orders', order) as Observable<Order>
       ).toPromise();
+
       this.clearCart();
+      
       return createdOrder;
     } else {
       return;
       //toltse ki helyesen a dolgokat, es visszadob
+    }
+  }
+
+  checkOrderDataCorrection(): boolean {
+    if (this.restaurant &&
+      this.cartItems.length > 0 &&
+      this.deliveryAddress) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

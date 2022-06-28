@@ -23,4 +23,8 @@ export class CartCommentComponent implements OnInit {
     this.cartService.comment = this.comment;
     this.cartService.sendOrder();
   }
+
+  checkCartCompletion(): boolean {
+    return this.cartService.checkOrderDataCorrection();
+  }
 }

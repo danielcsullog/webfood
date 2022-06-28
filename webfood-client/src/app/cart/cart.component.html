@@ -1,24 +1,25 @@
+<p mat-line class="reverse-line">
+    <button mat-icon-button (click)="closeDialog()" class="cart-close">x</button>
+</p>
 <ng-container *ngIf="getCartItems().length != 0; else emptyCart">
-    <div class="cartTitle">
-        <h1>Cart</h1>
-        <h3>{{getCartRestaurant()!.name}}</h3>
-    </div>
+    <h1 class="cartTitle">Cart</h1>
+    <button mat-button>
+        <mat-icon>restaurant</mat-icon>
+        {{getCartRestaurant()!.name}}
+    </button>
     <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="Items"> 
+        <mat-tab label="Items">
             <app-cart-items></app-cart-items>
         </mat-tab>
         <mat-tab label="Address">
             <app-cart-address></app-cart-address>
         </mat-tab>
-        <mat-tab label="Summary">
+        <mat-tab label="Notes">
             <app-cart-comment></app-cart-comment>
         </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
 </ng-container>
 <ng-template #emptyCart>
     <h1>Cart</h1>
     <h4>Your cart is empty!</h4>
 </ng-template>
-<div class="cart-buttons">
-    <button mat-button (click)="closeDialog()">Close</button>
-</div>

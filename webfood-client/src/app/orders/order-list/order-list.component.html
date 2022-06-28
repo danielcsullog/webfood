@@ -3,7 +3,14 @@
     <mat-expansion-panel *ngFor="let order of orders" hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                {{order.orderDate | date:'medium' }}
+                <ng-container *ngIf="isOrderStatusNotCompleted(order); else orderDone">
+                    <mat-icon>hourglass_empty</mat-icon>
+                    <span class="ongoing-item">{{order.orderDate | date:'medium' }}</span>
+                </ng-container>
+                <ng-template #orderDone>
+                    <mat-icon>done</mat-icon>
+                    {{order.orderDate | date:'medium' }}
+                </ng-template>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <app-order-details [order]="order"></app-order-details>

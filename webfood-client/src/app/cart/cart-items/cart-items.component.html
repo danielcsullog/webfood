@@ -16,13 +16,13 @@
         <div>
             {{item.meal.price*item.amount}} Ft
         </div>
-        <button mat-icon-button (click)="removeItem(item)">
+        <button mat-icon-button (click)="removeItem(item)" class="cart-button-remove">
             <mat-icon>delete</mat-icon>
         </button>
         <mat-divider></mat-divider>
     </mat-list-item>
-    <mat-list-item>
-        <h3 mat-line>Total: {{getTotalPrice()}}</h3>
+    <mat-list-item class="total-line">
+        <h3 mat-line>Total:</h3>
         <p mat-line>
             <span>Number of items: {{getNumberOfItems()}}</span>
         </p>
@@ -31,6 +31,7 @@
         </div>
     </mat-list-item>
 </mat-list>
-<button mat-button (click)="removeAllItems()" color="primary">
+<button mat-button (click)="removeAllItems()" class="cart-button-remove">
+    <mat-icon>remove_shopping_cart</mat-icon>
     CLEAR CART
 </button>

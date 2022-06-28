@@ -1,13 +1,26 @@
-.cart-buttons {
-    display: flex;
-    flex-direction: row-reverse;
-    font-size: 20px;
+.cart-close {
+    font-size: 15px;
 }
 
 .cartTitle h1 {
     margin: 0
 }
 
-.cartTitle h2 {
-    margin: 0
+.cartTitle {
+    margin: 0;
+}
+
+.reverse-line {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0;
+    margin: 0;
+}
+
+.restaurant-text {
+    color: #673AB7
+}
+
+.sidenav-text {
+    margin: 50px;
 }

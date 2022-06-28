@@ -21,9 +21,9 @@ export class CartIconComponent implements OnInit {
   openCart() {
     const dialogRef = this.dialog.open(CartComponent, {
       width: '600px',
-      height: '450px',
+      height: '500px',
       data: {},
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe(result => {

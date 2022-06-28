@@ -17,6 +17,14 @@ export class OrderListComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.orders = await this.orderService.getOrders();
+    this.orders.reverse();
   }
 
+  isOrderStatusNotCompleted(order: Order): boolean {
+    if (order.orderStatus != "DONE") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { UserAddress } from '../../core/user.address';
 import { AddressService } from '../service/address.service';
 
@@ -32,12 +34,12 @@ export class AddressesEditorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private addressService: AddressService
-  ) { 
-  
+  ) {
+
   }
 
   ngOnInit(): void {
-    if(this.addressService.addressToEdit){
+    if (this.addressService.addressToEdit) {
       this.addressForm.get('zipCode')?.setValue(this.addressService.addressToEdit.zipCode);
       this.addressForm.get('city')?.setValue(this.addressService.addressToEdit.city);
       this.addressForm.get('street')?.setValue(this.addressService.addressToEdit.street);
@@ -47,18 +49,28 @@ export class AddressesEditorComponent implements OnInit {
       this.addressForm.get('floor')?.setValue(this.addressService.addressToEdit.floor);
       this.addressForm.get('doorNumber')?.setValue(this.addressService.addressToEdit.doorNumber);
       this.addressForm.get('note')?.setValue(this.addressService.addressToEdit.note);
-    } 
+    }
   }
 
-  submit() {
-    //if (!this.addressForm.valid) {
-    //  this.addressForm.markAllAsTouched();
-    //  return;
-   // }
-    //TODO: DeleteOldEntryIfExistsAddNewEntry
-    console.log(this.addressForm.value as UserAddress);
+  submit(): UserAddress | undefined {
+    if (!this.addressForm.valid) {
+      return;
+    }
+
+    const address = this.addressForm.value as UserAddress;
     this.addressForm.reset();
-    //show dialog: modified address done
+
+    this.addressService.createAddress(address);
+
+    return address;
+  }
+
+  isAddressFormValid(): boolean {
+    if (!this.addressForm.valid) {
+      return false;
+    } else {
+      return true
+    }
   }
 
   get zipCode(): FormControl {

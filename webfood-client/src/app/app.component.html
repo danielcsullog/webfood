@@ -14,11 +14,26 @@
 <mat-sidenav-container class="container">
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['restaurants']">Restaurants</a>
-      <a mat-list-item [routerLink]="['orders']">Orders</a>
-      <a mat-list-item [routerLink]="['addresses']">Addresses</a>
-      <a mat-list-item [routerLink]="['profile']">Profile</a>
-      <a mat-list-item>My Restaurant</a>
+      <a mat-list-item [routerLink]="['restaurants']">
+        <mat-icon>restaurant</mat-icon>
+        Restaurants
+      </a>
+      <a mat-list-item [routerLink]="['orders']">
+        <mat-icon>update</mat-icon>
+        Orders
+      </a>
+      <a mat-list-item [routerLink]="['addresses']">
+        <mat-icon>location_city</mat-icon>
+        Addresses
+      </a>
+      <a mat-list-item [routerLink]="['profile']">
+        <mat-icon>person</mat-icon>
+        Profile
+      </a>
+      <a mat-list-item>
+        <mat-icon>business_center</mat-icon>
+        My Restaurant
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

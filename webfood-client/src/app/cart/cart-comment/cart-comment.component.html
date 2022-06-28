@@ -11,6 +11,16 @@
         </textarea>
     </mat-form-field>
 </div>
-<div class="center">
-    <button mat-raised-button color="primary" (click)="sendOrder()">Send order</button>
-</div>
+<ng-container *ngIf="checkCartCompletion(); else missingData">
+    <div class="center">
+        <button mat-raised-button color="primary" (click)="sendOrder()">Send order</button>
+    </div>
+</ng-container>
+<ng-template #missingData>
+    <div class="center">
+        <button mat-raised-button disabled>Send order</button>
+    </div>
+    <div class="center">
+        <h3 class="centerWarn">Please select one of your addresses to send your order!</h3>
+    </div>
+</ng-template>
