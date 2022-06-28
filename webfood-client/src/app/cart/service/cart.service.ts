@@ -49,7 +49,6 @@ export class CartService {
 
   setRestaurant(restaurant: Restaurant) {
     if (restaurant.id != this.restaurant?.id) {
-      console.log("new restaurant name: " + restaurant.name);
       this.restaurant = restaurant;
     }
   }

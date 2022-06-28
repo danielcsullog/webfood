@@ -19,10 +19,6 @@ export class AddressesListComponent implements OnInit {
     this.addresses = await this.addressService.getAddresses();
   }
 
-  onEditAddress(address: UserAddress) {
-    console.log(address);
-  }
-
   clearForm() {
     this.addressService.setAddressToEdit(undefined);
   }

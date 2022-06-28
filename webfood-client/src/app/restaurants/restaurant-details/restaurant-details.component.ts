@@ -16,8 +16,4 @@ export class RestaurantDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openOffers(restaurant: Restaurant) {
-    console.log(restaurant);
-  }
-
 }

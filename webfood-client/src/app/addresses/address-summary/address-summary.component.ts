@@ -19,7 +19,7 @@ export class AddressSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.userAddress);
+    
   }
 
   edit() {

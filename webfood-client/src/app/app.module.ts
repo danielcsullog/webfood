@@ -27,7 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MealListComponent } from './meals/meal-list/meal-list.component';
 import { MealDetailsComponent } from './meals/meal-details/meal-details.component'
 import { MatBadgeModule } from '@angular/material/badge';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 import { MealSummaryComponent } from './meals/meal-summary/meal-summary.component';
 import { CartComponent } from './cart/cart.component';
@@ -39,6 +39,8 @@ import { CartItemsComponent } from './cart/cart-items/cart-items.component';
 import { CartAddressComponent } from './cart/cart-address/cart-address.component';
 import { CartCommentComponent } from './cart/cart-comment/cart-comment.component';
 import { MatSelectModule } from '@angular/material/select';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 
 @NgModule({
@@ -62,6 +64,7 @@ import { MatSelectModule } from '@angular/material/select';
     CartItemsComponent,
     CartAddressComponent,
     CartCommentComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,13 @@ import { MatSelectModule } from '@angular/material/select';
     MatDividerModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
