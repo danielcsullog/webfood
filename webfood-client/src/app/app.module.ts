@@ -41,6 +41,7 @@ import { CartCommentComponent } from './cart/cart-comment/cart-comment.component
 import { MatSelectModule } from '@angular/material/select';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CartAddressComponent,
     CartCommentComponent,
     LoginComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,

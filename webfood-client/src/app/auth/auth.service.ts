@@ -3,16 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../core/user';
 import { UserService } from '../user/user.service';
+import { AuthStorageService, LoginResponse } from './auth-storage.service';
 
 export interface UserAuthRequest {
   name?: string;
   userName: string;
   password: string;
-}
-
-export interface LoginResponse {
-  user: User;
-  access_token: string;
 }
 
 @Injectable({
@@ -25,7 +21,11 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private userService: UserService,
-  ) { }
+    private authStorageService: AuthStorageService,
+  ) {
+    const result = this.authStorageService.loadUser();
+    this.setLoginResponse(result);
+  }
 
   async login(userAuthRequest: UserAuthRequest) {
     const result = await (
@@ -35,7 +35,14 @@ export class AuthService {
       ) as Observable<LoginResponse>
     ).toPromise();
 
+    this.authStorageService.saveUser(result);
+
     this.setLoginResponse(result);
+  }
+
+  logout() {
+    this.setLoginResponse(null);
+    this.authStorageService.saveUser(null);
   }
 
   private setLoginResponse(result: LoginResponse | null) {

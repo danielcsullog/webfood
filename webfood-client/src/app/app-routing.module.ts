@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddressesEditorComponent } from './addresses/addresses-editor/addresses-editor.component';
 import { AddressesListComponent } from './addresses/addresses-list/addresses-list.component';
 import { AuthGuard } from './auth/auth.guard';
+import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
@@ -41,6 +42,9 @@ const routes: Routes = [{
 }, {
   path: 'login',
   component: LoginComponent
+}, {
+  path: 'landing',
+  component: LandingComponent,
 }, {
   path: '**',
   redirectTo: 'restaurants',

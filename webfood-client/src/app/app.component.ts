@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from './core/user';
+import { Router } from '@angular/router';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,8 @@ export class AppComponent {
   appTitle = 'webFood';
 
   constructor(
-    private httpClient: HttpClient,
+    private authService: AuthService,
+    private router: Router
   ) {
     
   }
@@ -22,10 +22,9 @@ export class AppComponent {
 
   }
 
-  async getCurrentUser(): Promise<User> {
-    return await (
-      this.httpClient.get('/api/users/current-user') as Observable<User>
-    ).toPromise();
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/', 'login']);
   }
 
 }
