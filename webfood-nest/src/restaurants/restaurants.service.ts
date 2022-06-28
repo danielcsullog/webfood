@@ -32,7 +32,7 @@ export class RestaurantsService {
     const restaurant = new Restaurant();
     restaurant.name = createRestaurantDto.name;
     restaurant.description = createRestaurantDto.description;
-    restaurant.priceCategory = createRestaurantDto.priceCategory;
+    restaurant.priceCategory = 0;
     restaurant.category = createRestaurantDto.category;
     restaurant.address = createRestaurantDto.address;
     restaurant.openingHours = createRestaurantDto.openingHours;
@@ -92,7 +92,7 @@ export class RestaurantsService {
 
     restaurant.name = restaurantDto.name || restaurant.name;
     restaurant.description = restaurantDto.description || restaurant.description;
-    restaurant.priceCategory = restaurantDto.priceCategory || restaurant.priceCategory;
+    //restaurant.priceCategory = restaurantDto.priceCategory || restaurant.priceCategory;
     restaurant.category = restaurantDto.category || restaurant.category;
     restaurant.address = restaurantDto.address || restaurant.address;
     restaurant.openingHours = restaurantDto.openingHours || restaurant.openingHours;

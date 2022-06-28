@@ -22,6 +22,8 @@ export class MealsService {
   async create(createMealDto: MealDto, user: UserDto): Promise<Meal> {
     const meal = new Meal();
 
+    let restaurant: Restaurant;
+
     if (createMealDto.restaurantIds) {
       for (let restaurantId of createMealDto.restaurantIds) {
         const filters: FilterQuery<Restaurant> = { id: restaurantId };
@@ -30,15 +32,28 @@ export class MealsService {
           filters.owner = { id: user.id };
         }
 
-        const restaurant = await this.restaurantRepository.findOne(filters);
+        restaurant = await this.restaurantRepository.findOne(filters, {
+          populate: ['meals']
+        });
+
         if (!restaurant) {
           return;
         }
+
+        let prices: number[] = [];
+        for (let meal of restaurant.meals) {
+          prices.push(meal.price);
+        }
+
+        restaurant.priceCategory = this.calculatePriceCategoryForRestaurant(
+            prices, 
+            createMealDto.price
+        );
         
         meal.restaurants.add(restaurant);
       }
     }
-    
+  
     meal.name = createMealDto.name;
     meal.price = createMealDto.price;
     meal.description = createMealDto.description;
@@ -51,8 +66,36 @@ export class MealsService {
     meal.isSugarFree = createMealDto.isSugarFree;
 
     await this.mealRepository.persistAndFlush(meal);
+    await this.restaurantRepository.persistAndFlush(restaurant);
 
     return meal;
+  }
+
+  private calculatePriceCategoryForRestaurant(
+    prices: number[],
+    newMealPrice: number
+  ): number {
+    let sumPrices = newMealPrice;
+    for (let price of prices) {
+      if (!price) {
+        price = 0;
+      }
+      sumPrices += price;
+    }  
+
+    const averagePrice = sumPrices / (prices.length + 1);
+
+    if (averagePrice < 1000) {
+      return 1;
+    } else if (averagePrice < 1500) {
+      return 2;
+    } else if (averagePrice < 2000) {
+      return 3;
+    } else if (averagePrice < 2500) {
+      return 4;
+    } else {
+      return 5;
+    }
   }
 
   async findAll(mealDto: MealDto): Promise<Meal[]> {

@@ -5,7 +5,7 @@
         <mat-icon>search</mat-icon>
     </button>
 </mat-form-field>
-<mat-accordion>
+<mat-accordion class="example-headers-align">
     <mat-tab-group class="matTab">
         <mat-tab *ngFor="let category of mealCategories" label={{category}}>
             <mat-expansion-panel *ngFor="let meal of filteredMeals" hideToggle>
@@ -13,9 +13,12 @@
                     <mat-panel-title>
                         {{meal.name}}
                     </mat-panel-title>
-                    <mat-panel-title class="price">
-                        {{meal.price}} Ft
-                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="meal-description">{{meal.description}}</span>
+                        <mat-label>
+                            {{meal.price}} Ft
+                        </mat-label>
+                      </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-meal-details [meal]="meal" [mealRestaurant]="restaurant"></app-meal-details>
             </mat-expansion-panel>

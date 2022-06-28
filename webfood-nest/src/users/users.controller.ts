@@ -72,7 +72,6 @@ export class UsersController {
         @Param('addressId', ParseIntPipe) id: number,
         @UserParam() userDto: UserDto,
     ): Promise<UserAddressDto> {
-        console.log(userDto.id);
         const userAddress = await this.usersService.findAddressById(id, userDto);
 
         if (!userAddress) {

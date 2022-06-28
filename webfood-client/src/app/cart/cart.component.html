@@ -3,7 +3,7 @@
 </p>
 <ng-container *ngIf="getCartItems().length != 0; else emptyCart">
     <h1 class="cartTitle">Cart</h1>
-    <button mat-button>
+    <button mat-button [routerLink]="['restaurants/', getCartRestaurant()!.id]" (click)="closeDialog()">
         <mat-icon>restaurant</mat-icon>
         {{getCartRestaurant()!.name}}
     </button>
@@ -21,5 +21,5 @@
 </ng-container>
 <ng-template #emptyCart>
     <h1>Cart</h1>
-    <h4>Your cart is empty!</h4>
+    <h3 class="empty-text">Your cart is empty!</h3>
 </ng-template>

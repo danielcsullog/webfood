@@ -37,5 +37,8 @@ export class RestaurantListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  needToAddDollarSign(restaurant: Restaurant): number[] {
+    return Array(restaurant.priceCategory).fill(0);
+  }
 
 }

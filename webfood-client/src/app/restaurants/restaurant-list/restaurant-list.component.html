@@ -7,12 +7,20 @@
     </button>
 </mat-form-field>
 <ng-container *ngIf="filteredRestaurants.length != 0; else searchFail">
-    <mat-accordion>
+    <mat-accordion class="example-headers-align">
         <mat-expansion-panel *ngFor="let restaurant of filteredRestaurants" hideToggle>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{restaurant.name}}
                 </mat-panel-title>
+                <mat-panel-description>
+                    <span class="restaurant-description">{{restaurant.description}}</span>
+                    <div>
+                        <mat-label *ngFor="let num of needToAddDollarSign(restaurant)">
+                            <mat-icon>attach_money</mat-icon>
+                        </mat-label>
+                    </div>
+                </mat-panel-description>
             </mat-expansion-panel-header>
             <app-restaurant-details [restaurant]="restaurant"></app-restaurant-details>
         </mat-expansion-panel>

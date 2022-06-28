@@ -76,7 +76,6 @@ export class UsersService {
     ): Promise<UserAddress> {
         const filters: FilterQuery<UserAddress> = { id: addressId };
         if (user.role === UserRole.User) {
-            console.log(addressId, user.id);
             filters.user = { id: user.id };
         }
         return await this.userAddressRepository.findOne(filters, {

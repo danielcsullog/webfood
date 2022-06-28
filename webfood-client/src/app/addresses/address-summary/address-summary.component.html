@@ -26,7 +26,10 @@
     <p>Note: {{userAddress.note}} </p>
 </div>
 <div *ngIf="showButtons" class="buttons">
+    <button (click)="removeAddress()" mat-raised-button color="secondary" class="delete-button">
+        DELETE
+    </button>
     <button (click)="edit()" [routerLink]="['/addresses/new']" mat-raised-button color="secondary">
-        Edit
+        EDIT
     </button>
 </div>

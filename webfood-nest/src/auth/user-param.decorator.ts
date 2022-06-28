@@ -13,7 +13,7 @@ export const UserParam = createParamDecorator(
     (_: never, ctx: ExecutionContext) => {
         const user = new User();
         user.id = 2;
-        user.role = UserRole.User;
+        user.role = UserRole.Admin;
         return user;
         //return getUserFromRequest(ctx);
     },

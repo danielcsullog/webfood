@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/core/user';
 import { CartComponent } from '../cart.component';
 import { CartService } from '../service/cart.service';
 

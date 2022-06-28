@@ -11,7 +11,6 @@ import { User } from './core/user';
 export class AppComponent {
 
   appTitle = 'webFood';
-  currentUser!: User;
 
   constructor(
     private httpClient: HttpClient,
@@ -19,9 +18,8 @@ export class AppComponent {
     
   }
 
-  async ngOnInit(): Promise<User> {
-    this.currentUser = await this.getCurrentUser();
-    return this.currentUser;
+  ngOnInit() {
+
   }
 
   async getCurrentUser(): Promise<User> {

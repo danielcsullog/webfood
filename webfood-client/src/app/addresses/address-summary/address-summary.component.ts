@@ -23,8 +23,13 @@ export class AddressSummaryComponent implements OnInit {
   }
 
   edit() {
-    //this.editAddress.emit();
     this.addressService.setAddressToEdit(this.userAddress);
-    
   }
+
+  async removeAddress(): Promise<UserAddress> {
+    const deletedAddress = await this.addressService.deleteAddress(this.userAddress);
+    window.location.reload();
+    return deletedAddress;
+  }
+  
 }
