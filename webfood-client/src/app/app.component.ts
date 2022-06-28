@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth/auth.service';
+import { UserService } from './user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,18 @@ export class AppComponent {
 
   appTitle = 'webFood';
 
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
+  }
+
+  get isAdmin(): boolean {
+    return this.userService.isAdmin;
+  }
+
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
   ) {
     
   }
@@ -25,6 +35,10 @@ export class AppComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/', 'login']);
+  }
+
+  getUserName(): string {
+    return this.authService.user!.name;
   }
 
 }

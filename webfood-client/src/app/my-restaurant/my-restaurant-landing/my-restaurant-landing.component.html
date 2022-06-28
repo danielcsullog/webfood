@@ -1,0 +1,47 @@
+<h1>My Restaurant</h1>
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab *ngIf="userRestaurants.length != 0" label="My Restaurants">
+        <mat-card *ngFor="let restaurant of userRestaurants" class="example-card">
+            <mat-card-subtitle>{{restaurant.address}}</mat-card-subtitle>
+            <mat-card-title>{{restaurant.name}}</mat-card-title>
+            <mat-card-content>
+                <p>Employees: {{getEmployeesCount(restaurant)}}</p>
+                <p>Orders in progress: ??</p>
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions>
+                <button mat-button>ORRDERS</button>
+                <button mat-button>WORKERS</button>
+                <button mat-button>EDIT</button>
+            </mat-card-actions>
+            <mat-card-footer>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </mat-card-footer>
+        </mat-card>
+    </mat-tab>
+    <mat-tab *ngIf="workPlaces.length != 0" label="Workplaces">
+        <mat-card *ngFor="let restaurant of workPlaces" class="example-card">
+            <mat-card-subtitle>{{restaurant.address}}</mat-card-subtitle>
+            <mat-card-title>{{restaurant.name}}</mat-card-title>
+            <mat-card-content>
+                <p>Employees: {{getEmployeesCount(restaurant)}}</p>
+                <p>Orders in progress: ??</p>
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions>
+                <button mat-button>ORRDERS</button>
+                <button mat-button>WORKERS</button>
+            </mat-card-actions>
+            <mat-card-footer>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </mat-card-footer>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Requests">
+        <mat-list-item>
+            <button (click)="openNewReqDialog()" mat-raised-button color="primary" class="add-req-button">
+                New request
+            </button>
+        </mat-list-item>
+    </mat-tab>
+</mat-tab-group>

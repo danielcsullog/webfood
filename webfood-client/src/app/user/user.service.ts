@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../core/user';
+import { User, UserRole } from '../core/user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,12 @@ export class UserService {
 
   private _user: User | null = null;
 
-  get User() {
+  get user() {
     return this._user;
+  }
+
+  get isAdmin(): boolean {
+    return this.user?.role === UserRole.Admin;
   }
 
   constructor() { }

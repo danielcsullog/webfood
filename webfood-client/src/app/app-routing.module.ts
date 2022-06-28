@@ -5,6 +5,7 @@ import { AddressesListComponent } from './addresses/addresses-list/addresses-lis
 import { AuthGuard } from './auth/auth.guard';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
+import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
@@ -40,6 +41,9 @@ const routes: Routes = [{
   component: ProfileEditorComponent,
   canActivate: [AuthGuard],
 }, {
+  path: 'myrestaurant/landing',
+  component: MyRestaurantLandingComponent
+}, {
   path: 'login',
   component: LoginComponent
 }, {
@@ -47,7 +51,7 @@ const routes: Routes = [{
   component: LandingComponent,
 }, {
   path: '**',
-  redirectTo: 'restaurants',
+  redirectTo: 'landing',
 },
 
 ];

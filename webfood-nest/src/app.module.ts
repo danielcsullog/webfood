@@ -9,9 +9,17 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RolesGuard } from './auth/roles.guard';
+import { MyRestaurantModule } from './my-restaurant/my-restaurant.module';
 
 @Module({
-  imports: [MikroOrmModule.forRoot(mikroOrmConfig), OrdersModule, MealsModule, RestaurantsModule, UsersModule, AuthModule],
+  imports: [MikroOrmModule.forRoot(mikroOrmConfig), 
+    OrdersModule, 
+    MealsModule, 
+    RestaurantsModule, 
+    UsersModule, 
+    AuthModule, 
+    MyRestaurantModule,
+  ],
   providers: [
     {
       provide: APP_GUARD,

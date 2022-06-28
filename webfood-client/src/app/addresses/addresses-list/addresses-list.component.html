@@ -1,8 +1,4 @@
-<div class="button-container">
-    <button (click)="clearForm()"mat-raised-button [routerLink]="['/addresses/new']" color="primary">
-        NEW ADDRESS
-    </button>
-</div>
+<h1>Addresses</h1>
 <mat-accordion>
     <mat-expansion-panel *ngFor="let address of addresses" hideToggle>
         <mat-expansion-panel-header>
@@ -16,3 +12,8 @@
         ></app-address-summary>    
     </mat-expansion-panel>
 </mat-accordion>
+<div class="button-container">
+    <button (click)="clearForm()"mat-raised-button [routerLink]="['/addresses/new']" color="primary">
+        NEW ADDRESS
+    </button>
+</div>

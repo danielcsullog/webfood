@@ -42,7 +42,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LandingComponent } from './landing/landing.component';
-
+import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { LandingComponent } from './landing/landing.component';
     CartCommentComponent,
     LoginComponent,
     LandingComponent,
+    MyRestaurantLandingComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ import { LandingComponent } from './landing/landing.component';
     MatDialogModule,
     MatCardModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressBarModule,
   ],
   providers: [
     {

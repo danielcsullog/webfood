@@ -18,6 +18,10 @@ export class AuthService {
 
   private _token: string | null = null;
 
+  get user() {
+    return this.userService.user;
+  }
+
   constructor(
     private httpClient: HttpClient,
     private userService: UserService,

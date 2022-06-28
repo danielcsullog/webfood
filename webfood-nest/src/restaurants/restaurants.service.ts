@@ -13,7 +13,6 @@ import { Meal } from '../meals/entities/meal';
 
 @Injectable()
 export class RestaurantsService {
-  
 
   constructor(
     @InjectRepository(Restaurant)
@@ -60,14 +59,14 @@ export class RestaurantsService {
     };
 
     return await this.restaurantRepository.find(filters, {
-      populate: ['owner', 'workers']
+      populate: ['owner', 'workers', 'orders']
     });
   }
 
   async findOne(restaurantId: number): Promise<Restaurant> {
     return await this.restaurantRepository.findOne(
       { id: restaurantId },
-      { populate: ['owner', 'workers'] }
+      { populate: ['owner', 'workers', 'orders'] }
     );
   }
 
@@ -189,7 +188,7 @@ export class RestaurantsService {
 
     if (user.role == UserRole.User) {
       let userHasAccess = false;
-      
+
       if (restaurantFromId.owner.id != user.id) {
 
         for (const worker of restaurantFromId.workers) {
@@ -213,4 +212,15 @@ export class RestaurantsService {
       .findAllRestaurantMeals(restaurantId);
     return meals;
   }
+
+  async getUserRestaurants(user: UserDto): Promise<Restaurant[]> {
+    const filters: FilterQuery<Restaurant> = {
+      owner: { id: user.id }
+    };
+
+    return await this.restaurantRepository.find(filters, {
+      populate: ['owner'],
+    })
+  }
+
 }

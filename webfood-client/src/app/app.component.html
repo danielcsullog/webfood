@@ -2,12 +2,15 @@
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{ appTitle }}</span>
+  <button mat-button [routerLink]="['landing']" class="app-title">{{ appTitle }}</button>
   <span class="spacer"></span>
-  <span>hi, username</span>
-  <app-cart-icon></app-cart-icon>
-  <button mat-button (click)="logout()">
+  <span *ngIf="isLoggedIn">{{getUserName()}}</span>
+  <app-cart-icon *ngIf="isLoggedIn"></app-cart-icon>
+  <button *ngIf="isLoggedIn" mat-button (click)="logout()">
     <span>Logout</span>
+  </button>
+  <button *ngIf="!isLoggedIn" mat-button [routerLink]="['/', 'login']">
+    <span>Login</span>
   </button>
 </mat-toolbar>
 
@@ -30,9 +33,13 @@
         <mat-icon>person</mat-icon>
         Profile
       </a>
-      <a mat-list-item>
+      <a mat-list-item [routerLink]="['myrestaurant/landing']">
         <mat-icon>business_center</mat-icon>
         My Restaurant
+      </a>
+      <a *ngIf="isAdmin" mat-list-item>
+        <mat-icon>notification_important</mat-icon>
+        Requests
       </a>
     </mat-nav-list>
   </mat-sidenav>
