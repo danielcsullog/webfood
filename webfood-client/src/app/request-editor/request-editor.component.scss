@@ -1,0 +1,25 @@
+.req-close {
+    font-size: 15px;
+}
+.reverse-line {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0;
+    margin: 0;
+}
+
+.req-title {
+    margin: 0;
+}
+
+.form-field {
+    margin-top: 20px;
+}
+
+mat-form-field {
+    display: block;
+}
+
+.delete-button {
+    color: firebrick;
+}

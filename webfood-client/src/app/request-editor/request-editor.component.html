@@ -1,0 +1,91 @@
+<p mat-line class="reverse-line">
+    <button mat-icon-button (click)="closeDialog()" class="req-close">x</button>
+</p>
+<h1 class="req-title">New Request</h1>
+<mat-form-field appearance="fill" class="form-field">
+    <mat-label>Select request type</mat-label>
+    <mat-select [(ngModel)]="selectedTypeAsString">
+        <mat-option *ngFor="let type of requestTypes" [value]="type">
+            {{type}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<app-restaurant-new *ngIf="selectedTypeAsString=='New restaurant'">
+</app-restaurant-new>
+<ng-container *ngIf="selectedTypeAsString=='Delete restaurant'">
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Select the restaurant to delete</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantToDelete">
+            <mat-option *ngFor="let restaurant of data.myRestaurants" [value]="restaurant">
+                {{restaurant.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button *ngIf="selectedRestaurantToDelete"
+        (click)="deleteRestaurant()" 
+        mat-raised-button 
+        class="delete-button">
+        DELETE
+    </button>
+</ng-container>
+<ng-container *ngIf="selectedTypeAsString=='Edit restaurant'">
+    <app-restaurant-editor [myRestaurants]="data.myRestaurants"></app-restaurant-editor>
+</ng-container>
+<ng-container *ngIf="selectedTypeAsString=='Applying for a job'">
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Select the restaurant to apply</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantToApply">
+            <mat-option *ngFor="let restaurant of data.restaurants" [value]="restaurant">
+                {{restaurant.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button *ngIf="selectedRestaurantToApply"
+        (click)="applyJob()" 
+        mat-raised-button 
+        color="primary">
+        APPLY
+    </button>
+</ng-container>
+<ng-container *ngIf="selectedTypeAsString=='Resign from work'">
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Select the restaurant to resign</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantToResign">
+            <mat-option *ngFor="let restaurant of data.workPlaces" [value]="restaurant">
+                {{restaurant.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button *ngIf="selectedRestaurantToResign"
+        (click)="resignJob()" 
+        mat-raised-button 
+        class="delete-button">
+        RESIGN
+    </button>
+</ng-container>
+<ng-container *ngIf="selectedTypeAsString=='Dismiss an employee'">
+    <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Select a restaurant to resign an employee</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantToDismissFrom">
+            <mat-option *ngFor="let restaurant of data.myRestaurants" [value]="restaurant">
+                {{restaurant.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="selectedRestaurantToDismissFrom">
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Select an employee to resign</mat-label>
+            <mat-select [(ngModel)]="selectedUserToDismiss">
+                <mat-option *ngFor="let worker of selectedRestaurantToDismissFrom.workers" [value]="worker">
+                    id: {{worker.id}}, {{worker.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button *ngIf="selectedUserToDismiss"
+            (click)="resignJob()" 
+            mat-raised-button 
+            class="delete-button">
+            DISMISS
+        </button>
+    </ng-container>
+</ng-container>

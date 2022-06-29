@@ -1,0 +1,12 @@
+<h2>Edit restaurant</h2>
+<mat-form-field appearance="fill" class="form-field">
+    <mat-label>Select restaurant to edit</mat-label>
+    <mat-select [(ngModel)]="selectedRestaurant">
+        <mat-option *ngFor="let restaurant of myRestaurants" [value]="restaurant">
+            {{restaurant.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<ng-container *ngIf="selectedRestaurant">
+    <h2>works</h2>
+</ng-container>
