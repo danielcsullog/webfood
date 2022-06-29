@@ -1,7 +1,7 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../users/entity/user';
+import { User } from '../users/entities/user';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {

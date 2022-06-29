@@ -1,4 +1,4 @@
-import { User } from "../../users/entity/user";
+import { User } from "../../users/entities/user";
 import { UserDto } from "../../users/dto/user.dto";
 import { Restaurant, RestaurantCategory } from "../entities/restaurant";
 import { OrderDto } from "../../orders/dto/order.dto";

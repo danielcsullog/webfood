@@ -31,7 +31,7 @@ export class AuthService {
     this.setLoginResponse(result);
   }
 
-  async login(userAuthRequest: UserAuthRequest) {
+  async login(userAuthRequest: UserAuthRequest): Promise<LoginResponse> {
     const result = await (
       this.httpClient.post(
         '/api/users/login',
@@ -42,11 +42,22 @@ export class AuthService {
     this.authStorageService.saveUser(result);
 
     this.setLoginResponse(result);
+
+    return result;
   }
 
   logout() {
     this.setLoginResponse(null);
     this.authStorageService.saveUser(null);
+  }
+
+  async register(userAuthRequest: UserAuthRequest) {
+    await (
+      this.httpClient.post(
+        '/api/users',
+        userAuthRequest
+      ) as Observable<User>
+    ).toPromise();
   }
 
   private setLoginResponse(result: LoginResponse | null) {
@@ -68,3 +79,5 @@ export class AuthService {
     return this.token ? true : false;
   }
 }
+
+

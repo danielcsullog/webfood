@@ -6,8 +6,8 @@ import { AuthService } from '../auth/auth.service';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { UserAddressDto } from './dto/user.address.dto';
 import { UserDto } from './dto/user.dto';
-import { User, UserRole } from './entity/user';
-import { UserAddress } from './entity/user.address';
+import { User, UserRole } from './entities/user';
+import { UserAddress } from './entities/user.address';
 
 @Injectable()
 export class UsersService {

@@ -1,6 +1,6 @@
 import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
-import { User } from "../../users/entity/user";
-import { UserAddress } from "../../users/entity/user.address";
+import { User } from "../../users/entities/user";
+import { UserAddress } from "../../users/entities/user.address";
 import { Restaurant } from "../../restaurants/entities/restaurant";
 import { OrderItem } from "./order.item";
 

@@ -3,8 +3,8 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { UserDto } from '../users/dto/user.dto';
-import { User, UserRole } from '../users/entity/user';
-import { UserAddress } from '../users/entity/user.address';
+import { User, UserRole } from '../users/entities/user';
+import { UserAddress } from '../users/entities/user.address';
 import { Meal } from '../meals/entities/meal';
 import { OrderDto } from './dto/order.dto';
 import { Order, OrderStatus } from './entities/order';
@@ -62,7 +62,7 @@ export class OrdersService {
             + " " +
             order.userAddress.houseNumber;
         order.orderStatus = OrderStatus.New;
-        order.restaurant = this.restaurantRepository.getReference(orderDto.restaurant.id);
+        order.restaurant = this.restaurantRepository.getReference(orderDto.restaurantId);
 
         if (orderDto.orderItems) {
             for (const item of orderDto.orderItems) {

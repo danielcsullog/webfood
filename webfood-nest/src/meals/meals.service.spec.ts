@@ -4,7 +4,7 @@ import { RestaurantsService } from '../restaurants/restaurants.service';
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { Meal } from './entities/meal';
 import { MealsService } from './meals.service';
-import { User } from '../users/entity/user';
+import { User } from '../users/entities/user';
 import { Order } from '../orders/entities/order';
 
 describe('MealsService', () => {

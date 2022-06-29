@@ -1,7 +1,7 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/entity/user';
+import { User } from '../users/entities/user';
 import { UserAuthDto } from '../users/dto/user-auth.dto';
 import { UserDto } from '../users/dto/user.dto';
 import { promisify } from 'util';

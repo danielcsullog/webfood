@@ -1,5 +1,5 @@
-import { User } from "../entity/user";
-import { UserAddress } from "../entity/user.address";
+import { User } from "../entities/user";
+import { UserAddress } from "../entities/user.address";
 import { UserDto } from "./user.dto";
 
 export class UserAddressDto {

@@ -3,7 +3,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Injectable } from '@nestjs/common';
 import { UserDto } from '../users/dto/user.dto';
-import { UserRole } from '../users/entity/user';
+import { UserRole } from '../users/entities/user';
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { MealDto } from './dto/meal.dto';
 import { Meal } from './entities/meal';

@@ -2,6 +2,7 @@ import { Collection, Entity, Enum, ManyToMany, OneToMany, PrimaryKey, Property }
 import { Restaurant } from "../../restaurants/entities/restaurant";
 import { Order } from "../../orders/entities/order";
 import { UserAddress } from "./user.address";
+import { Request } from "../../requests/entities/request"
 
 @Entity()
 export class User {
@@ -16,7 +17,7 @@ export class User {
 
     @Property()
     password!: string;
-
+    
     @Enum()
     role!: UserRole;
 
@@ -31,6 +32,9 @@ export class User {
 
     @ManyToMany(() => Restaurant, (restaurant) => restaurant.workers)
     workplaces = new Collection<Restaurant>(this);
+
+    @OneToMany(() => Request, (request) => request.user)
+    requests = new Collection<Request>(this);
 }
 
 export enum UserRole {

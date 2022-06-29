@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { UserDto } from '../users/dto/user.dto';
-import { UserParam } from '../auth/user-param.decorator';
-import { RestaurantDto } from '../restaurants/dto/restaurant.dto';
+import { UserDto } from '../../users/dto/user.dto';
+import { UserParam } from '../../auth/user-param.decorator';
+import { RestaurantDto } from '../dto/restaurant.dto';
 import { MyRestaurantService } from './my-restaurant.service';
-import { User } from '../users/entity/user';
+import { User } from '../../users/entities/user';
 
 @Controller('my-restaurant')
 export class MyRestaurantController {

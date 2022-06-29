@@ -1,20 +1,24 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Restaurant } from '../restaurants/entities/restaurant';
-import { MyRestaurantService } from './my-restaurant.service';
+import { User } from '../users/entities/user';
+import { Request } from './entities/request';
+import { RequestsService } from './requests.service';
 
-describe('MyRestaurantService', () => {
-  let service: MyRestaurantService;
+describe('RequestsService', () => {
+  let service: RequestsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        MyRestaurantService,
+        RequestsService,
+        { provide: getRepositoryToken(Request), useValue: {} },
+        { provide: getRepositoryToken(User), useValue: {} },
         { provide: getRepositoryToken(Restaurant), useValue: {} },
       ],
     }).compile();
 
-    service = module.get<MyRestaurantService>(MyRestaurantService);
+    service = module.get<RequestsService>(RequestsService);
   });
 
   it('should be defined', () => {

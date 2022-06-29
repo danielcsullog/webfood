@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginResponse } from '../auth/auth-storage.service';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -24,14 +25,20 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async submit() {
+  async submit(): Promise<LoginResponse | null> {
     if (!this.loginForm.valid) {
-      return;
+      return null;
     }
 
-    await this.authService.login(this.loginForm.value);
+    const result = await this.authService.login(this.loginForm.value);
+
+    if (!result) {
+      return null;
+    }
 
     this.router.navigate(['/']);
+
+    return result;
   }
 
   get userName() {

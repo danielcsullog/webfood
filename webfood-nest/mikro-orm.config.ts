@@ -3,8 +3,9 @@ import { Meal } from "./src/meals/entities/meal";
 import { Restaurant } from "./src/restaurants/entities/restaurant";
 import { Order } from "./src/orders/entities/order";
 import { OrderItem } from "./src/orders/entities/order.item";
-import { UserAddress } from "./src/users/entity/user.address";
-import { User } from "./src/users/entity/user";
+import { UserAddress } from "./src/users/entities/user.address";
+import { User } from "./src/users/entities/user";
+import { Request } from "./src/requests/entities/request";
 
 export default {
     entities: [
@@ -13,7 +14,8 @@ export default {
         Meal, 
         OrderItem,
         User,
-        UserAddress
+        UserAddress,
+        Request
     ],
     dbName: (process.env.seed ? './dist/' : '') + process.env.dbName,
     type: 'sqlite',

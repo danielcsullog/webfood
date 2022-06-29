@@ -1,9 +1,8 @@
 import { EntityRepository, FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/entity/user';
-import { Restaurant } from '../restaurants/entities/restaurant';
-import { UserDto } from '../users/dto/user.dto';
+import { Restaurant } from '../entities/restaurant';
+import { UserDto } from '../../users/dto/user.dto';
 
 @Injectable()
 export class MyRestaurantService {

@@ -44,6 +44,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { LandingComponent } from './landing/landing.component';
 import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     LoginComponent,
     LandingComponent,
     MyRestaurantLandingComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

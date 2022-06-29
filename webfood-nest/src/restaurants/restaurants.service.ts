@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Order, OrderStatus } from '../orders/entities/order';
 import { OrderDto } from '../orders/dto/order.dto';
 import { UserDto } from '../users/dto/user.dto';
-import { User, UserRole } from '../users/entity/user';
+import { User, UserRole } from '../users/entities/user';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { Restaurant } from './entities/restaurant';
 import { MealsService } from '../meals/meals.service';
@@ -91,7 +91,6 @@ export class RestaurantsService {
 
     restaurant.name = restaurantDto.name || restaurant.name;
     restaurant.description = restaurantDto.description || restaurant.description;
-    //restaurant.priceCategory = restaurantDto.priceCategory || restaurant.priceCategory;
     restaurant.category = restaurantDto.category || restaurant.category;
     restaurant.address = restaurantDto.address || restaurant.address;
     restaurant.openingHours = restaurantDto.openingHours || restaurant.openingHours;

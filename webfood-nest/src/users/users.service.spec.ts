@@ -1,8 +1,8 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth/auth.service';
-import { User } from './entity/user';
-import { UserAddress } from './entity/user.address';
+import { User } from './entities/user';
+import { UserAddress } from './entities/user.address';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {

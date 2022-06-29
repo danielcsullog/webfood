@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
+import { RegistrationComponent } from './registration/registration.component';
 import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
 import { RestaurantListComponent } from './restaurants/restaurant-list/restaurant-list.component';
 import { RestaurantOffersComponent } from './restaurants/restaurant-offers/restaurant-offers.component';
@@ -46,6 +47,9 @@ const routes: Routes = [{
 }, {
   path: 'login',
   component: LoginComponent
+}, {
+  path: 'registration',
+  component: RegistrationComponent
 }, {
   path: 'landing',
   component: LandingComponent,

@@ -1,11 +1,11 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../users/entity/user';
+import { User } from '../users/entities/user';
 import { Meal } from '../meals/entities/meal'
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { Order } from './entities/order';
 import { OrdersService } from './orders.service';
-import { UserAddress } from '../users/entity/user.address';
+import { UserAddress } from '../users/entities/user.address';
 
 describe('OrdersService', () => {
   let service: OrdersService;

@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { User, UserRole } from '../users/entity/user';
+import { User, UserRole } from '../users/entities/user';
 import { UserDto } from '../users/dto/user.dto';
 
 export function getUserFromRequest(ctx: ExecutionContext) {

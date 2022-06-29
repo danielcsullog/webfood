@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Meal } from '../meals/entities/meal';
 import { MealsService } from '../meals/meals.service';
 import { Order } from '../orders/entities/order';
-import { User } from '../users/entity/user';
+import { User } from '../users/entities/user';
 import { Restaurant } from './entities/restaurant';
 import { RestaurantsService } from './restaurants.service';
 

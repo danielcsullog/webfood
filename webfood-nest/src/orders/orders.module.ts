@@ -6,8 +6,8 @@ import { Order } from './entities/order';
 import { Restaurant } from '../restaurants/entities/restaurant';
 import { Meal } from '../meals/entities/meal';
 import { OrderItem } from './entities/order.item';
-import { User } from '../users/entity/user';
-import { UserAddress } from '../users/entity/user.address';
+import { User } from '../users/entities/user';
+import { UserAddress } from '../users/entities/user.address';
 
 @Module({
   imports: [MikroOrmModule.forFeature({ 

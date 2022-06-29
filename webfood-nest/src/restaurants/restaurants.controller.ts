@@ -5,7 +5,7 @@ import { UserParam } from '../auth/user-param.decorator';
 import { RestaurantDto } from './dto/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { Roles } from '../auth/roles';
-import { User, UserRole } from '../users/entity/user';
+import { User, UserRole } from '../users/entities/user';
 import { OrderDto } from '../orders/dto/order.dto';
 import { MealDto } from '../meals/dto/meal.dto';
 
