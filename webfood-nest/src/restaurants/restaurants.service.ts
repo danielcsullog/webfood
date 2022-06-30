@@ -39,7 +39,7 @@ export class RestaurantsService {
 
     restaurant.owner = this.userRepository.getReference(user.id);
 
-    if (restaurant.workers) {
+    if (restaurant.workers.isDirty()) {
       restaurant.workers.set(
         createRestaurantDto.workers.map((worker) =>
           this.userRepository.getReference(worker.id)
@@ -51,11 +51,12 @@ export class RestaurantsService {
     await this.restaurantRepository.populate(restaurant, ['owner', 'workers']);
 
     return restaurant;
+  
   }
 
   async findAll(restaurantDto: RestaurantDto): Promise<Restaurant[]> {
     const filters: FilterQuery<Restaurant> = {
-      name: { $like: `%${restaurantDto.name || ''}%` },
+      allowed: true,
     };
 
     return await this.restaurantRepository.find(filters, {
@@ -95,6 +96,7 @@ export class RestaurantsService {
     restaurant.address = restaurantDto.address || restaurant.address;
     restaurant.openingHours = restaurantDto.openingHours || restaurant.openingHours;
     restaurant.phoneNumber = restaurantDto.phoneNumber || restaurant.phoneNumber;
+    restaurant.allowed = restaurantDto.allowed || restaurant.allowed;
 
     if (restaurantDto.workers) {
       restaurant.workers.set(

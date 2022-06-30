@@ -45,9 +45,9 @@ import { LandingComponent } from './landing/landing.component';
 import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { RegistrationComponent } from './registration/registration.component';
-import { RequestEditorComponent } from './request-editor/request-editor.component';
-import { RestaurantNewComponent } from './restaurants/restaurant-new/restaurant-new.component';
 import { RestaurantEditorComponent } from './restaurants/restaurant-editor/restaurant-editor.component';
+import { RequestListComponent } from './requests/request-list/request-list.component';
+import { RequestEditorComponent } from './requests/request-editor/request-editor.component';
 
 @NgModule({
   declarations: [
@@ -75,8 +75,8 @@ import { RestaurantEditorComponent } from './restaurants/restaurant-editor/resta
     MyRestaurantLandingComponent,
     RegistrationComponent,
     RequestEditorComponent,
-    RestaurantNewComponent,
     RestaurantEditorComponent,
+    RequestListComponent,
   ],
   imports: [
     BrowserModule,

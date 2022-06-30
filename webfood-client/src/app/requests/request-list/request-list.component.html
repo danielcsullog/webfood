@@ -1,0 +1,37 @@
+<mat-card *ngFor="let request of requests" class="example-card">
+    <mat-card-subtitle>Restaurant id: {{request.restaurantId}}</mat-card-subtitle>
+    <mat-card-title>{{request.type}}</mat-card-title>
+    <mat-card-content>
+        <p>Sender: {{request.user.name}}</p>
+        <p>Request creation date: {{request.creationDate | date:'medium'}}</p>
+        <p>Request completion date: {{request.completionDate | date:'medium'}}</p>
+        <p>Status: {{request.status}}</p>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <ng-container *ngIf="userIsAdmin && needToShowButtons(request)">
+        <p mat-line>
+            Set status:
+        </p>
+        <mat-card-actions>
+            <button (click)="refuseRequest(request)" mat-button class="refuse-button">REFUSE</button>
+            <button (click)="acceptRequest(request)" mat-button *ngIf="request.status === 'IN_PROGRESS'" class="accept-button">ACCEPT</button>
+            <button (click)="setStatusInProgress(request)" mat-button *ngIf="request.status === 'VIEWED'">IN PROGRESS</button>
+            <button (click)="setStatusViewed(request)" *ngIf="request.status === 'SENT'" mat-button>VIEWED</button>
+        </mat-card-actions>
+    </ng-container>
+    <mat-card-footer *ngIf="request.status === 'SENT'">
+        <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="request.status === 'VIEWED'">
+        <mat-progress-bar mode="indeterminate" color="secondary"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="request.status === 'IN_PROGRESS'">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="request.status === 'ACCEPTED'">
+        <mat-progress-bar mode="determinate" value="100" color="primary"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="request.status === 'REFUSED'">
+        <mat-progress-bar mode="determinate" value="100" color="warn"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>

@@ -22,8 +22,10 @@ export class MealListComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.meals = await this.mealService.getMeals(this.restaurant.id);
-    this.mealCategories = await this.mealService.getDistinctCategories(this.restaurant.id);
+    if(this.restaurant.id) {
+      this.meals = await this.mealService.getMeals(this.restaurant.id);
+      this.mealCategories = await this.mealService.getDistinctCategories(this.restaurant.id);
+    }
     this.filteredMeals = this.meals;
   }
 

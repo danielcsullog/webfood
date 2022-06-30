@@ -9,6 +9,7 @@ import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-land
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { RequestListComponent } from './requests/request-list/request-list.component';
 import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
 import { RestaurantListComponent } from './restaurants/restaurant-list/restaurant-list.component';
 import { RestaurantOffersComponent } from './restaurants/restaurant-offers/restaurant-offers.component';
@@ -44,6 +45,9 @@ const routes: Routes = [{
 }, {
   path: 'myrestaurant/landing',
   component: MyRestaurantLandingComponent
+}, {
+  path: 'other-requests',
+  component: RequestListComponent
 }, {
   path: 'login',
   component: LoginComponent

@@ -31,10 +31,9 @@ export class RequestsController {
     }
 
 
-    @Post('user')
-    @Roles(UserRole.Admin)
+    @Get('user')
     async findAllByUser(
-        @Body() userDto: UserDto
+        @UserParam() userDto: UserDto
     ): Promise<RequestDto[]> {
         const requests = await this.requestService
             .findAllByUser(userDto);

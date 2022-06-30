@@ -1,12 +1,126 @@
-<h2>Edit restaurant</h2>
-<mat-form-field appearance="fill" class="form-field">
-    <mat-label>Select restaurant to edit</mat-label>
-    <mat-select [(ngModel)]="selectedRestaurant">
-        <mat-option *ngFor="let restaurant of myRestaurants" [value]="restaurant">
-            {{restaurant.name}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-<ng-container *ngIf="selectedRestaurant">
-    <h2>works</h2>
+<ng-container>
+    <mat-form-field appearance="fill">
+        <mat-label>Select restaurant type</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantType" >
+            <mat-option *ngFor="let type of types" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <form [formGroup]="restaurantForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input
+                formControlName="name"
+                name="name"
+                matInput
+            />
+            <mat-error *ngIf="name.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+                formControlName="description"
+                name="description"
+                matInput
+            ></textarea>
+            <mat-error *ngIf="description.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input
+                formControlName="address"
+                name="address"
+                matInput
+            />
+            <mat-error *ngIf="address.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Phone number</mat-label>
+            <input
+                formControlName="phoneNumber"
+                name="phoneNumber"
+                matInput
+            />
+            <mat-error *ngIf="phoneNumber.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <h4>Opening hours</h4>
+        <mat-form-field appearance="outline">
+            <mat-label>Monday (example: "MON: 08:00-20:00") </mat-label>
+            <input
+                formControlName="mon"
+                name="mon"
+                matInput
+            />
+            <mat-error *ngIf="mon.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Tuesday (example: "TUE: 08:00-20:00") </mat-label>
+            <input
+                formControlName="tue"
+                name="tue"
+                matInput
+            />
+            <mat-error *ngIf="tue.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Wednesday (example: "WED: 08:00-20:00") </mat-label>
+            <input
+                formControlName="wed"
+                name="wed"
+                matInput
+            />
+            <mat-error *ngIf="wed.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Thursday (example: "THU: 08:00-20:00") </mat-label>
+            <input
+                formControlName="thu"
+                name="thu"
+                matInput
+            />
+            <mat-error *ngIf="thu.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Friday (example: "FRI: 08:00-20:00") </mat-label>
+            <input
+                formControlName="fri"
+                name="fri"
+                matInput
+            />
+            <mat-error *ngIf="fri.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Saturday (example: "SAT: 08:00-20:00") </mat-label>
+            <input
+                formControlName="sat"
+                name="sat"
+                matInput
+            />
+            <mat-error *ngIf="sat.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Sunday (example: "SUN: 08:00-20:00") </mat-label>
+            <input
+                formControlName="sun"
+                name="sun"
+                matInput
+            />
+            <mat-error *ngIf="sun.invalid">This field required</mat-error> 
+        </mat-form-field>
+        <div>
+            <button 
+                *ngIf="this.restaurantToEdit" 
+                mat-raised-button 
+                color="primary">
+                UPDATE
+            </button>
+            <button 
+                *ngIf="!this.restaurantToEdit" 
+                mat-raised-button 
+                color="primary">
+                CREATE
+            </button>
+        </div>
+    </form>
 </ng-container>

@@ -7,6 +7,7 @@
             <mat-card-content>
                 <p>Employees: {{getEmployeesCount(restaurant)}}</p>
                 <p>Orders in progress: ??</p>
+                <p>Allowed: {{restaurant.allowed}}</p>
             </mat-card-content>
             <mat-divider inset></mat-divider>
             <mat-card-actions>
@@ -37,11 +38,19 @@
             </mat-card-footer>
         </mat-card>
     </mat-tab>
-    <mat-tab label="Requests">
+    <mat-tab label="My Requests">
         <mat-list-item>
             <button (click)="openNewReqDialog()" mat-raised-button color="primary" class="add-req-button">
                 New request
             </button>
+        </mat-list-item>
+        <mat-list-item>
+            <app-request-list [requests]="userRequests" [showButtonsInPage]="false"></app-request-list>
+        </mat-list-item>
+    </mat-tab>
+    <mat-tab label="Incoming Requests" *ngIf="isAdmin">            
+        <mat-list-item>
+            <app-request-list [requests]="requests"></app-request-list>
         </mat-list-item>
     </mat-tab>
 </mat-tab-group>

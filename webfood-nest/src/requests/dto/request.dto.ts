@@ -10,6 +10,7 @@ export class RequestDto {
     status?: RequestStatus;
     restaurantId: number;
     text?: string;
+    userToFireId?: number;
 
     constructor(request?: Request) {
         if (request) {
@@ -21,6 +22,7 @@ export class RequestDto {
             this.status = request.status;
             this.restaurantId = request.restaurant.id;
             this.text = request.text;
+            this.userToFireId = request.userToFireId;
         }
     }
 }

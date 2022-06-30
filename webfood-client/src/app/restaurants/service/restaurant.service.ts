@@ -21,7 +21,7 @@ export class RestaurantService {
     ).toPromise();
   }
 
-  async getRestaurant(id: number): Promise<Restaurant | undefined> {
+  async getRestaurant(id?: number): Promise<Restaurant> {
     return (
       this.httpClient.get(`/api/restaurants/${id}`) as Observable<Restaurant>
     ).toPromise();
@@ -51,4 +51,27 @@ export class RestaurantService {
     return modifiedRestaurant;
   }
 
+  async deleteRestaurant(
+    restaurant: Restaurant
+  ): Promise<Restaurant> {
+    const deletedRestaurant = await (
+      this.httpClient.delete(
+        `api/restaurants/${restaurant.id}`
+      ) as Observable<Restaurant>
+    ).toPromise()
+
+    return deletedRestaurant;
+  }
+
+  async updateRestaurant(
+    restaurant: Restaurant
+  ): Promise<Restaurant> {
+    const updatedRestaurant = await (
+      this.httpClient.patch(
+        `api/restaurants/${restaurant.id}`,
+        restaurant
+      ) as Observable<Restaurant>
+    ).toPromise();
+    return updatedRestaurant;
+  }
 }

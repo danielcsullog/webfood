@@ -31,6 +31,9 @@ export class Restaurant {
     @Property()
     phoneNumber!: string;
 
+    @Property()
+    allowed: boolean = false;
+
     @OneToMany(() => Order, (order) => order.restaurant)
     orders = new Collection<Order>(this);
 

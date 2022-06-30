@@ -28,6 +28,9 @@ export class Request {
 
     @Property()
     text?: string;
+
+    @Property()
+    userToFireId?: number;
 }
 
 export enum RequestType {

@@ -34,6 +34,7 @@ export class RequestsService {
         request.status = requestDto.status;
         request.restaurant = this.restaurantRepository.getReference(requestDto.restaurantId);
         request.text = requestDto.text;
+        request.userToFireId = requestDto.userToFireId;
 
         await this.requestRepository.persistAndFlush(request);
         await this.requestRepository.populate(request, ['user', 'restaurant']);
@@ -42,28 +43,30 @@ export class RequestsService {
     }
 
     async findAll(
-        user: UserDto
+        userDto: UserDto
     ): Promise<Request[]> {
-        const filters: FilterQuery<Request> = { user }
 
-        if (user.role === UserRole.User) {
-            filters.user = { id: user.id }
-        }
-
-        return await this.requestRepository
+        if (userDto.role === UserRole.User) {
+            const filters: FilterQuery<Request> = { user:userDto }
+            filters.user = { id: userDto.id }
+            return await this.requestRepository
             .find(filters, {
                 populate: ['user', 'restaurant']
             });
+        } else {
+            return await this.requestRepository
+            .findAll({
+                populate: ['user', 'restaurant']
+            });
+        }
+
+        
     }
 
     async findAllByUser(
         userDto: UserDto
     ): Promise<Request[]> {
-        const user = await this.userRepository.findOne(userDto.id);
-        if (!user) {
-            return;
-        }
-        const filters: FilterQuery<Request> = { user };
+        const filters: FilterQuery<Request> = { user: userDto };
 
         return await this.requestRepository
             .find(filters, {
@@ -100,12 +103,13 @@ export class RequestsService {
             return;
         }
 
-        if (updateRequestDto.status === RequestStatus.Accepted) {
-            request.completionDate = new Date();
+        if (updateRequestDto.status === RequestStatus.Accepted ||
+            updateRequestDto.status === RequestStatus.Refused) {
+            request.completionDate = updateRequestDto.completionDate || request.completionDate;
         }
 
         request.status = updateRequestDto.status || request.status;
-
+        
         await this.requestRepository.persistAndFlush(request);
         await this.requestRepository.populate(request, ['user', 'restaurant']);
 

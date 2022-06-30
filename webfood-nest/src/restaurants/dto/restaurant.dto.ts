@@ -15,6 +15,7 @@ export class RestaurantDto {
     owner?: UserDto;
     workers?: UserDto[];
     orders?: OrderDto[];
+    allowed?: boolean;
 
     constructor(restaurant?: Restaurant) {
         if (restaurant) {
@@ -26,6 +27,7 @@ export class RestaurantDto {
             this.address = restaurant.address;
             this.openingHours = restaurant.openingHours;
             this.phoneNumber = restaurant.phoneNumber;
+            this.allowed = restaurant.allowed;
             
            if(restaurant.owner && restaurant.owner instanceof User) {
                this.owner = {

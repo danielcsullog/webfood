@@ -5,7 +5,7 @@ export interface Restaurant {
     id: number;
     name: string;
     description: string;
-    priceCategory: number;
+    priceCategory?: number;
     category: string;
     address: string;
     openingHours: string[];
@@ -13,4 +13,5 @@ export interface Restaurant {
     owner?: User,
     workers?: User[]
     orders?: Order[]
+    allowed?: boolean;
 }
