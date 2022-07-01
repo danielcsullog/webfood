@@ -7,19 +7,6 @@ const app = express();
 
 app.use(express.static('./dist/webfood-client'));
 
-let usersTarget = process.env.TARGET || 'http://localhost:3000';
-
-app.use(
-  '/api/users/login',
-  createProxyMiddleware({
-    pathRewrite: {
-      '^/api': '',
-    },
-    target: `${usersTarget}`,
-    changeOrigin: true,
-  })
-);
-
 app.use(
   '/api/*',
   createProxyMiddleware({
