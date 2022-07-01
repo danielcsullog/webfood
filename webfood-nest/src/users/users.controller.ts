@@ -37,10 +37,10 @@ export class UsersController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@UserParam() user: UserDto) {
-        return JSON.stringify({
+        return {
             user,
             access_token: await this.authService.generateJwt(user),
-        });
+        };
     }
 
     @Get('current-user')

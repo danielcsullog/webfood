@@ -36,14 +36,15 @@ export class AuthService {
       this.httpClient.post(
         '/api/users/login',
         userAuthRequest, 
-      ) as Observable<LoginResponse>
+        {responseType: 'text' as 'json'}
+      ) as Observable<string>
     ).toPromise();
 
-    this.authStorageService.saveUser(result);
+    this.authStorageService.saveUser(JSON.parse(result));
 
-    this.setLoginResponse(result);
+    this.setLoginResponse(JSON.parse(result));
 
-    return JSON.stringify(result);
+    return result;
   }
 
   logout() {
