@@ -1,3 +1,4 @@
+import { Meal } from "./meal";
 import { Order } from "./order";
 import { User } from "./user";
 
@@ -14,4 +15,5 @@ export interface Restaurant {
     workers?: User[]
     orders?: Order[]
     allowed?: boolean;
+    meals?: Meal[];
 }

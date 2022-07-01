@@ -1,0 +1,27 @@
+<h1>{{data.restaurant.name}} - Meals</h1>
+<button (click)="openMealCreatorDialog()" mat-raised-button color="primary" class="add-req-button">
+    ADD MEAL
+</button>
+<mat-accordion class="example-headers-align">
+    <mat-tab-group class="matTab" *ngIf="meals">
+        <mat-tab *ngFor="let category of mealCategories" label={{category}}>
+            <mat-expansion-panel *ngFor="let meal of meals" hideToggle>
+                <mat-expansion-panel-header *ngIf="meal.category == category">
+                    <mat-panel-title>
+                        {{meal.name}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span class="meal-description">{{meal.description}}</span>
+                        <mat-label>
+                            {{meal.price}} Ft
+                        </mat-label>
+                        <button (click)="openMealCreatorDialog(meal)" mat-button color="secondary">
+                            EDIT
+                        </button>
+                      </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-meal-details [meal]="meal" [mealRestaurant]="data.restaurant" [needAmount]="false"></app-meal-details>
+            </mat-expansion-panel>
+        </mat-tab>
+    </mat-tab-group>
+</mat-accordion>

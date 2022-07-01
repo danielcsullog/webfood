@@ -1,0 +1,59 @@
+<h2>New Meal</h2>
+<form [formGroup]="mealForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+            formControlName="name"
+            name="name"
+            matInput
+        />
+        <mat-error *ngIf="name.invalid">This field required</mat-error> 
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input
+            formControlName="price"
+            name="price"
+            matInput
+        />
+        <mat-error *ngIf="price.invalid">This field required</mat-error> 
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+            formControlName="description"
+            name="description"
+            matInput
+        ></textarea>
+        <mat-error *ngIf="description.invalid">This field required</mat-error> 
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input
+            formControlName="category"
+            name="category"
+            matInput
+        />
+        <mat-error *ngIf="category.invalid">This field required</mat-error> 
+    </mat-form-field>
+    <mat-slide-toggle formControlName="isVegan">Vegan</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isSpicy">Spicy</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isVegetarian">Vegetarian</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isLactoseFree">Lactose free</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isGlutenFree">Gluten free</mat-slide-toggle>
+    <mat-slide-toggle formControlName="isSugarFree">Sugar free</mat-slide-toggle>
+    <div>
+        <button 
+            *ngIf="data.meal"
+            mat-raised-button 
+            color="primary">
+            UPDATE
+        </button>
+        <button 
+            *ngIf="!data.meal"
+            mat-raised-button 
+            color="primary">
+            CREATE
+        </button>
+    </div>
+</form>

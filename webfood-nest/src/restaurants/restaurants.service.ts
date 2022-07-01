@@ -60,14 +60,14 @@ export class RestaurantsService {
     };
 
     return await this.restaurantRepository.find(filters, {
-      populate: ['owner', 'workers', 'orders']
+      populate: ['owner', 'workers', 'orders', 'meals']
     });
   }
 
   async findOne(restaurantId: number): Promise<Restaurant> {
     return await this.restaurantRepository.findOne(
       { id: restaurantId },
-      { populate: ['owner', 'workers', 'orders'] }
+      { populate: ['owner', 'workers', 'orders', 'meals'] }
     );
   }
 

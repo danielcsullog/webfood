@@ -37,7 +37,7 @@ export class Restaurant {
     @OneToMany(() => Order, (order) => order.restaurant)
     orders = new Collection<Order>(this);
 
-    @ManyToMany(() => Meal, (meal) => meal.restaurants)
+    @OneToMany(() => Meal, (meal) => meal.restaurant)
     meals = new Collection<Meal>(this);
 
     @ManyToOne(() => User)

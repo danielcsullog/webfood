@@ -87,7 +87,7 @@ export class CartService {
   async sendOrder(): Promise<Order | undefined> {
     if (this.restaurant && this.cartItems.length > 0 && this.deliveryAddress) {
       const order: Order = {
-        restaurant: this.restaurant,
+        restaurantId: this.restaurant.id,
         orderItems: this.cartItems,
         userAddress: this.deliveryAddress,
         comment: this.comment

@@ -24,36 +24,34 @@ export class MealsService {
 
     let restaurant: Restaurant;
 
-    if (createMealDto.restaurantIds) {
-      for (let restaurantId of createMealDto.restaurantIds) {
-        const filters: FilterQuery<Restaurant> = { id: restaurantId };
-        
-        if (user.role === UserRole.User) {
-          filters.owner = { id: user.id };
-        }
+    if (createMealDto.restaurantId) {
+      const filters: FilterQuery<Restaurant> = { id: createMealDto.restaurantId };
 
-        restaurant = await this.restaurantRepository.findOne(filters, {
-          populate: ['meals']
-        });
-
-        if (!restaurant) {
-          return;
-        }
-
-        let prices: number[] = [];
-        for (let meal of restaurant.meals) {
-          prices.push(meal.price);
-        }
-
-        restaurant.priceCategory = this.calculatePriceCategoryForRestaurant(
-            prices, 
-            createMealDto.price
-        );
-        
-        meal.restaurants.add(restaurant);
+      if (user.role === UserRole.User) {
+        filters.owner = { id: user.id };
       }
+
+      restaurant = await this.restaurantRepository.findOne(filters, {
+        populate: ['meals']
+      });
+
+      if (!restaurant) {
+        return;
+      }
+
+      let prices: number[] = [];
+      for (let meal of restaurant.meals) {
+        prices.push(meal.price);
+      }
+
+      restaurant.priceCategory = this.calculatePriceCategoryForRestaurant(
+        prices,
+        createMealDto.price
+      );
+
+      meal.restaurant = restaurant;
     }
-  
+
     meal.name = createMealDto.name;
     meal.price = createMealDto.price;
     meal.description = createMealDto.description;
@@ -81,7 +79,7 @@ export class MealsService {
         price = 0;
       }
       sumPrices += price;
-    }  
+    }
 
     const averagePrice = sumPrices / (prices.length + 1);
 
@@ -109,36 +107,36 @@ export class MealsService {
   }
 
   async findAllRestaurantMeals(restaurantId: number): Promise<Meal[]> {
-    const filters: FilterQuery<Meal> = { restaurants: {
-      id: restaurantId
-    } };
+    const filters: FilterQuery<Meal> = {
+      restaurant: {
+        id: restaurantId
+      }
+    };
     const meals = await this.mealRepository.find(filters);
     return meals;
   }
 
   async update(
-    mealId: number, 
-    updateMealDto: MealDto, 
+    mealId: number,
+    updateMealDto: MealDto,
     user: UserDto
   ): Promise<Meal> {
 
     const meal = await this.mealRepository.findOne(mealId);
-    await this.mealRepository.populate(meal, ['restaurants']);
+    await this.mealRepository.populate(meal, ['restaurant']);
 
     if (!meal) {
       return;
     }
 
-    for(let item of meal.restaurants) {
-      const filters: FilterQuery<Restaurant> = { id: item.id };
-      if (user.role === UserRole.User) {
-        filters.owner = { id: user.id };
-      }
+    const filters: FilterQuery<Restaurant> = { id: meal.restaurant.id };
+    if (user.role === UserRole.User) {
+      filters.owner = { id: user.id };
+    }
 
-      const restaurant = await this.restaurantRepository.findOne(filters);
-      if (!restaurant) {
-        return;
-      }
+    const restaurant = await this.restaurantRepository.findOne(filters);
+    if (!restaurant) {
+      return;
     }
 
     meal.name = updateMealDto.name || meal.name;
@@ -159,22 +157,21 @@ export class MealsService {
 
   async remove(mealId: number, user: UserDto): Promise<Meal> {
     const meal = await this.mealRepository.findOne(mealId);
-    if(!meal) {
+    if (!meal) {
       return;
     }
 
-    for(let item of meal.restaurants) {
-      const filters: FilterQuery<Restaurant> = { id: item.id };
-        
-      if (user.role === UserRole.User) {
-        filters.owner = { id: user.id };
-      }
+    const filters: FilterQuery<Restaurant> = { id: meal.restaurant.id };
 
-      const restaurant = await this.restaurantRepository.findOne(filters);
-      if (!restaurant) {
-        return;
-      }
+    if (user.role === UserRole.User) {
+      filters.owner = { id: user.id };
     }
+
+    const restaurant = await this.restaurantRepository.findOne(filters);
+    if (!restaurant) {
+      return;
+    }
+
 
     await this.mealRepository.removeAndFlush(meal);
 

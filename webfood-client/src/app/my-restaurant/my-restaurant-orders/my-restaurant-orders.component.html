@@ -1,0 +1,32 @@
+<h1>{{data.restaurant.name}} - Orders</h1>
+<mat-card *ngFor="let order of orders" class="example-card">
+    <mat-card-subtitle>id: {{order.orderId}}</mat-card-subtitle>
+    <mat-card-title>{{order.orderStatus}}</mat-card-title>
+    <mat-card-content>
+        <p>Date: {{order.orderDate | date:'medium'}}</p>
+        <p>Address: {{order.shortAddress}}</p>
+        <p>Comment: {{order.comment}}</p>
+        <mat-list-item *ngFor="let item of order.orderItems">
+            <p mat-line>
+                id:{{item.id}} {{item.meal.name}} amount: {{item.amount}}
+            </p>
+        </mat-list-item>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <p mat-line>
+        Set status:
+    </p>
+    <mat-card-actions>
+        <button (click)="setOrderStatusDoing(order)" mat-button *ngIf="order.orderStatus === 'NEW'">DOING</button>
+        <button (click)="setOrderStatusDone(order)" mat-button *ngIf="order.orderStatus === 'DOING'">DONE</button>
+    </mat-card-actions>
+    <mat-card-footer *ngIf="order.orderStatus === 'NEW'">
+        <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="order.orderStatus === 'DOING'">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="order.orderStatus === 'DONE'">
+        <mat-progress-bar mode="determinate" value="100" color="primary"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>

@@ -8,7 +8,7 @@ import { Order } from '../../core/order';
   providedIn: 'root'
 })
 export class OrderService {
-  
+
   constructor(
     private httpClient: HttpClient
   ) { }
@@ -19,4 +19,13 @@ export class OrderService {
     ).toPromise();
   }
 
+  async updateOrder(newOrder: Order): Promise<Order> {
+    console.log(newOrder.orderStatus);
+    return (
+      this.httpClient.patch(
+        `/api/orders/${newOrder.orderId}`,
+        newOrder
+      ) as Observable<Order>
+    ).toPromise()
+  }
 }

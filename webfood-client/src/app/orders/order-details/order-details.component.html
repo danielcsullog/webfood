@@ -4,8 +4,8 @@
 <div>
     <p>Status: {{order.orderStatus}}</p>
 </div>
-<div>
-    <p>Restaurant: {{order.restaurant.name}}</p>
+<div *ngIf="restaurant">
+    <p>Restaurant: {{restaurant.name}}</p>
 </div>
 <div>
     <h3>Ordered items: </h3>

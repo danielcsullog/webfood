@@ -11,13 +11,10 @@
             </mat-card-content>
             <mat-divider inset></mat-divider>
             <mat-card-actions>
-                <button mat-button>ORRDERS</button>
-                <button mat-button>WORKERS</button>
-                <button mat-button>EDIT</button>
+                <button mat-button (click)="openRestaurantOrders(restaurant)">ORRDERS</button>
+                <button mat-button (click)="openWorkers(restaurant)">WORKERS</button>
+                <button mat-button (click)="openMealEditor(restaurant)">EDIT MEALS</button>
             </mat-card-actions>
-            <mat-card-footer>
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </mat-card-footer>
         </mat-card>
     </mat-tab>
     <mat-tab *ngIf="workPlaces.length != 0" label="Workplaces">
@@ -30,12 +27,9 @@
             </mat-card-content>
             <mat-divider inset></mat-divider>
             <mat-card-actions>
-                <button mat-button>ORRDERS</button>
-                <button mat-button>WORKERS</button>
+                <button mat-button (click)="openRestaurantOrders(restaurant)">ORRDERS</button>
+                <button mat-button (click)="openWorkers(restaurant)">WORKERS</button>
             </mat-card-actions>
-            <mat-card-footer>
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </mat-card-footer>
         </mat-card>
     </mat-tab>
     <mat-tab label="My Requests">

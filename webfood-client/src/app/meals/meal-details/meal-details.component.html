@@ -22,7 +22,7 @@
 <div>
     <p>Gluten free: {{meal.isGlutenFree}}</p>
 </div>
-<div class="cartButton">
+<div class="cartButton" *ngIf="needAmount">
     <button (click)="addMealToCart()" mat-raised-button color="primary">
         Add to cart
     </button>
@@ -35,6 +35,6 @@
         </button>
         <button (click)="increaseAmount()" mat-button color="secondary">
             +
-        </button>        
+        </button>
     </span>
 </div>

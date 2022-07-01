@@ -54,7 +54,6 @@ export class RequestEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data.restaurants);
   }
 
   closeDialog() {

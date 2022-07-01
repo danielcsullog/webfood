@@ -13,7 +13,7 @@ export class MealDto {
     isLactoseFree?: boolean;
     isGlutenFree?: boolean;
     isSugarFree?: boolean;
-    restaurantIds?: number[];
+    restaurantId?: number;
 
     constructor(meal?: Meal) {
         if (meal) {
@@ -29,10 +29,8 @@ export class MealDto {
             this.isGlutenFree = meal.isGlutenFree;
             this.isSugarFree = meal.isSugarFree;
             
-            if(meal.restaurants?.isInitialized(true)) {
-                this.restaurantIds = meal.restaurants
-                    .getItems()
-                    .map((restaurant) => restaurant.id /*new RestaurantDto(restaurant)*/);   
+            if(meal.restaurant) {
+                this.restaurantId = meal.restaurant.id;
             } 
         }
     }

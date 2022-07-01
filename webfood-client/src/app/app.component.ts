@@ -11,6 +11,8 @@ import { UserService } from './user/user.service';
 export class AppComponent {
 
   appTitle = 'webFood';
+  isShowing!: boolean;
+
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
@@ -25,7 +27,12 @@ export class AppComponent {
     private router: Router,
     private userService: UserService,
   ) {
-    
+
+  }
+
+
+  toggleSidenav() {
+    this.isShowing = !this.isShowing;
   }
 
   ngOnInit() {

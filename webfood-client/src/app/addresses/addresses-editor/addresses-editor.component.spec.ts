@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddressesEditorComponent } from './addresses-editor.component';
 
-describe('AddressesEditorComponent', () => {
+xdescribe('AddressesEditorComponent', () => {
   let component: AddressesEditorComponent;
   let fixture: ComponentFixture<AddressesEditorComponent>;
 

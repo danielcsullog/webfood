@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Meal } from 'src/app/core/meal';
 import { Order } from 'src/app/core/order';
 import { Restaurant } from 'src/app/core/restaurant';
 
@@ -28,6 +29,12 @@ export class MyRestaurantService {
   async getRestaurantOrders(restaurant: Restaurant): Promise<Order[]> {
     return (
       this.httpClient.get(`/api/restaurants/${restaurant.id}/orders`) as Observable<Order[]>
+    ).toPromise();
+  }
+
+  async getRestaurantMeals(restaurant: Restaurant): Promise<Meal[]> {
+    return (
+      this.httpClient.get(`/api/restaurants/${restaurant.id}/meals`) as Observable<Meal[]>
     ).toPromise();
   }
 }

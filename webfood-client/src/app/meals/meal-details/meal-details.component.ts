@@ -23,6 +23,7 @@ export class MealDetailsComponent implements OnInit {
 
   @Input() meal!: Meal;
   @Input() mealRestaurant!: Restaurant;
+  @Input() needAmount: boolean = true;
 
   constructor(
     private fb: FormBuilder,

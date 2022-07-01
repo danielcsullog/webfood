@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="sidenav.toggle()">
+  <button mat-icon-button *ngIf="isLoggedIn" (click)="toggleSidenav()">
     <mat-icon>menu</mat-icon>
   </button>
   <button mat-button [routerLink]="['landing']" class="app-title">{{ appTitle }}</button>
@@ -18,7 +18,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="container">
-  <mat-sidenav #sidenav mode="side" opened>
+  <mat-sidenav #sidenav *ngIf="isLoggedIn" [opened]="isShowing">
     <mat-nav-list>
       <a mat-list-item [routerLink]="['restaurants']">
         <mat-icon>restaurant</mat-icon>

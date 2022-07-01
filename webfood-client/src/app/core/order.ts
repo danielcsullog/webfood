@@ -9,7 +9,7 @@ export interface Order {
     userAddress: UserAddress;
     shortAddress?: string;
     orderStatus?: string;
-    restaurant: Restaurant;
+    restaurantId: number;
     orderItems: OrderItem[];
     comment?: string;
 }

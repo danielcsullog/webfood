@@ -43,11 +43,16 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LandingComponent } from './landing/landing.component';
 import { MyRestaurantLandingComponent } from './my-restaurant/my-restaurant-landing/my-restaurant-landing.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RegistrationComponent } from './registration/registration.component';
 import { RestaurantEditorComponent } from './restaurants/restaurant-editor/restaurant-editor.component';
 import { RequestListComponent } from './requests/request-list/request-list.component';
 import { RequestEditorComponent } from './requests/request-editor/request-editor.component';
+import { MyRestaurantOrdersComponent } from './my-restaurant/my-restaurant-orders/my-restaurant-orders.component';
+import { MyRestaurantWorkersComponent } from './my-restaurant/my-restaurant-workers/my-restaurant-workers.component';
+import { MealEditorComponent } from './meals/meal-editor/meal-editor.component';
+import { MealCreatorComponent } from './meals/meal-creator/meal-creator.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -77,6 +82,10 @@ import { RequestEditorComponent } from './requests/request-editor/request-editor
     RequestEditorComponent,
     RestaurantEditorComponent,
     RequestListComponent,
+    MyRestaurantOrdersComponent,
+    MyRestaurantWorkersComponent,
+    MealEditorComponent,
+    MealCreatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +109,7 @@ import { RequestEditorComponent } from './requests/request-editor/request-editor
     MatDividerModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {

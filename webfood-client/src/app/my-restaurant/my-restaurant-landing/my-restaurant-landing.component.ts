@@ -8,6 +8,9 @@ import { RestaurantService } from 'src/app/restaurants/service/restaurant.servic
 import { UserService } from 'src/app/user/user.service';
 import { MyRestaurantService } from '../service/my-restaurant.service';
 import { Request } from '../../core/request'
+import { MyRestaurantOrdersComponent } from '../my-restaurant-orders/my-restaurant-orders.component';
+import { MyRestaurantWorkersComponent } from '../my-restaurant-workers/my-restaurant-workers.component';
+import { MealEditorComponent } from 'src/app/meals/meal-editor/meal-editor.component';
 
 @Component({
   selector: 'app-my-restaurant-landing',
@@ -32,6 +35,7 @@ export class MyRestaurantLandingComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.userRestaurants = await this.myRestaurantService.getUserRestaurants();
+    console.log(this.userRestaurants);
     this.workPlaces = await this.myRestaurantService.getWorkPlaces();
     this.restaurants = await this.restaurantService.getRestaurants();
     this.requests = await this.requestService.getAllRequests();
@@ -60,7 +64,39 @@ export class MyRestaurantLandingComponent implements OnInit {
       },
       autoFocus: false,
     });
+  }
 
+  openRestaurantOrders(_restaurant: Restaurant) {
+    const dialogRef = this.dialog.open(MyRestaurantOrdersComponent, {
+      width: '600px',
+      height: '800px',
+      data: {
+        restaurant: _restaurant,
+      },
+      autoFocus: false,
+    })
+  }
+
+  openWorkers(_restaurant: Restaurant) {
+    const dialogRef = this.dialog.open(MyRestaurantWorkersComponent, {
+      width: '500px',
+      height: '200px',
+      data: {
+        restaurant: _restaurant,
+      },
+      autoFocus: false,
+    })
+  }
+
+  openMealEditor(_restaurant: Restaurant) {
+    const dialogRef = this.dialog.open(MealEditorComponent, {
+      width: '800px',
+      height: '600px',
+      data: {
+        restaurant: _restaurant,
+      },
+      autoFocus: false,
+    })
   }
 
   getAllRestaurants(): Restaurant[] {
@@ -70,4 +106,5 @@ export class MyRestaurantLandingComponent implements OnInit {
   get isAdmin() {
     return this.userService.isAdmin;
   }
+
 }

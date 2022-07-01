@@ -1,5 +1,7 @@
+import { Restaurant } from "./restaurant";
+
 export interface Meal {
-    id: number;
+    id?: number;
     name: string;
     price: number;
     description: string;
@@ -10,4 +12,5 @@ export interface Meal {
     isLactoseFree: boolean;
     isGlutenFree: boolean;
     isSugarFree: boolean;
+    restaurantId: number;
 }

@@ -3,14 +3,18 @@
     <mat-expansion-panel *ngFor="let order of orders" hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <ng-container *ngIf="isOrderStatusNotCompleted(order); else orderDone">
+                <ng-container *ngIf="order.orderStatus === 'NEW'">
+                    <mat-icon>new_releases</mat-icon>
+                    <span class="ongoing-item">{{order.orderDate | date:'medium' }}</span>
+                </ng-container>
+                <ng-container *ngIf="order.orderStatus === 'DOING'">
                     <mat-icon>hourglass_empty</mat-icon>
                     <span class="ongoing-item">{{order.orderDate | date:'medium' }}</span>
                 </ng-container>
-                <ng-template #orderDone>
-                    <mat-icon>done</mat-icon>
-                    {{order.orderDate | date:'medium' }}
-                </ng-template>
+                <ng-container *ngIf="order.orderStatus === 'DONE'">
+                    <mat-icon>done_outline</mat-icon>
+                    <span class="list-item">{{order.orderDate | date:'medium' }}</span>
+                </ng-container>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <app-order-details [order]="order"></app-order-details>

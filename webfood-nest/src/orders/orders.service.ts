@@ -91,18 +91,10 @@ export class OrdersService {
     ): Promise<Order> {
         const filters: FilterQuery<Order> = { orderId };
 
-        if (user.role === UserRole.User) {
-            filters.user = { id: user.id };
-        }
-
         const order = await this.orderRepository.findOne(filters, {
             populate: ['orderItems', 'userAddress', 'restaurant']
         });
 
-
-        if (!order || order.orderStatus !== OrderStatus.New) {
-            return;
-        }
 
         if (orderDto.userAddress) {
             order.userAddress = await this.userAddressRepository
@@ -110,9 +102,10 @@ export class OrdersService {
             order.shortAddress = order.userAddress.city + " " +
                 order.userAddress.street + " " +
                 order.userAddress.houseNumber;
+            order.orderStatus = OrderStatus.New;
         }
 
-        order.orderStatus = OrderStatus.New;
+
 
         if (orderDto.orderItems && orderDto.orderItems.length > 0) {
             order.orderItems.removeAll();
@@ -123,11 +116,15 @@ export class OrdersService {
                 newOrderItem.amount = item.amount;
                 order.orderItems.add(newOrderItem);
             }
+            order.orderStatus = OrderStatus.New;
         }
 
         if (orderDto.comment) {
             order.comment = orderDto.comment;
+            order.orderStatus = OrderStatus.New;
         }
+
+        order.orderStatus = orderDto.orderStatus;
 
         await this.orderRepository.persistAndFlush(order);
         await this.orderRepository.populate(order, ['orderItems', 'user', 'userAddress']);

@@ -14,6 +14,24 @@ export class MealService {
     private httpClient: HttpClient
   ) { }
 
+  async createMeal(newMeal: Meal) {
+    return await (
+      this.httpClient.post(
+        '/api/meals',
+        newMeal
+      ) as Observable<Meal>
+    ).toPromise();
+  }
+
+  async updateMeal(oldMealId: number, newMeal: Meal) {
+    return await (
+      this.httpClient.patch(
+        `/api/meals/${oldMealId}`,
+          newMeal
+        ) as Observable<Meal>
+      ).toPromise();
+  }
+
   async getMeals(restaurantId: number): Promise<Meal[]> {
     return (
       this.httpClient.get(`/api/restaurants/${restaurantId}/meals`) as Observable<Meal[]>
@@ -32,8 +50,9 @@ export class MealService {
     for (let i = 0; i < meals.length; i++) {
       this.mealCategoriesNotUnique[i] = meals[i].category;
     }
-   
+
     return [... new Set(this.mealCategoriesNotUnique)];
   }
+
 
 }
