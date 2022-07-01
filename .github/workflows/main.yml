@@ -57,6 +57,8 @@ jobs:
         run: npm i
       - name: Run tests
         run: npm run test:ci
+        env:
+          CI: false
   frontend-deploy:
     runs-on: ubuntu-latest
     defaults:
