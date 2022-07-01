@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async submit(): Promise<LoginResponse | null> {
+  async submit(): Promise<string | null> {
     if (!this.loginForm.valid) {
       return null;
     }

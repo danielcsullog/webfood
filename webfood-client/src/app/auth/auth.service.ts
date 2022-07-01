@@ -31,7 +31,7 @@ export class AuthService {
     this.setLoginResponse(result);
   }
 
-  async login(userAuthRequest: UserAuthRequest): Promise<LoginResponse> {
+  async login(userAuthRequest: UserAuthRequest): Promise<string> {
     const result = await (
       this.httpClient.post(
         '/api/users/login',
@@ -43,7 +43,7 @@ export class AuthService {
 
     this.setLoginResponse(result);
 
-    return result;
+    return JSON.stringify(result);
   }
 
   logout() {
