@@ -55,14 +55,8 @@ jobs:
           cache-dependency-path: webfood-client/package-lock.json
       - name: Install dependencies
         run: npm i
-      - name: Build
-        run: npm run build
-        env: 
-          CI: false
-      - name: Run tests
-        run: npm run test:ci
-        env:
-          CI: false
+     # - name: Run tests
+     #   run: npm run test:ci
   frontend-deploy:
     runs-on: ubuntu-latest
     defaults:
