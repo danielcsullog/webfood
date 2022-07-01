@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Build
-        run: npm build
+        run: npm run build
         env: 
           CI: false
       - name: Run tests
