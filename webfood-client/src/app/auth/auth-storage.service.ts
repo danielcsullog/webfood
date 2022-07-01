@@ -15,6 +15,8 @@ export class AuthStorageService {
   private static USER_KEY = 'user';
 
   saveUser(loginResponse: LoginResponse | null) {
+    console.log("SAVE_USER:");
+    console.log(loginResponse);
     if (!loginResponse) {
       sessionStorage.removeItem(AuthStorageService.TOKEN_KEY);
       sessionStorage.removeItem(AuthStorageService.USER_KEY);

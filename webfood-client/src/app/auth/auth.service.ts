@@ -36,9 +36,14 @@ export class AuthService {
       this.httpClient.post(
         '/api/users/login',
         userAuthRequest, 
-        {responseType: 'text' as 'json'}
+        {responseType: 'text'}
       ) as Observable<string>
     ).toPromise();
+
+    console.log("LOGIN_AS_TEXT");
+    console.log(result);
+    console.log("LOGIN_AS_JSONPARSE");
+    console.log(JSON.parse(result));
 
     this.authStorageService.saveUser(JSON.parse(result));
 
@@ -62,6 +67,9 @@ export class AuthService {
   }
 
   private setLoginResponse(result: LoginResponse | null) {
+    console.log('SET_LOGIN_RESPONSE:');
+    console.log(result)
+
     if (!result) {
       this._token = null;
       this.userService.setUser(null);
