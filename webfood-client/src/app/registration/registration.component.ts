@@ -32,7 +32,7 @@ export class RegistrationComponent implements OnInit {
 
     await this.authService.register(this.registrationForm.value);
 
-    this.router.navigate(['/', 'login']);
+    this.router.navigate(['/login']);
   }
 
   get name() {
