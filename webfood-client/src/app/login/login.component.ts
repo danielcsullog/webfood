@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       return null;
     }
 
-    this.router.navigate(['/']);
+    this.router.navigate(['/landing']);
 
     return result;
   }
