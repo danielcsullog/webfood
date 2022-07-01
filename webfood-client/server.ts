@@ -7,13 +7,15 @@ const app = express();
 
 app.use(express.static('./dist/webfood-client'));
 
+let usersTarget = process.env.TARGET || 'http://localhost:3000';
+
 app.use(
   '/api/users/login',
   createProxyMiddleware({
     pathRewrite: {
       '^/api': '',
     },
-    target: `${process.env.TARGET}/users/login`,
+    target: `${usersTarget}`,
     changeOrigin: true,
   })
 );
@@ -29,8 +31,8 @@ app.use(
   })
 );
 
-app.use('/*', (req, res) => {
+/*app.use('*', (req, res) => {
   res.sendFile(path.resolve('./dist/webfood-client/index.html'));
-});
+});*/
 
 app.listen(process.env.PORT || 4200);
