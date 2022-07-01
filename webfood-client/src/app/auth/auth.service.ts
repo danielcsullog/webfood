@@ -35,7 +35,7 @@ export class AuthService {
     const result = await (
       this.httpClient.post(
         '/api/users/login',
-        userAuthRequest
+        userAuthRequest, 
       ) as Observable<LoginResponse>
     ).toPromise();
 

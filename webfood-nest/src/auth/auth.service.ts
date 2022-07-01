@@ -30,7 +30,7 @@ export class AuthService {
         return null;
     }
 
-    async generateJwt(userDto: UserDto) {
+    async generateJwt(userDto: UserDto): Promise<string> {
         return await this.jwtService.signAsync({
           sub: userDto.id,
           user: {
