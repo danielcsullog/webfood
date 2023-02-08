@@ -1,6 +1,6 @@
 # webFood
 
-Food ordering app for customers and restaurants.
+Full stack Food ordering app for customers and restaurants.
 
 Deployed on Heroku: webfood-fullstack-client.herokuapp.com
 
